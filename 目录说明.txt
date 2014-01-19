@@ -1,0 +1,63 @@
+目录结构说明：
+
+www根目录
+|
+|--Home	      : 前台目录
+|     |--Conf     : 配置目录
+|     |--Lib      : 前台库目录
+|     |   |--Action        :前控制器目录
+|     |   |--Model         :模型目录
+|     |   
+|     |--Tpl       : 前台模板目录
+|     |   |--User          :用户目录
+|     |   |--Project       :项目
+|     |   |--Policy        :政策
+|     |   |--Question      :问答
+|     |   |--Message       :信息中心
+|     |   |--Index	   :默认目录
+|     |   
+|     |--Common    :前台公用目录
+|
+|--Admin      : 后台目录
+|     |--Conf     : 配置目录
+|     |--Lib      : 后台库目录
+|     |   |--Action        :前控制器目录
+|     |   |--Model         :模型目录
+|     |   
+|     |--Tpl       : 后台模板目录
+|     |   |--User          :用户目录
+|     |   |--Project       :项目
+|     |   |--Policy        :政策
+|     |   |--Filter        :垃圾信息目录
+|     |   |--Message       :系统信息目录
+|     |   |--Statistics	   :统计目录
+|     |   
+|     |--Common    : 后台公用目录
+|
+|--Common   ：公用函数及类库文件存放目录
+|     |--Functions ：公用函数文件存放目录
+|     |--Lib       ：公用类库文件存放目录
+|     |--Extend    ：第三方扩展存放目录
+|     |--config.php: 公用配置文件
+|
+|--Public    : 公用前台文件目录
+|     |--Css       : 公用的CSS样式存放目录
+|     |--Img       ：公用图片存放目录
+|     |--Js        ：公用JS存放目录
+|
+|--Uploads   : 文件上传存放目录
+|     |--Img       :	图片目录
+|     |--Doc	   :    文档目录
+|     |--Others    :    其他目录	
+|
+|--Runtime    : 临时文件存放目录
+|     |--Admin     ：前台缓存
+|     |--Home	   : 后台缓存
+|
+|--ThinkPHP : ThinkPHP核心框架包
+|
+|--index.php  ：前台入口文件（进入Home文件夹)
+|
+|--manage.php : 后台入口文件（不是admin.php,进入Admin文件夹）
+|
+|--.htaccess  : URL重写规则文件
