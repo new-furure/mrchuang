@@ -60,7 +60,7 @@ class Model {
     // 是否批处理验证
     protected $patchValidate    =   false;
     // 链操作方法列表
-    protected $methods          =   array('table','order','alias','having','group','lock','distinct','auto','filter','validate','result','bind','token');
+    protected $methods          =   array('table','order','alias','having','group','lock','distinct','auto','filter','validate');
 
     /**
      * 架构函数
@@ -112,7 +112,7 @@ class Model {
                 $db   =  $this->dbName?$this->dbName:C('DB_NAME');
                 $fields = F('_fields/'.strtolower($db.'.'.$this->name));
                 if($fields) {
-                    $version    =   C('DB_FIELD_VERSION');
+                    $version    =   C('DB_FIELD_VERISON');
                     if(empty($version) || $fields['_version']== $version) {
                         $this->fields   =   $fields;
                         return ;
@@ -148,7 +148,7 @@ class Model {
         }
         // 记录字段类型信息
         $this->fields['_type'] =  $type;
-        if(C('DB_FIELD_VERSION')) $this->fields['_version'] =   C('DB_FIELD_VERSION');
+        if(C('DB_FIELD_VERISON')) $this->fields['_version'] =   C('DB_FIELD_VERISON');
 
         // 2008-3-7 增加缓存开关控制
         if(C('DB_FIELDS_CACHE')){
@@ -400,12 +400,16 @@ class Model {
         $data       =   $this->_facade($data);
         // 分析表达式
         $options    =   $this->_parseOptions($options);
-        $pk         =   $this->getPk();
+        if(false === $this->_before_update($data,$options)) {
+            return false;
+        }
         if(!isset($options['where']) ) {
             // 如果存在主键数据 则自动作为更新条件
-            if(isset($data[$pk])) {
+            if(isset($data[$this->getPk()])) {
+                $pk                 =   $this->getPk();
                 $where[$pk]         =   $data[$pk];
                 $options['where']   =   $where;
+                $pkValue            =   $data[$pk];
                 unset($data[$pk]);
             }else{
                 // 如果没有任何更新条件则不执行
@@ -413,12 +417,6 @@ class Model {
                 return false;
             }
         }
-        if(is_array($options['where']) && isset($options['where'][$pk])){
-            $pkValue    =   $options['where'][$pk];
-        }        
-        if(false === $this->_before_update($data,$options)) {
-            return false;
-        }        
         $result     =   $this->db->update($data,$options);
         if(false !== $result) {
             if(isset($pkValue)) $data[$pk]   =  $pkValue;
@@ -445,23 +443,21 @@ class Model {
             else
                 return false;
         }
-        $pk   =  $this->getPk();
         if(is_numeric($options)  || is_string($options)) {
             // 根据主键删除记录
+            $pk   =  $this->getPk();
             if(strpos($options,',')) {
                 $where[$pk]     =  array('IN', $options);
             }else{
                 $where[$pk]     =  $options;
             }
+            $pkValue            =  $where[$pk];
             $options            =  array();
             $options['where']   =  $where;
         }
         // 分析表达式
         $options =  $this->_parseOptions($options);
-        if(is_array($options['where']) && isset($options['where'][$pk])){
-            $pkValue    =   $options['where'][$pk];
-        }
-        $result  =    $this->db->delete($options);
+        $result=    $this->db->delete($options);
         if(false !== $result) {
             $data = array();
             if(isset($pkValue)) $data[$pk]   =  $pkValue;
@@ -525,7 +521,7 @@ class Model {
 
     /**
      * 分析表达式
-     * @access protected
+     * @access proteced
      * @param array $options 表达式参数
      * @return array
      */
@@ -534,31 +530,24 @@ class Model {
             $options =  array_merge($this->options,$options);
         // 查询过后清空sql表达式组装 避免影响下次查询
         $this->options  =   array();
-        if(!isset($options['table'])){
+        if(!isset($options['table']))
             // 自动获取表名
             $options['table']   =   $this->getTableName();
-            $fields             =   $this->fields;
-        }else{
-            // 指定数据表 则重新获取字段列表 但不支持类型检测
-            $fields             =   $this->getDbFields();
-        }
-
         if(!empty($options['alias'])) {
             $options['table']  .=   ' '.$options['alias'];
         }
         // 记录操作的模型名称
         $options['model']       =   $this->name;
-
         // 字段类型验证
-        if(isset($options['where']) && is_array($options['where']) && !empty($fields) && !isset($options['join'])) {
+        if(isset($options['where']) && is_array($options['where']) && !empty($this->fields)) {
             // 对数组查询条件进行字段类型检查
             foreach ($options['where'] as $key=>$val){
                 $key            =   trim($key);
-                if(in_array($key,$fields,true)){
+                if(in_array($key,$this->fields,true)){
                     if(is_scalar($val)) {
                         $this->_parseType($options['where'],$key);
                     }
-                }elseif(!is_numeric($key) && '_' != substr($key,0,1) && false === strpos($key,'.') && false === strpos($key,'(') && false === strpos($key,'|') && false === strpos($key,'&')){
+                }elseif('_' != substr($key,0,1) && false === strpos($key,'.') && false === strpos($key,'|') && false === strpos($key,'&')){
                     unset($options['where'][$key]);
                 }
             }
@@ -579,17 +568,13 @@ class Model {
      * @return void
      */
     protected function _parseType(&$data,$key) {
-        if(empty($this->options['bind'][':'.$key])){
-            $fieldType = strtolower($this->fields['_type'][$key]);
-            if(false !== strpos($fieldType,'enum')){
-                // 支持ENUM类型优先检测
-            }elseif(false === strpos($fieldType,'bigint') && false !== strpos($fieldType,'int')) {
-                $data[$key]   =  intval($data[$key]);
-            }elseif(false !== strpos($fieldType,'float') || false !== strpos($fieldType,'double')){
-                $data[$key]   =  floatval($data[$key]);
-            }elseif(false !== strpos($fieldType,'bool')){
-                $data[$key]   =  (bool)$data[$key];
-            }
+        $fieldType = strtolower($this->fields['_type'][$key]);
+        if(false === strpos($fieldType,'bigint') && false !== strpos($fieldType,'int')) {
+            $data[$key]   =  intval($data[$key]);
+        }elseif(false !== strpos($fieldType,'float') || false !== strpos($fieldType,'double')){
+            $data[$key]   =  floatval($data[$key]);
+        }elseif(false !== strpos($fieldType,'bool')){
+            $data[$key]   =  (bool)$data[$key];
         }
     }
 
@@ -618,28 +603,10 @@ class Model {
         }
         $this->data         =   $resultSet[0];
         $this->_after_find($this->data,$options);
-        if(!empty($this->options['result'])) {
-            return $this->returnResult($this->data,$this->options['result']);
-        }
         return $this->data;
     }
     // 查询成功的回调方法
     protected function _after_find(&$result,$options) {}
-
-    protected function returnResult($data,$type=''){
-        if ($type){
-            if(is_callable($type)){
-                return call_user_func($type,$data);
-            }
-            switch (strtolower($type)){
-                case 'json':
-                    return json_encode($data);
-                case 'xml':
-                    return xml_encode($data);
-            }
-        }
-        return $data;
-    }
 
     /**
      * 处理字段映射
@@ -719,9 +686,7 @@ class Model {
         $options                =   $this->_parseOptions($options);
         $field                  =   trim($field);
         if(strpos($field,',')) { // 多字段
-            if(!isset($options['limit'])){
-                $options['limit']   =   is_numeric($sepa)?$sepa:'';
-            }
+            $options['limit']   =   is_numeric($sepa)?$sepa:'';
             $resultSet          =   $this->db->select($options);
             if(!empty($resultSet)) {
                 $_field         =   explode(',', $field);
@@ -735,7 +700,7 @@ class Model {
                     if(2==$count) {
                         $cols[$name]   =  $result[$key2];
                     }else{
-                        $cols[$name]   =  is_string($sepa)?implode($sepa,$result):$result;
+                        $cols[$name]   =  is_string($sepa)?implode($sepa,array_slice($result,1)):$result;
                     }
                 }
                 return $cols;
@@ -796,8 +761,6 @@ class Model {
             if(is_string($fields)) {
                 $fields =   explode(',',$fields);
             }
-            // 判断令牌验证字段
-            if(C('TOKEN_ON'))   $fields[] = C('TOKEN_NAME');
             foreach ($data as $key=>$val){
                 if(!in_array($key,$fields)) {
                     unset($data[$key]);
@@ -809,7 +772,7 @@ class Model {
         if(!$this->autoValidation($data,$type)) return false;
 
         // 表单令牌验证
-        if(!$this->autoCheckToken($data)) {
+        if(C('TOKEN_ON') && !$this->autoCheckToken($data)) {
             $this->error = L('_TOKEN_ERROR_');
             return false;
         }
@@ -837,8 +800,6 @@ class Model {
     // 自动表单令牌验证
     // TODO  ajax无刷新多次提交暂不能满足
     public function autoCheckToken($data) {
-        // 支持使用token(false) 关闭令牌验证
-        if(isset($this->options['token']) && !$this->options['token']) return true;
         if(C('TOKEN_ON')){
             $name   = C('TOKEN_NAME');
             if(!isset($data[$name]) || !isset($_SESSION[$name])) { // 令牌数据无效
@@ -847,7 +808,7 @@ class Model {
 
             // 令牌验证
             list($key,$value)  =  explode('_',$data[$name]);
-            if($value && $_SESSION[$name][$key] === $value) { // 防止重复提交
+            if($_SESSION[$name][$key] == $value) { // 防止重复提交
                 unset($_SESSION[$name][$key]); // 验证完成销毁session
                 return true;
             }
@@ -919,10 +880,6 @@ class Model {
                             break;
                         case 'field':    // 用其它字段的值进行填充
                             $data[$auto[0]] = $data[$auto[1]];
-                            break;
-                        case 'ignore': // 为空忽略
-                            if(''===$data[$auto[0]])
-                                unset($data[$auto[0]]);
                             break;
                         case 'string':
                         default: // 默认作为字符串填充
@@ -1067,24 +1024,20 @@ class Model {
      * @return boolean
      */
     public function check($value,$rule,$type='regex'){
-        $type   =   strtolower(trim($type));
-        switch($type) {
+        switch(strtolower(trim($type))) {
             case 'in': // 验证是否在某个指定范围之内 逗号分隔字符串或者数组
-            case 'notin':
-                $range   = is_array($rule)? $rule : explode(',',$rule);
-                return $type == 'in' ? in_array($value ,$range) : !in_array($value ,$range);
+                $range   = is_array($rule)?$rule:explode(',',$rule);
+                return in_array($value ,$range);
             case 'between': // 验证是否在某个范围
-            case 'notbetween': // 验证是否不在某个范围            
                 if (is_array($rule)){
                     $min    =    $rule[0];
                     $max    =    $rule[1];
                 }else{
                     list($min,$max)   =  explode(',',$rule);
                 }
-                return $type == 'between' ? $value>=$min && $value<=$max : $value<$min || $value>$max;
+                return $value>=$min && $value<=$max;
             case 'equal': // 验证是否等于某个值
-            case 'notequal': // 验证是否等于某个值            
-                return $type == 'equal' ? $value == $rule : $value != $rule;
+                return $value == $rule;
             case 'length': // 验证长度
                 $length  =  mb_strlen($value,'utf-8'); // 当前数据长度
                 if(strpos($rule,',')) { // 长度区间
@@ -1097,7 +1050,7 @@ class Model {
                 list($start,$end)   =  explode(',',$rule);
                 if(!is_numeric($start)) $start   =  strtotime($start);
                 if(!is_numeric($end)) $end   =  strtotime($end);
-                return NOW_TIME >= $start && NOW_TIME <= $end;
+                return $_SERVER['REQUEST_TIME'] >= $start && $_SERVER['REQUEST_TIME'] <= $end;
             case 'ip_allow': // IP 操作许可验证
                 return in_array(get_client_ip(),explode(',',$rule));
             case 'ip_deny': // IP 操作禁止验证
@@ -1152,12 +1105,12 @@ class Model {
         // 分析表达式
         if(true === $parse) {
             $options =  $this->_parseOptions();
-            $sql    =   $this->db->parseSql($sql,$options);
+            $sql  =   $this->db->parseSql($sql,$options);
         }elseif(is_array($parse)){ // SQL预处理
-            $parse  =   array_map(array($this->db,'escapeString'),$parse);
-            $sql    =   vsprintf($sql,$parse);
+            $sql  = vsprintf($sql,$parse);
         }else{
-            $sql    =   strtr($sql,array('__TABLE__'=>$this->getTableName(),'__PREFIX__'=>C('DB_PREFIX')));
+            if(strpos($sql,'__TABLE__'))
+                $sql    =   str_replace('__TABLE__',$this->getTableName(),$sql);
         }
         $this->db->setModel($this->name);
         return $sql;
@@ -1408,8 +1361,7 @@ class Model {
      * @return Model
      */
     public function cache($key=true,$expire=null,$type=''){
-        if(false !== $key)
-            $this->options['cache']  =  array('key'=>$key,'expire'=>$expire,'type'=>$type);
+        $this->options['cache']  =  array('key'=>$key,'expire'=>$expire,'type'=>$type);
         return $this;
     }
 
@@ -1488,17 +1440,7 @@ class Model {
         }elseif(is_object($where)){
             $where  =   get_object_vars($where);
         }
-        if(is_string($where) && '' != $where){
-            $map    =   array();
-            $map['_string']   =   $where;
-            $where  =   $map;
-        }        
-        if(isset($this->options['where'])){
-            $this->options['where'] =   array_merge($this->options['where'],$where);
-        }else{
-            $this->options['where'] =   $where;
-        }
-        
+        $this->options['where'] =   $where;
         return $this;
     }
 
@@ -1523,17 +1465,6 @@ class Model {
      */
     public function page($page,$listRows=null){
         $this->options['page'] =   is_null($listRows)?$page:$page.','.$listRows;
-        return $this;
-    }
-
-    /**
-     * 查询注释
-     * @access public
-     * @param string $comment 注释
-     * @return Model
-     */
-    public function comment($comment){
-        $this->options['comment'] =   $comment;
         return $this;
     }
 
