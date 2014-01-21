@@ -1,0 +1,32 @@
+<!-- -------------------------
+
+			政策模块
+			初稿
+			@作者：邓茜
+			完善
+			@作者：
+------------------------------>
+<include file="Global:header" />
+<div id="main">
+	<div id="policy_head">
+    <h1 id="policy_info">政策列表</h1>
+        <div class="tab">
+              <a href="<php>echo U('Policy/index');</php>" id="policy_1">所有政策</a>
+              <a href="<php>if($ssesion[user_id] == ''){echo U('User/log');}else{echo U('Policy/myfocus');}</php>" id="policy_2">我关注的</a>
+        </div>
+    </div>
+	
+    <div id="policy_list">
+    <php>
+     if(!$policy_list)
+    	{
+        	echo ' <div id="policy_none">暂无政策</div>';
+        }else{
+    
+        }
+    </php>
+    </div>
+    <div class="clear"></div>
+    <div id="page" align="center">
+    </div>  
+</div>

@@ -3,6 +3,8 @@
 			项目模块
 			初稿
 			@作者：邓茜
+			完善
+			@作者：
 
 ------------------------------>
 <include file="Global:header" />
@@ -11,11 +13,11 @@
     <h1 id="t_info">项目列表</h1>
         <div class="tab">
               <a href="<php>echo U('Project/index');</php>" id="project_1">所有项目</a>
-              <a href="<php>if($ssesion[user_id] == ''){echo U('User/log');}else{echo U('Project/focus');}</php>" id="project_2">我关注的</a>
+              <a href="<php>if($ssesion[user_id] == ''){echo U('User/log');}else{echo U('Project/myfocus');}</php>" id="project_2">我关注的</a>
         </div>
     </div>
 	
-    <div id="topic_list">
+    <div id="project_list">
     <php>
      if(!$project_list)
     	{

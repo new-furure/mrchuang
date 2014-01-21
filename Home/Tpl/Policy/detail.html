@@ -1,0 +1,22 @@
+<!-- -------------------------
+
+			单个政策浏览页
+			初稿
+			@作者：邓茜
+			完善
+			@作者：
+------------------------------>
+<include file="Global:header" />
+<div id="main">
+    <div id="pplicy_title">政策: <php>echo $policy['policy_effective']?$policy['policy_title']:'该政策已失效'</php></div>
+    	<div id="project_inf" class="t_head">
+        	<div id="guanzhu_num">关注者：<php>echo $policy?$policy['policy_focus_num']:0</php>人</div>
+			<div id="zan_num">赞：<php>echo $policy?$policy['policy_up_num']:0</php>人</div>
+			<div id="cai_num">踩：<php>echo $policy?$policy['policy_down_num']:0</php>人</div>
+            <div id="topic_create_time">创建时间:<php>echo time_mode($topic['addtime']);</php></div>
+        </div>
+		<div id="policy_profile">政策简介：
+			<php>echo $policy['policy_effective']?$policy['policy_profile']:'该项目已失效'</php>
+		</div>
+	</div>
+</div>
