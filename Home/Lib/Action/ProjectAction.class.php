@@ -10,24 +10,28 @@
 +-------------------------------------------------
 */
 class ProjectAction extends Action {
-//登录验证
-//@作者：邓茜
- private function tologin() {
-        if ($session['user_id'] == '') {
-            exit($_POST['c'] . '<script>$("#alert_mid").html("请先登录");$("#top_tip").animate({top:0},400).delay(1000).animate({top:-36},400,function(){location.href="' . U('User/log') . '"});</script>');
-        }
-    }
+	
+	public $user_id; // 公用变量
+	$user_id = $session[user_id];
+
+
 
 //项目浏览页
-//@作者 
+//@作者 邓茜
+
 public function index()
 {
  	$project = M('project');
-   // $project_list = $project->page($this->get['p'] . ',' . $this->setting['project_per_page'])->order('project_time DESC')->select();
+	//分页，每页显示10个项目
+    $project_list = $project->page($this->get['p'].',10')->order('project_time DESC')->select();
     $count = $project->count();
-   // $Page = new Page($count, $this->setting['project_per_page']);
-	$user_id = $session[user_id];
-    if ($user_id != '') {
+    $page = new page($count, $this->setting['project_per_page']);
+	if ($user_id == '')
+	{
+	    $this->error('您尚未登录',U('User/log'));
+		return;
+	}
+    else ($user_id != '') {
         $focus_on_project = M('focus_on_project');
         $focus = $focus_on_project->where(array(
             'user_id' => $this->user_id
@@ -42,10 +46,10 @@ public function index()
             }
         }
 	}	
-	//$this->assign('page', $Page->show());
+	$this->assign('page', $page->show());
     $this->assign('totalcount', $total_count);
     $this->assign('my_focus', $my_focus);
-   // $this->assign('project_list', $project_list);
+    $this->assign('project_list', $project_list);
     $this->assign('title', '所有项目-' . $this->setting['site_name']);
     $this->display();
 }
@@ -57,16 +61,15 @@ public function index()
 //@作者 
 public function detail()
 {
-	$obj = D('Project');
+	$obj = M('project');
 	$project_id=$_GET[project_id];
-	$where['project_id']=$project_id;
-	$project = $obj->where($where)->find();
-	$project['project_name'] = $this->
-	$where['arcid'] = $arcid;
-		$article = $obj->relation(true)->where($where)->find();
-		$article['arcurl'] =  U('Article/index',array('arcid'=>$arcid));
-		$article['commentnum'] = $this->getCommentNum($article['arcid']);
-		$article['colurl'] = U('Index/columns',array('colid'=>$article['colid']));
+	$project = $obj->find($project_id);
+	if($project) {
+        $this->data = $project;
+    }else{
+        $this->error('数据错误');
+    }
+    $this->display();
 }
 
 //回复
@@ -84,7 +87,9 @@ public function reply()
 //@作者 
 public function edit()
 {
-
+	$tag=M('tag');
+	$this->tag=$tag->find();
+	$this->display();
 }
 
 //保存
