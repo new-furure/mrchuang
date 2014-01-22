@@ -12,105 +12,103 @@
 class ProjectAction extends Action {
 	
 	public $user_id; // 公用变量
-	$user_id = $session[user_id];
-
-
 
 //项目浏览页
 //@作者 邓茜
 
-public function index()
-{
- 	$project = M('project');
-	//分页，每页显示10个项目
-    $project_list = $project->page($this->get['p'].',10')->order('project_time DESC')->select();
-    $count = $project->count();
-    $page = new page($count, $this->setting['project_per_page']);
-	if ($user_id == '')
+	public function index()
 	{
-	    $this->error('您尚未登录',U('User/log'));
-		return;
+		$project = M('project');
+		//分页，每页显示10个项目
+		$project_list = $project->page('1,10')->order('project_time DESC')->select();
+		$count = $project->count();
+		$page = new Page($count,10);
+		$user_id = $session[user_id];
+		if ($user_id == '')
+		{
+			$this->error('您尚未登录',U('User/log'));
+			return;
+		}
+		else{
+			$focus_on_project = M('focus_on_project');
+			$focus = $focus_on_project->where(array(
+				'user_id' => $this->user_id
+			))->select();
+			$total_count = $focus_on_project->where(array(
+				'user_id' => $this->user_id
+			))->count(project_id);
+			$my_focus = array();
+			foreach ($focus as $k => $v) {
+				if ($v['user_id'] == $this->user_id) {
+					$my_focus[] = $v['project_id'];
+				}
+			}
+		}	
+		$this->assign('page', $page->show());
+		$this->assign('totalcount', $total_count);
+		$this->assign('my_focus', $my_focus);
+		$this->assign('project_list', $project_list);
+		$this->assign('title', '所有项目-' . $this->setting['site_name']);
+		$this->display();
 	}
-    else ($user_id != '') {
-        $focus_on_project = M('focus_on_project');
-        $focus = $focus_on_project->where(array(
-            'user_id' => $this->user_id
-        ))->select();
-        $total_count = $focus_on_project->where(array(
-            'user_id' => $this->user_id
-        ))->count(project_id);
-        $my_focus = array();
-        foreach ($focus as $k => $v) {
-            if ($v['user_id'] == $this->user_id) {
-                $my_focus[] = $v['project_id'];
-            }
-        }
-	}	
-	$this->assign('page', $page->show());
-    $this->assign('totalcount', $total_count);
-    $this->assign('my_focus', $my_focus);
-    $this->assign('project_list', $project_list);
-    $this->assign('title', '所有项目-' . $this->setting['site_name']);
-    $this->display();
-}
 
 //搜索
 //建议写在通用库中
 
 //单个项目查看页
 //@作者 
-public function detail()
-{
-	$obj = M('project');
-	$project_id=$_GET[project_id];
-	$project = $obj->find($project_id);
-	if($project) {
-        $this->data = $project;
-    }else{
-        $this->error('数据错误');
-    }
-    $this->display();
-}
+	public function detail()
+	{
+		$obj = M('project');
+		$project_id=$_GET[project_id];
+		$project = $obj->find($project_id);
+		if($project) {
+			$this->data = $project;
+		}else{
+			$this->error('数据错误');
+		}
+		$this->display();
+	}
 
 //回复
 //@作者 
 //建议写在公用库函数
-public function reply()
-{
-	if(session('user_id')==''){
-		    $this->error('您尚未登录',U('User/login'));
-			return;
-		}	
-}
+	public function reply()
+	{
+		if(session('user_id')==''){
+				$this->error('您尚未登录',U('User/login'));
+				return;
+			}	
+	}
 
 // 项目填写
 //@作者 
-public function edit()
-{
-	$tag=M('tag');
-	$this->tag=$tag->find();
-	$this->display();
-}
+	public function edit()
+	{
+		$tag=M('tag');
+		$this->tag=$tag->find();
+		$this->display();
+	}
 
 //保存
 //@作者 
-public function save(/*参数自定*/)
-{
-
-}
+	public function save(/*参数自定*/)
+	{
+	
+	}
 
 //项目提交
 //数据存档和数据提交数据库
 //@作者 
-public function submit()
-{
-
-}
+	public function submit()
+	{
+	
+	}
 
 
 //加关注
 //@作者:邓茜
-function focus() {
+	function focus() {
    		$this->tologin();
         $data['uid'] = $this->uid;
         $data['topicid'] = $this->post['topicid'];
@@ -122,7 +120,7 @@ function focus() {
             $topic->where($data)->delete();
             echo '+ 关注';
         }
-}
+	}
 ///项目资料卡 建议写在公共模板库
 ///此部分需要和其他人沟通好 
 }
