@@ -23,7 +23,14 @@
     	{
         	echo ' <div id="project_none">暂无项目</div>';
         }else{
-    
+    		foreach($project_list as $k=>$v)
+			{
+			echo'
+			 <div class="topic_mid">
+			 <a class="topic_name" href="'.U('Project/detail?pid='.$v['project_id']).'">'.$v['project_title'].'</a>
+			 </div>
+			 ';
+			}
         }
     </php>
     </div>

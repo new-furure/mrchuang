@@ -22,14 +22,10 @@ class ProjectAction extends Action {
 		//分页，每页显示10个项目
 		$project_list = $project->page('1,10')->order('project_time DESC')->select();
 		$count = $project->count();
-		$page = new Page($count,10);
+		//$page = new Page($count,10);
 		$user_id = $session[user_id];
-		if ($user_id == '')
+		if ($user_id != '')
 		{
-			$this->error('您尚未登录',U('User/log'));
-			return;
-		}
-		else{
 			$focus_on_project = M('focus_on_project');
 			$focus = $focus_on_project->where(array(
 				'user_id' => $this->user_id
@@ -44,7 +40,7 @@ class ProjectAction extends Action {
 				}
 			}
 		}	
-		$this->assign('page', $page->show());
+		//$this->assign('page', $page->show());
 		$this->assign('totalcount', $total_count);
 		$this->assign('my_focus', $my_focus);
 		$this->assign('project_list', $project_list);
@@ -102,7 +98,23 @@ class ProjectAction extends Action {
 //@作者 
 	public function submit()
 	{
-	
+			//$data['project_']=I('post.project_');//预留的，草稿判断位；
+			//$data['project_']=I('post.project_');//预留的，图片链接位;
+			//$data['project_']=I('post.project_');//预留的，文档链接
+			//$data['project_title'] = $_POST['project_title'];
+			//$data['project_profile'] = $_POST['project_profile'];
+			$data['project_title'] = I('post.project_title');
+			$data['project_profile'] = I('post.project_profile');
+			$data['project_time']=date('Y-m-d H:i:s');
+			$project = M('project');
+			$result = $project->add($data);
+			if(!$result) {
+			$this->waitSecond=5;
+			$this->error('写入错误！');
+			return;
+			}else{
+				$this->success('添加成功','index');
+			}
 	}
 
 

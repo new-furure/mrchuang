@@ -10,15 +10,18 @@
     	<div id="main_left">
         	<div class="question_info">编辑<php>echo $sign;</php></div>
             <form action="<php>echo U('Project/submit');</php>" method="post" id="pub_form">
-			 <input type="text" maxlength="40" class="focus" id="publish_question_title" name="pub_title" value="输入标题..." title="输入标题..." />
+			 <input type="text" maxlength="40" class="focus" id="publish_question_title" name="project_title" value="输入标题..." title="输入标题..." />
                 <div class="clear"></div>
                 <script type="text/plain" id="editor" name="project_content"><php>echo $sign;</php>详细描述...</script>
 				<div id="tag_div">
                 	<div id="add_tag_div">
-                    	<input maxlength="8" id="search_tag" name="tag" type="text" /><div class="s_btn" id="add_tag_btn">添加标签</div>
+                    	<input maxlength="8" id="search_tag" name="project_profile" type="text" />
+                    	<div class="s_btn" id="add_tag_btn">添加标签</div>
                     </div>
                 </div>
-                <div class="rect_button" id="edit_button"><img src="" />发布</div>
+                <div class="rect_button" id="edit_button"><img src="" />发布
+                  <input name="submit" type="submit" id="submit" value="提交" />
+                </div>
             </form>
         	</div>
       		<div id="loading_small"></div>
