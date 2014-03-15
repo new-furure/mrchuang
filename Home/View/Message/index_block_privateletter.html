@@ -1,0 +1,16 @@
+{//消息————私信模块}
+<div class="well row">
+  <div class="col-md-3 thumbnail">
+    <img src="[pic]"/>
+  </div>
+  <div class="col-md-9">
+  	<a class="pull-right" onclick="delete_block2(this)">已读</a>
+    <h2><strong>私信</strong></h2>
+    <h5 class="text-muted">{$_SESSION['message'].message_time|substr=0,16}<br/>
+      <a href="{$_SESSION['message'].user_id|get_url_by_id}" class="text-info">
+      {$_SESSION['message'].user_name}</a>向您发送了私信：
+      {$_SESSION['message'].message_content}
+    </h5>
+  </div>
+</div>
+

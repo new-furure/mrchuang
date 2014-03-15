@@ -1,0 +1,38 @@
+{//私信关注页使用的问题块,包含从User/index页传来的一些数据}
+        <div>
+          <div class="thumbnail">
+            <h5 class="text-muted">您关注的问题[title]有了来自[username]的新评论</h5>
+            <div class="row">
+              <div class="col-md-3">
+                <a href="{:U('/Home/Question/detail/aid/'.$vo['article_id'])}" class="infocardshow" onmouseover="SetInfocardPosition()">
+                  <img src="[pic]" data-src="holder.js/300x200" alt="Generic placeholder thumbnail">
+                </a>
+                <!--V字认证？-->
+                <div style="color:#FF0000;width:90%; height:9px;"></div>
+                <span class="label label-warning" style="font-size:18px"><a href="{:U('User/p_primary')}" style="color:white" class="infocardshow" onmouseover="SetInfocardPosition()">V[user_name]</a></span>
+                <!--项目团队,链接团队主页？-->
+              </div>
+              <div class="caption col-md-9">
+                <div style="height:20px;padding-left:20px">
+                  <a href="{:U('/Home/Question/detail/aid/'.$vo['article_id'])}"><h2>[title]</h2></a>
+                  <h6 class="text-muted">[time]</h6><!--这里的时间数据怎么显示？-->
+                </div>
+                <div style="height:90px;padding-left:30px">
+                  <h6 class="text-muted" style="line-height:1.5;letter-spacing:2px">[content]</h6><!--52-->
+                </div>
+              </div>
+          </div><!--row end-->
+          <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <p>
+              <h6><a style="cursor:pointer">赞（[up_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">踩（[down_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">关注（[focus_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">收藏（[collect_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">评论（[comment_number]）</a></h6>
+            </p>
+          </div>
+          </div><!--row end-->
+
+          </div>
+        </div>

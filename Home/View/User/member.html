@@ -1,0 +1,33 @@
+<div class="member-contant col-sm-6 col-md-4">
+  <include file="User:infocard_tiny" />
+  <IF condition="$isself">
+    <h5>
+      <IF condition="$user['user_status'] eq C('PENDING_USER')">
+        <a>
+          <span class="member glyphicon glyphicon-ok"url="{:U('User/acceptMember')}" pid="{$user['user_id']}">通过请求</span>
+        </a>
+        <a>
+          <span class="member glyphicon glyphicon-remove text-danger" url="{:U('User/deleteMember')}" pid="{$user['user_id']}">拒绝申请</span>
+        </a>
+      </IF>
+      <a>
+        <IF condition="$user['user_status'] eq C('ADMIN_USER')">
+          <span class="member glyphicon glyphicon-tags" url="{:U('User/setNormal')}" pid="{$user['user_id']}">取消管理员</span>
+          <ELSEIF condition="$user['user_status'] eq C('NORMAL_USER')"/>
+          <span class="member glyphicon glyphicon-tags" url="{:U('User/setAdmin')}" pid="{$user['user_id']}" >设为管理员</span>
+        </IF>
+      </a>
+      <IF condition="($user['user_status'] eq C('ADMIN_USER')) OR ($user['user_status'] eq C('NORMAL_USER'))" >
+        <a class="member-edit text-success" pid="{$user['user_id']}">
+          <span>{$user['belong_to_organization_info']}</span>
+          <span class="glyphicon glyphicon-edit" >编辑</span>
+        </a>
+
+        <a class="text-muted">
+          <span class="member glyphicon glyphicon-remove-circle" url="{:U('User/deleteMember')}" pid="{$user['user_id']}">删除</span>
+        </a>
+      </IF>
+    </h5>
+
+  </IF>
+</div>

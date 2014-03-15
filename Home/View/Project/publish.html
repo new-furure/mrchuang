@@ -1,0 +1,107 @@
+{//政策发布页}
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/img/blue-logo.png" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  <script type="text/javascript" src="__ROOT__/Public/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/js/uploadify-v3.1/jquery.uploadify-3.1.min.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/js/jquery.Jcrop.min.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/js/ThinkBox/jquery.ThinkBox.js"></script>
+<link rel="stylesheet" type="text/css" href="__ROOT__/Public/js/ThinkBox/css/ThinkBox.css" media="all">
+
+  <load href="__PUBLIC__/Ueditor/ueditor.config.js" />
+    <load href="__PUBLIC__/Ueditor/ueditor.all.min.js" />
+    <script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
+    <script type="text/javascript">
+    /*common.js里面的各种需要用到的url*/
+    var save_url='{:U("/Home/Base/save")}';
+    var preview_url='{:U("/Home/Base/preview")}';
+    var submit_url ='{:U("/Home/Base/submit")}';
+    var article_type='project';
+    var log_url = '{:U("/Home/User/log")}';
+    var article_url = '{:U("/Home/Project/detail/aid/","","")}';
+    var home_url = '{:U("/Home/Project")}';
+    </script>
+</block>
+
+<block name="title">
+  <title>项目发布-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header.html" />
+</block>
+
+<block name="main">
+
+  <script type="text/javascript" defer src="__ROOT__/Public/Js/index.js"></script>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <form action="" name="pform" method ="post">
+      <center>
+        <h2 class="public__myblue">项目标题</h2>
+        <div id="div_title" style="color:red"></div>
+        <input name="article_title" type="text" class="form-control" placeholder="项目标题" onblur="CheckTitle(this.value)" maxLength="64"/><br/>
+        <h2 class="public__myblue">项目简介</h2>
+        <div id="div_profile" style="color:red"></div>
+        <textarea name="profile" class="form-control" rows="3" placeholder="项目简介" onblur="CheckProfile(this.value)" maxLength="200"></textarea><br/>
+        <h2 class="public__myblue">项目内容填写</h2>
+        <div id="div_content" style="color:red"></div>
+        
+<div>
+    <script id="editor" name="content" type="text/plain" style="height:600px">
+      项目内容
+    </script>
+</div>
+
+
+        <h2 class="public__myblue">填写此项目标签</h2>
+        <div id="nonamediv">
+        <div class="input-group" style="width:50%;">
+          <input type="text" class="form-control" placeholder="项目标签" id="biaoqian" name="biaoqian">
+          <span class="input-group-btn">
+           <button class="btn btn-info" type="button" onclick="addbiaoqian()">.<span class="glyphicon glyphicon-plus"></span>.</button>
+          </span>
+        </div><!-- /input-group-->
+        <br/>
+        </div>
+      </center>
+      <br/>
+      
+    </form>
+    <button class="btn btn-success" onclick="save_draft()" ><span class="glyphicon glyphicon-lock"></span>&nbsp;存草稿</button>
+      <button class="btn btn-info"  onclick="submit()" aid="{$data['article_id']}"><span class="glyphicon glyphicon-ok" id="send_btn"></span>&nbsp;确认发布</button>
+    </div>
+  </div>
+  <script type="text/javascript">
+
+  </script>
+
+  <script defer type="text/javascript" language="javascript">
+  var num=0;
+  var array=[];
+    function addbiaoqian()
+    {
+      array[num]=biaoqian.value;
+      num=num+1;
+      var neirong = document.createTextNode(biaoqian.value);
+      var myspan = document.createElement("span");
+      myspan.appendChild(neirong);
+      myspan.className="label label-primary policy__label";
+      document.getElementById("nonamediv").appendChild(myspan);
+      biaoqian.value="";
+    }
+  </script>
+
+<script type="text/javascript">
+    //UEDITOR_HOME_URL、config、all这三个顺序不能改变(绝对路径)
+    window.UEDITOR_HOME_URL = "/ThinkPHP/Public/Ueditor/"; 
+    window.onload = function(){
+    window.UEDITOR_CONFIG.imagePath='__ROOT__/Uploads/Img/article';//编辑器调用图片的地址  
+    }
+    //实例化编辑器
+    var ue = UE.getEditor('editor');
+   
+</script>
+ </block>

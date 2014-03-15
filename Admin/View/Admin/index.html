@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>系统用户管理</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+	<script>
+//调用时要"return ondel();",不要直接写"ondel()"，这样onclick不能获得返回值。
+function ondel()
+{
+	if(confirm("确定要删除吗")){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+  <tr bgcolor="#FFFFFF">
+    <td height="24" colspan="<?php echo $size+3;?>">
+		<center><b>管理员列表</b></center>
+</td>
+  </tr>
+  <tr bgcolor="#FBFCE2">
+    <td width="10%" height="24" align="center">管理员id</td>
+    <td width="16%" align="center">管理员</td>
+	<?php
+		foreach($priinfo as $value)
+		{
+			if($value!='')
+				echo '<td width="6%" align="center">'.$value.'</td>';
+		}
+	?>
+	
+    <td align="center">操作</td>
+  </tr>
+  <foreach name='list' item='li'>
+    <tr bgcolor="#FFFFFF" align="center" class="hover">
+    <td width="10%" height="24" align="center">{$li['admin_id']}</td>
+    <td width="16%" align="center">{$li['admin_name']}</td>
+    <?php
+		if($li['admin_privilege'][0]==0)
+		{
+			echo "<td align='center' colspan='".$size."'>该管理员已被删除</td>";
+		}
+		else if($li['admin_privilege'][0]==2)
+		{
+			echo "<td align='center' colspan='".$size."'>超级管理员</td>";
+		}
+		else
+		{
+			for($i=1;$i<=$size;$i++)
+			{
+				$value="";
+				if($li['admin_privilege'][$i]=='1')
+					$value="有";
+				echo '<td width="6%" align="center">'.$value.'</td>';
+			}
+		}
+	?></td>
+    <td width="20%" align="center">
+	<u>
+	<a href="{:U('Admin/delAdmin',array('id'=>$li['admin_id']))}" onclick="return ondel();">删除</a> --
+	<a href="{:U('Admin/editAdmin',array('id'=>$li['admin_id']))}" >修改</a>
+	</u>
+	</td>
+    </td>
+  </tr>
+</foreach>
+    <tr bgcolor="#F9FCEF">
+    <td height="24" colspan="<?php echo $size+3;?>" align="center" valign="top">
+      <span>{$page}</span>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

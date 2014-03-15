@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>个人用户管理</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+	<script>
+//调用时要"return ondel();",不要直接写"ondel()"，这样onclick不能获得返回值。
+function ondel()
+{
+	if(confirm("确定要删除吗")){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+  <tr bgcolor="#FFFFFF">
+    <td height="24" colspan="6">
+		<b><u><a href="{:U('User/index',array('type'=>'1'))}" >未认证</a></u></b>&nbsp;
+		<b><u><a href="{:U('User/index',array('type'=>'2'))}" >已认证</a></u></b>&nbsp;
+		<center><b>个人用户</b></center>
+	</td>
+  </tr>
+  <tr bgcolor="#FBFCE2">
+    <td width="18%" height="24" align="center">用户id</td>
+    <td width="23%" align="center">用户邮箱</td>
+    <td width="12%" align="center">用户名</td>
+    <td width="12%" align="center">用户状态</td>
+    <td width="12%" align="center">创建时间</td>
+    <td width="23%" align="center">操作</td>
+  </tr>
+  <foreach name='list' item='li'>
+    <tr bgcolor="#FFFFFF" align="center" class="hover">
+    <td width="18%" height="24" align="center">{$li['user_id']}</td>
+    <td width="23%" align="center">{$li['user_email']}</td>
+    <td width="12%" align="center">{$li['user_nickname']}</td>
+    <td width="12%" align="center"><?php echo ac($li['user_type'],$class=1)?"激活":"未激活";?></td>
+    <td width="12%" align="center">{$li['user_time']}
+	</td>
+    <td>
+	<u>
+	<a href="{:U('User/delUser',array('id'=>$li['user_id']))}" onclick="return ondel();">删除</a>
+	</u>
+	<!--<a href="{:U('User/detailUser',array('id'=>$li['user_id']))}" >详细</a> --
+	<a href="{:U('User/passUser',array('id'=>$li['user_id'],'cert'=>$li['user_certified']))}" >
+	<if condition="$li['user_certified'] eq 1 ">驳回<else />通过</if></a> --
+	<a href="{:U('User/lockUser',array('id'=>$li['user_id'],'lock'=>$li['user_effective']))}">
+	<if condition="$li['user_effective'] eq 1 ">锁定<else />解锁</if></a> --
+	<a href="{:U('User/delUser',array('id'=>$li['user_id']))}">删除</a>
+	<a href="{:U('User/sendNotice',array('id'=>$li['user_id']))}">发送通知</a>-->
+    </td>
+  </tr>
+</foreach>
+    <tr bgcolor="#F9FCEF">
+    <td height="24" colspan="6" align="center" valign="top">
+      <span>{$page}</span>
+    </td>
+  </tr>
+
+  <form action="{:U('User/index')}" method="post">
+  <tr bgcolor="#FFFFFF">
+   <td align="left">搜索个人用户：</td>
+   <td colspan="5"  align='left'>
+	关键词
+   <input type='text' name="sname" style="width:200px;"/>&nbsp;&nbsp;<input type="submit" value="搜索" /></td>
+  </tr>
+  </form>
+
+
+</table>
+</body>
+</html>

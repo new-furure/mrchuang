@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>个人用户管理</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+	<script>
+function ondel()
+{
+	if(confirm("确定要删除吗")){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+
+<input type="hidden" name="type" value="2" />
+<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+  <tr bgcolor="#FFFFFF"><td height="24" colspan="6"><center><b>问题列表</b></center>
+	</td>
+  </tr>
+  <tr bgcolor="#FBFCE2">
+    <td width="10%" height="24" align="center">用户id</td>
+    <td width="20%" align="center">问题标题</td>
+    <td width="30%" align="center">问题简介</td>
+    <td width="20%" align="center">评论数-点击数-赞-踩</td>
+    <td width="10%" align="center">发表时间</td>
+	<td width="10%" align="center">操作</td>
+  </tr>
+  <foreach name='list' item='li'>
+    <tr bgcolor="#FFFFFF" align="center" class="hover">
+    <td width="10%" height="24" align="center">{$li['user_id']}</td>
+    <td width="20%" align="center"><a href="{:get_url_by_id($li['article_id'])}">{$li['article_title']}</a></td>
+    <td width="30%" align="center">{$li['article_profile']}</td>
+    <td width="20%" align="center">{$li['article_comment_number']}-{$li['article_hits']}-{$li['article_up_number']}-{$li['article_down_number']}</td>
+    <td width="10%" align="center">{$li['article_time']}</td>
+	<td width="10%" align="center">
+	<a href="{:U('Question/delQuestion',array('id'=>$li['article_id']))}" onclick="return ondel();">删除</a>
+	</td>
+  </tr>
+</foreach>
+    <tr bgcolor="#F9FCEF">
+    <td height="24" colspan="6" align="center" valign="top">
+      <span>{$page}</span>
+    </td>
+  </tr>
+  <form action="{:U('Question/question')}" method="post">
+  <tr bgcolor="#FFFFFF">
+   <td align="left">搜索问题：</td>
+   <td colspan="5"  align='left'>
+	关键词
+   <input type='text' name="sname" style="width:200px;"/>&nbsp;&nbsp;<input type="submit" value="搜索" /></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

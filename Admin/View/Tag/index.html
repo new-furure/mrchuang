@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>标签管理</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+<script>
+//调用时要"return ondel();",不要直接写"ondel()"，这样onclick不能获得返回值。
+function ondel()
+{
+	if(confirm("确定要删除吗")){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+  <tr bgcolor="#FFFFFF">
+    <td height="24" colspan="6"><center><b>标签列表</b></center>
+	</td>
+  </tr>
+  <tr bgcolor="#FBFCE2">
+    <td width="10%" height="24" align="center">标签id</td>
+    <td width="25%" align="center">标签标题</td>
+    <td width="25%" align="center">标签信息</td>
+    <td width="15%" align="center">标签热度</td>
+    <td width="25%" align="center">操作</td>
+  </tr>
+  <foreach name='list' item='li'>
+    <tr bgcolor="#FFFFFF" align="center" class="hover">
+    <td width="10%" height="24" align="center">{$li['tag_id']}</td>
+    <td width="25%" align="center">{$li['tag_title']}</td>
+    <td width="25%" align="center">{$li['tag_profile']}</td>
+    <td width="15%" align="center">{$li['tag_hits']}</td>
+    <td width="25%" align="center">
+	<u>
+	<a href="{:U('Tag/deleteTag',array('id'=>$li['tag_id']))}" onclick="return ondel();">删除</a> --
+	<a href="{:U('Tag/editTag',array('id'=>$li['tag_id']))}" >编辑</a>
+	</u>
+	</td>
+  </tr>
+</foreach>
+    <tr bgcolor="#F9FCEF">
+    <td height="24" colspan="6" align="center" valign="top">
+      <span>{$page}</span>
+    </td>
+  </tr>
+
+  <form action="{:U('Tag/index')}" method="post">
+  <tr bgcolor="#FFFFFF">
+   <td align="left">搜索标签：</td>
+   <td colspan="5"  align='left'>
+	关键词
+   <input type='text' name="sname" style="width:200px;"/>&nbsp;&nbsp;<input type="submit" value="搜索" /></td>
+  </tr>
+  </form>
+
+
+</table>
+</body>
+</html>

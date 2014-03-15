@@ -1,0 +1,46 @@
+<volist name='circle_list' id='vo' key='k'>
+<div class="well row" id="row{$k}">
+  <div class="col-md-10">
+  <eq name="vo.notice_type" value="31">
+    <a class="pull-right text-danger" onclick="request(this,{$k},0,{$vo.notice_id})">拒绝</a>
+    <p class="pull-right">&nbsp;|&nbsp;</p>
+    <a class="pull-right" onclick="request(this,{$k},1,{$vo.notice_id})">同意</a>
+  </eq>
+    <h5 class="text-muted">{$vo.notice_time|substr=0,16}<br/>
+      {$vo.notice_content}
+    </h5>
+  </div>
+</div>
+</volist>
+
+<script type="text/javascript">
+  function request (obj,row,if_agreed,notice_id) {
+    var user_id=$("#row"+row+" input[name='user_id']").val();
+    var circle_id=$("#row"+row+" input[name='circle_id']").val();
+    $.ajax({
+      type:"post",
+      url:"{:U('Notice/postRequest')}",
+      data:{user_id:user_id,circle_id:circle_id,if_agreed:if_agreed,notice_id:notice_id},
+      success: function(data, textStatus, xhr) {
+        alert(data.circle_limit);
+        switch(data.status){
+          case 1:
+            alert("圈子人数达到上限，无法加入新成员！");  
+            delete_block2(obj);
+            break;
+          case 2:
+            alert("加入成功!");
+            delete_block2(obj);
+            break;
+          case 3:
+            alert("拒绝加入成功！");
+            delete_block2(obj);
+            break;
+          default:
+            alert("操作失败！");
+            break;
+        }
+      }
+    });
+  }
+</script>

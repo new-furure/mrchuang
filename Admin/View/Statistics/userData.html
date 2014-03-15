@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>会员统计</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+</head>
+<body background='__PUBLIC__/Images/allbg.gif' leftmargin='8' topmargin='8'>
+	<table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#D6D6D6">
+  <tr bgcolor="#FFFFFF"><td height="24" colspan="7"><center><b>用户统计</b></center>
+	</td>
+  </tr>
+  <tr>
+  <td height="215" align="center" valign="top" bgcolor="#FFFFFF">
+  <b>
+        <table width="98%" border="0" cellspacing="1" cellpadding="1">
+          <tr> 
+            <td width="16%" height="30">个人用户：</td>
+            <td width="84%" style="text-align:left;">{$user_person}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">组织用户：</td>
+            <td width="84%" style="text-align:left;">{$user_org}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">创业团队：</td>
+            <td width="84%" style="text-align:left;">{$user_c1}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">认证公司：</td>
+            <td width="84%" style="text-align:left;">{$user_c2}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">风投机构：</td>
+            <td width="84%" style="text-align:left;">{$user_c3}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">孵化器：</td>
+            <td width="84%" style="text-align:left;">{$user_c4}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">特邀企业：</td>
+            <td width="84%" style="text-align:left;">{$user_c5}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">政府部门：</td>
+            <td width="84%" style="text-align:left;">{$user_c6}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">当前在线：</td>
+            <td width="84%" style="text-align:left;">{$user_now}</td>
+          </tr>
+        </table>
+		</b>
+	  </td>
+</tr>
+</table>
+</body>
+</html>

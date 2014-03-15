@@ -1,0 +1,64 @@
+<script type="text/javascript">
+  //pending ajax轮询消息
+  var noerror=true;
+  mcount={$_SESSION['unwatch_message_count']};
+  function connect() {
+    var ajax = $.ajax("{:U('Message/new_message_notice')}", 
+    {
+      success: function(transport) {
+        //if(transport!='wrong'){
+        var reg=/^[0-9]*$/;
+        if(reg.test(transport)){
+          $('#message').html(transport);      
+        }
+        noerror = true;
+      },
+      complete: function(transport) {
+        (!noerror) && setTimeout(function(){ connect() }, 5000) || connect();
+        noerror = false;
+      }
+    });
+  }
+  $(document).ready(function(){
+    if(mcount>0){
+      $('#message').html(mcount);
+    }
+    connect();
+  });
+
+//消息页面'发送私信'
+  function send_message(){
+    var user_id_other=$('#receive_user_id').val();
+    var content=$('#content').val();
+    if(user_id_other.length==0 || content.length==0){
+      alert('发件人和内容框不能为空！');
+    }else{
+      $.ajax({
+        type:"post",
+        url:"{:U('Message/send_message')}",
+        data:{content:content,user_id_other:user_id_other},
+        success: function(data, textStatus, xhr) {
+          if(data.status==1)
+            alert("发送成功！");                  
+        }
+      });
+      $('#sixinmodal').modal('hide');
+    }    
+  }
+
+//点击用户头像下按钮发送私信
+  function ajax_send_message(user_id_other){
+    var content=$('#message_content').val();
+    $.ajax({
+        type:"post",
+        url:"{:U('Message/send_message')}",
+        data:{content:content,user_id_other:user_id_other},
+        success: function(data, textStatus, xhr) {
+          alert(data.uid);
+          if(data.status==1)
+            alert("发送成功！");                  
+        }
+      });
+      $('#messagemodal').modal('hide');
+  }
+</script>

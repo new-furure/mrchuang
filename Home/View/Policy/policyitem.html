@@ -1,0 +1,37 @@
+{//用户首页使用的政策块,包含从User/index页传来的一些数据}        
+        <div id=[id]>
+          <div class="thumbnail">
+            <div class="row">
+              <div class="col-md-3">
+                <a href="{:U('/Home/User/info/'.$vo['user_id'])}"  target="_Blank">
+                  <img src="[pic]"  id="img" onerror="showimg(this);" data-src="holder.js/300x200" alt="Generic placeholder thumbnail"/>
+                </a>
+                
+                <div style="color:#FF0000;width:90%; height:9px;"></div>
+                
+                <span class="label label-warning" style="font-size:18px"><a href="{:U('/Home/User/info/'.$vo['user_id'])}" style="color:white" class="infocardshow" onmouseover="SetInfocardPosition()">V[government_name]</a></span>
+              </div>
+              <div class="caption col-md-9">
+                <div style="height:20px;padding-left:20px">
+                  <a href="{:U('/Home/Policy/detail/aid/'.$vo['article_id'])}"  target="_Blank"><h2>[title]</h2></a>
+                  <h6 class="text-muted">发布于 [time]</h6><!--这里的时间数据怎么显示？-->
+                </div><br/>
+                <div style="height:90px;padding-left:30px">
+                  <h6 class="text-muted" style="line-height:1.5;letter-spacing:2px">[content]</h6><!--52-->
+                </div>
+              </div>
+          </div><!--row end-->
+          <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <p>
+              <h6><a style="cursor:pointer">赞（[up_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">踩（[down_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">关注（[focus_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">收藏（[collect_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">评论（[comment_number]）</a></h6>
+            </p>
+          </div>
+          </div><!--row end-->
+
+          </div>
+        </div>

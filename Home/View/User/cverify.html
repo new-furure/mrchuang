@@ -1,0 +1,14 @@
+<!-- 企业认证 -->
+<form method="post" enctype="multipart/form-data" action="__URL__/cVerifySubmit">
+<br>公司名称<input type="text" value="{$enterprise.enterprise_title}" name="enterprise_title">
+<br>公司介绍<input type="text" value="{$enterprise.enterprise_profile}" name="enterprise_profile">
+<br>公司营业执照照片<input type="file" name="yyzz" ><img src="{$enterprise.enterprise_pic_of_yyzz_url}">
+<br>国税登记号<input type="text" value="{$enterprise.enterprise_taxcode_national}" name="enterprise_taxcode_national">
+<br>地税登记号<input type="text" value="{$enterprise.enterprise_taxcode_local}" name="enterprise_taxcode_local">
+<br>企业营业许可执照<input type="text" value="{$enterprise.enterprise_code_of_qyyyxk}" name="enterprise_code_of_qyyyxk">
+<br>营业执照代码<input type="text" value="{$enterprise.enterprise_code_of_yyzz}" name="enterprise_code_of_yyzz">
+<br>组织结构代码<input type="text" value="{$enterprise.enterprise_code_of_zzjg}" name="enterprise_code_of_zzjg">
+<br>法人代表身份证<input type="text" value="{$enterprise.enterprise_code_of_frdb}" name="enterprise_code_of_frdb"> 
+<br><input type="Submit">
+</form>
+

@@ -1,0 +1,14 @@
+<!-- 此模版镶嵌于其他页面不可直接调用 -->
+<form method="post" name="user" action="__URL__/update">
+	<a {$focuson} href="__URL__/focusOn/id/{$user.user_id}">关注</a>
+昵称<input type="text" name="user_nickname" {$isReadonly}  value={$user.user_nickname}>
+<!-- <BR>姓名 <input name="user_name" type="text" {$isReadonly}  value={$user.user_name}> -->
+<!-- <BR>一句话介绍<input name=" user_profile_short" type="text" {$isReadonly} value={$user.user_profile_short}> -->
+<BR>邮箱{$user.user_email}
+<BR>性别 <input name="user_sex" type="text"  {$isReadonly} value={$user.user_sex}>
+<!-- <BR>生日<input name=" user_birthday" type="date" {$isReadonly}  value={$user.user_birthday}> -->
+<!-- <BR>地址<input name=" user_location" type="text" {$isReadonly}  value={$user.user_location}> -->
+<BR>简介<input name=" user_profile" type="text" {$isReadonly}  value={$user.user_profile}>
+<BR>注册时间{$user.user_time}
+<br><input type="{$submit}">
+</form>

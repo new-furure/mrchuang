@@ -1,0 +1,25 @@
+{//私信————私信模块}
+<volist name="list" id="vo">
+<div class="well row">
+  <div class="col-md-3 thumbnail">
+    <img src="__ROOT__/{$vo['user_avatar_url']}"/>
+  </div>
+  <div class="col-md-9 row">
+    <div class="col-md-11">
+      <h2><strong>{$vo['user_name']}</strong></h2>
+    <h5 class="text-muted">{$vo['dialog_time']|substr=0,16}<br/>
+      <a onclick="window.open('__CONTROLLER__/list_dialog_message?user_id_other={$vo['user_id_other']}','','width=800,height=500')" >{$vo['dialog_content']}</a>
+    </h5>  
+    </div>
+    <div class="dropdown col-md-1">
+      <a style="font-size:20px" data-toggle="dropdown" href="#" class="text-right"><span class="glyphicon glyphicon-cog">.</span></a>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <li><a onclick="delete_block(this,{$vo['user_id_other']})">删除</a></li>
+        <li><a onclick="block({$vo['user_id_other']})">屏蔽</a></li>
+      </ul>
+    </div><br/><br/><br/>
+    <h5><neq name="vo['unwatch_message_count']" value='0'>{$vo['unwatch_message_count']}</neq></h5>    
+  </div>
+</div>
+</volist>
+

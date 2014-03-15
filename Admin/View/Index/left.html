@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>menu</title>
+<link rel="stylesheet" href="__PUBLIC__/Css/base.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Css/menu.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--<script language='javascript'>var curopenItem = '1';</script>-->
+<script language="javascript" type="text/javascript" src="__PUBLIC__/Js/menu.js"></script>
+<base target="main" />
+</head>
+<body target="main">
+<table width='99%' height="100%" border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td style='padding-left:3px;padding-top:8px' valign="top">
+      <foreach name='menu' item='m'>
+      <dl class='bitem'>
+        <dt onClick='showHide("items{$key}_1")'><b>{$m['name']}</b></dt>
+        <dd style='display:block' class='sitem' id='items{$key}_1'>
+          <ul class='sitemu'>
+            <foreach name='m.menu' item='child'>
+            <li><a href='{$child['url']}' target='main'>{$child['name']}</a> </li>
+            </foreach>
+          </ul>
+        </dd>
+      </dl>
+    </foreach>
+	  </td>
+  </tr>
+</table>
+</body>
+</html>

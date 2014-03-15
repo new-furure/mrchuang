@@ -1,0 +1,76 @@
+<meta charset='UTF-8'>
+
+ <head>
+   <title>MR.Chuang-{$title}</title>
+ </head>
+<div style="text-align:center;">闯先生网高级搜索页面</div>
+<br>
+<div name='searchUser' class='wrap'>
+    <form method="post" action="__URL__/searchUser">
+        搜索用户:<!-- (按照nickname和profile进行like式的搜索,不分词) --><input type="text" name="keyword"><br>
+        用户类别:
+        <input type="checkbox" name='TYPE[]' value=1>个人用户
+        <input type="checkbox" name='TYPE[]' value=2>组织用户<br>
+        用户身份:<!--(个人用户的身份由其创建的组织来区别)-->
+        <input type="checkbox" name='CATE[]' value=1 >个人(尚无组织)
+        <input type="checkbox" name='CATE[]' value=2 >创业
+        <input type="checkbox" name='CATE[]' value=4 >企业公司
+        <input type="checkbox" name='CATE[]' value=8 >风投
+        <input type="checkbox" name='CATE[]' value=16>孵化器
+        <input type="checkbox" name='CATE[]' value=32>特邀企业
+        <input type="checkbox" name='CATE[]' value=64>政府部门  全选<br>
+        搜索范围:
+        <input type="checkbox" name='FIELD[]' value=1>昵称
+        <input type="checkbox" name='FIELD[]' value=2>简介
+        <input type="checkbox" name='FIELD[]' value=4>关注的标签
+        <br>
+        <input type="radio" name='exact' value=1 checked>精确匹配
+        <input type="radio" name='exact' value=0>模糊匹配<br>
+        <input type="submit" value="提交">
+    </form> 
+</div>
+
+<div name='searchCircle' class='wrap'>
+    <form method="post" action="__URL__/searchCircle">
+        搜索圈子:<input type="text" name="keyword"><br/>
+        <input type="submit" value="提交">
+    </form> 
+</div>
+
+<div name='searchTag' class='wrap'>
+    <form method="post" action="__URL__/searchTag">
+        搜索标签:<input type="text" name="keyword"><br/>
+        <input type="radio" name='exact' value=1 checked>精确匹配
+        <input type="radio" name='exact' value=0>模糊匹配<br>
+        <input type="submit" value="提交">
+    </form>
+</div>
+
+<div name='searchArticle' class='wrap'>
+    <form method="post" action="__URL__/searchArticle">
+        搜索文章(按照文章标题):<input type="text" name="keyword"><br/>
+        文章类别:
+        <input type="checkbox" name='TYPE[]' value=1>项目
+        <input type="checkbox" name='TYPE[]' value=2>问题
+        <input type="checkbox" name='TYPE[]' value=4>政策
+        <br>
+        搜索范围:
+        <input type="checkbox" name='FIELD[]' value=1>标题
+        <input type="checkbox" name='FIELD[]' value=2>简介
+        <input type="checkbox" name='FIELD[]' value=4>标签
+        <br>
+        排序方式:<!--(个人用户的身份由其创建的组织来区别)-->
+        <input type="radio" name='ORDER[]' value=0 checked>按最近发表排序
+        <input type="radio" name='ORDER[]' value=1>按火热程度排序
+        <input type="radio" name='ORDER[]' value=2>按赞的数目排序
+        <input type="radio" name='ORDER[]' value=3>按评论数目排序
+        <br>
+        <input type="radio" name='exact' value=1 checked>精确匹配
+        <input type="radio" name='exact' value=0>模糊匹配<br>
+        <input type="submit" value="提交">
+    </form>
+</div>
+
+<!-- <body>
+    <a href="{$href}">{$word}</a>
+</body> -->

@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>main</title>
+<base target="_self">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/base.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/main.css" />
+</head>
+<body leftmargin="8" topmargin='8'>
+<table width="98%" align="center" border="0" cellpadding="4" cellspacing="1" bgcolor="#CBD8AC" style="margin-bottom:8px">
+  <tr bgcolor="#EEF4EA">
+    <td colspan="2" background="__PUBLIC__/Images/wbg.gif" class='title'><span>系统基本信息</span></td>
+  </tr>
+  <tr bgcolor="#FFFFFF">
+    <td>系统信息 </td>
+    <td>{$sysdata['sysos']}</td>
+  </tr>
+    <tr bgcolor="#FFFFFF">
+    <td>php版本 </td>
+    <td>{$sysdata['sysversion']}</td>
+	</tr>
+   <tr bgcolor="#FFFFFF">
+    <td> 数据库信息 </td>
+    <td>{$sysdata['mysqlinfo']}</td>
+  </tr>
+  </tr>
+   <tr bgcolor="#FFFFFF">
+    <td> GD库版本 </td>
+    <td>{$sysdata['gdinfo']}</td>
+  </tr>
+  <tr bgcolor="#FFFFFF">
+    <td> FreeType </td>
+    <td>{$sysdata['freetype']}</td>
+  </tr>
+    <tr bgcolor="#FFFFFF">
+    <td> 远程文件获取 </td>
+    <td>{$sysdata['allowurl']}</td>
+  </tr>
+   <tr bgcolor="#FFFFFF">
+    <td> 最大上传限制</td>
+    <td>{$sysdata['max_upload']}</td>
+  </tr>
+  <tr bgcolor="#FFFFFF">
+    <td> 最大执行时间</td>
+    <td>{$sysdata['max_ex_time']}</td>
+  </tr>
+   <tr bgcolor="#FFFFFF">
+    <td> 服务器时间</td>
+    <td>{$sysdata['systemtime']}</td>
+  </tr>
+</table>
+</body>
+</html>

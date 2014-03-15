@@ -1,0 +1,32 @@
+{//私信关注页使用的政策块,包含从User/index页传来的一些数据} 
+<volist name="focus_list" id='vo'>    
+  <div id="[id]">
+    <div class="thumbnail">
+      <h5 class="text-muted">{$vo.notice_title}</h5>
+      <div class="row">
+        <div class="col-md-3">
+          <a href="{:U('/Home/User/p_primary/'.$vo['user_id'])}" class="infocardshow" onmouseover="SetInfocardPosition()">                  
+          </a>          
+          <div style="color:#FF0000;width:90%; height:9px;"></div>
+        </div>
+        <div class="caption col-md-7">
+          <div style="height:20px">
+            <a href="{:U('/Home/Policy/detail/aid/'.$vo['article_id'])}"><h4>{$vo.notice_content}</h4></a>
+            <h6 class="text-muted col-md-offset-6">发布于 {$vo.notice_time|substr=0,16}</h6>
+          </div><br/>
+        </div>
+    </div><!--row end-->
+    <div class="row">
+    <div class="col-md-8 col-md-offset-6">
+      <p>
+        <h6><a style="cursor:pointer">赞（{$vo.comment_up_number}）</a>&nbsp;
+        <a style="cursor:pointer">踩（{$vo.comment_down_number}）</a>&nbsp;
+        <a style="cursor:pointer">评论（{$vo.comment_number}）</a>&nbsp;
+        <a style="cursor:pointer">举报</a></h6>
+      </p>
+    </div>
+    </div><!--row end-->
+
+    </div>
+  </div>
+  </volist>

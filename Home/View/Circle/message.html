@@ -1,0 +1,93 @@
+<!--圈子模块
+创建圈子页提交页
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  
+
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+<include file="Home/View/Circle/circle_logo.html" />
+
+
+  <div id="circle-homepage">
+    <div class="row">
+      <div class="col-md-8" id="show_alert">
+      <p style="border_bottom_style:solid;border_bottom_width:2px;border_bottom_color:red;font-size:150%" >与用户{$receiver_name}对话中</p>
+      <div class="item">
+            	<label style="font-size:130%">
+            	私信内容：</label>
+            	<textarea name="content" rows="5" cols="70" id="inputContent" ></textarea>
+       </div>
+
+       <div class="item item-bns" >
+            <span class="bn-flat"><input name="submit"  id="submitButton" rid="{$receiver_id}" cid="{$circle_id}" type="submit" value="提交" style="margin-left:50px;margin-top:15px" onclick="post_submit()"></span>
+            <div  style="background-color:#f2f8f2;color:#6e944f;display:none;text_align:center"></div>
+        </div>
+
+        <div class="dialog_card">
+        	<div class="dialog">
+        		
+        	</div><!--end of dialog-->
+        </div><!--end of dialog_card-->
+
+      </div><!--col-md-8-->
+    </div><!--row-->
+   </div><!--circle_homepage-->
+   <script type="text/javascript">
+   function post_submit(){
+    var content=$('textarea[name=content]');
+    var handleUrl='{:U("/Home/Circle/handleMessage")}';
+    var receive_user_id=document.getElementById("submitButton").getAttribute("rid");
+    var circle_id=document.getElementById("submitButton").getAttribute("cid");
+    var redirectUrl='{:U("/Home/Circle/manage_member/cid",'','')}';
+    if (content.val() != "") {
+
+        var a=$.post(handleUrl,{message_content:content.val(),receive_user_id:receive_user_id},function(data){
+          if(data.type=0)
+            alert('发送失败，请重试');
+          else{
+              var para=document.createElement("p");
+              para.id="p1";
+              para.style.backgroundColor="#f2f8f2";
+              para.style.color="red";
+
+              var node=document.createTextNode("发布成功，正在跳转...");
+              para.appendChild(node);
+
+              var element=document.getElementById("show_alert");
+              element.appendChild(para);
+              setTimeout("clean()",3000);
+
+             
+              window.location.href=redirectUrl+"/"+circle_id+".html";
+          }
+        },'json');
+        a.error(function(){alert('fail')});
+      } else {
+        document.getElementById('submitButton').focus();
+      
+       }
+      }
+
+      function clean(){
+        var parent=document.getElementById("show_alert");
+        var child=document.getElementById("p1");
+        parent.removeChild(child);
+      }
+   </script>
+</block><!--block-->

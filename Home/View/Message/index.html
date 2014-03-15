@@ -1,0 +1,140 @@
+{//项目浏览页}
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/mystyle.css" media="all"/>
+</block>
+<block name="javascript">
+  <include file="Home/Public/tool_infocard_js.html"/>
+
+</block>
+<block name="title">
+  <title>消息-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header1.html" />
+  <script>
+    document.getElementById("nav_message").className="nav__myactive";
+  </script>
+</block>
+
+<block name="main">
+  <div class="uglydiv">1 </div>
+<div style="color:#000000;width:100%; height:15px;"></div>
+
+<div class="row">
+
+  <div class="col-md-2 col-md-offset-1">
+
+    <div class="public__left-sidebar">
+      <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#sixinmodal"><span class="glyphicon glyphicon-envelope"></span>&nbsp;发私信</button>
+    </div>
+
+    <div class="public__left-sidebar">
+      <br/>
+      <center>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a id="all" class="btn-info" href="{:U('Message/index?bar=1')}"><span class="badge pull-right"></span><span style="color:#dddddd" class="glyphicon glyphicon-list pull-left"></span>全部消息</a></li>
+        <li><a id="sixin" class="btn-info" href="{:U('Message/index?bar=2')}"><span class="badge pull-right"><if condition="$_SESSION['unwatch_message_count'] gt 0 ">{$_SESSION['unwatch_message_count']}</if></span><span style="color:#dddddd" class="glyphicon glyphicon-envelope pull-left"></span>私信</a></li>
+        <li><a id="reply" class="btn-info" href="{:U('Message/index?bar=3')}"><span class="badge pull-right"><if condition="$_SESSION['unwatch_reply_count'] gt 0 ">{$_SESSION['unwatch_reply_count']}</if></span><span style="color:#dddddd" class="glyphicon glyphicon-edit pull-left"></span>回复</a></li>
+        <li><a id="focus" class="btn-info" href="{:U('Message/index?bar=4')}"><span class="badge pull-right"></span><span style="color:#dddddd" class="glyphicon glyphicon-eye-open pull-left"></span>关注</a></li>
+        <li><a id="circle" class="btn-info" href="{:U('Message/index?bar=5')}"><span class="badge pull-right"><if condition="$_SESSION['unwatch_circle_count'] gt 0 ">{$_SESSION['unwatch_circle_count']}</if></span><span style="color:#dddddd" class="glyphicon glyphicon-globe pull-left"></span>圈子</a></li>
+        <li><a id="part" class="btn-info" href="{:U('Message/index?bar=6')}"><span class="badge pull-right"></span><span style="color:#dddddd" class="glyphicon glyphicon-user pull-left"></span>参与</a></li>
+        <li><a id="system" class="btn-info" href="{:U('Message/index?bar=7')}"><span class="badge pull-right"><if condition="$_SESSION['unwatch_system_count'] gt 0 ">{$_SESSION['unwatch_system_count']}</if></span><span style="color:#dddddd" class="glyphicon glyphicon-th-large pull-left"></span>系统消息</a></li>
+      </ul>
+      </center>
+    </div>
+        <br/>
+  </div>
+
+  <div class="col-md-6 ">
+    <!--这里消息展示-->
+    <a href="{:U('Message/index?bar=2')}"><span id='message' class='text-danger'></span>条新私信</a>
+    <p class="text-right text-danger">
+      <h6>
+        <a href="javascript:void(0)"  onclick="read_all()">全部设为已读</a>
+        <a href="{:U('Message/setting')}">消息设置</a>
+      </h6>
+    </p>
+<!-- Tab panes -->
+<div class="tab-content">
+  <include file="$tplName"/>
+  <!--这里应该设一个参数，然后改变值来引入不同的页面-->
+<script type="text/javascript">
+function delete_block(obj,user_id_other)
+{
+    var oComment=obj.parentNode;//。
+    var oComment2=oComment.parentNode;
+    var oComment3=oComment2.parentNode;
+    var oComment4=oComment3.parentNode;
+    var oComment5=oComment4.parentNode;
+    oComment5.style.display="none";
+    $.ajax({
+      type:"post",
+      url:"{:U('Message/delete_dialog')}",
+      data:{user_id_other:user_id_other},
+      success: function(data, textStatus, xhr) {
+        if(data.status==1){
+          alert("删除成功！");                  
+        }
+      }
+    });
+}
+function delete_block2(obj,type)
+{
+    var oComment=obj.parentNode;//
+    var oComment2=oComment.parentNode;
+    oComment2.style.display="none";
+    $.ajax({
+      type:"post",
+      url:"{:U('Message/readNotice')}",
+      data:{notice_type:type},
+      success: function(data, textStatus, xhr) {
+        //if(data.status==1)
+          //alert("设置成功！");                  
+      }
+    });
+}
+//屏蔽对话
+function block(user_id_other){
+  $.ajax({
+      type:"post",
+      url:"{:U('Message/block_dialog')}",
+      data:{user_id_other:user_id_other},
+      success: function(data, textStatus, xhr) {
+        if(data.status==1){
+          alert("屏蔽用户"+data.username+"成功！以后收到他的私信将不再提醒！");                  
+        }
+      }
+  });
+}
+//设置全部已读
+  function read_all(){
+
+    $.ajax({
+        type:"post",
+        url:"{:U('Message/all_read')}",
+        success: function(data, textStatus, xhr) {
+          if(data.status==1){
+            //alert("设置成功！");                  
+          }
+        }
+    });
+  }
+</script>
+
+</div><!-- Tab panes end-->
+
+  </div><!--6 end-->
+  <div class="col-md-2 ">
+    <include file="User:mysidebar"/>
+    <include file="Home/Public/sidebar.html"/>
+  </div><!--2 end-->
+</div>
+
+<include file="sixinmodel"/>
+<include file="User/infocard"/>
+<include file="reportmodel"/>
+ </block>  

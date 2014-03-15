@@ -1,0 +1,472 @@
+<!--圈子模块
+未登录跳转到登陆页log
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  <script src="__ROOT__/Public/Js/jquery.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
+  <script type="text/javascript">
+  var up_url='{:U("/Home/Base/up_article")}';
+  var down_url='{:U("/Home/Base/down_article")}';
+  var focus_url='{:U("/Home/Base/focus")}';
+  var collect_url='{:U("/Home/Base/collect")}';
+  var report='{:U("/Home/Base/report")}';
+  var edit_url='{:U("/Home/Policy/edit/aid/","","")}';
+  var delete_url='{:U("/Home/Base/delete","","")}';
+  var report_article_url='{:U/Home/Base/report_article}';
+  var report_comment_url='{:U/Home/Base/report_comment}';
+  </script>  
+  <!--script type="text/javascript" src="__ROOT__/Public/Js/Base.js"></script>
+
+<script type="text/javascript" src="__ROOT__/Public/Js/prototype.js"></script>
+
+<script type="text/javascript" src="__ROOT__/Public/Js/mootools.js"></script-->
+
+<!--script type="text/javascript" src="__ROOT__/Public/Js/Ajax/ThinkAjax.js"></script-->
+
+
+
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+
+<include file="Home/View/Circle/circle_logo.html" />
+
+	<div id="circle-homepage">
+		<div class="row">
+			<div class="col-md-8">
+        <volist name="post_detail" id="v">
+        <h4 style="font-weight:bold">
+          [<?php 
+            switch ($v['post_type']) {
+              case 0:
+                echo "跨圈活动";
+                break;
+              case 1:
+                echo "圈内活动";
+                break;
+              case 2:
+                echo "群聊";
+                break;
+              case 3:
+                echo "话题贴";
+                break;
+              default:
+                break;
+            }
+
+            ?>
+                    帖子]{$v.article_title}
+        </h4>
+        <div id="circle-info">
+            <img align="left" valign="top" class="circle-icon" width="40" height="40" src="{$v.user_avatar_url}" alt="{$v.user_nickname}"/>
+            &nbsp; &nbsp;
+
+            <p class="info" style="display:inline;color:gray">
+                    来自
+                    &gt; <a style="margin-left:6px;" href="{:get_url_by_id($v.user_id)}"  title="作者">{$v.user_nickname}</a>
+            </p>
+            &nbsp; &nbsp;
+            <p class="info" style="display:inline;color:#6e944f">
+                    {$v.article_time}
+                     <a style="margin-left:6px;" href="{:U('Circle/quit')}"  title="退出圈子"></a>
+                    
+
+            </p>
+            <div class="row">
+              <div class="col-md-11">
+
+                <div  class="article-content">
+              <p><!--测试-->{$v.article_content|htmlspecialchars_decode}
+              
+              </p>
+            </div >
+
+              </div>
+            </div>
+            
+              
+
+            <div  class="content-toolbar">
+
+              <div class="row">
+          <div class="col-md-4">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" id="up" style="background-color:#f2f8f2;color:#6e944f" aid="{$v['article_id']}"> <span class="up"><php>if(in_list($user_id,$v['article_id'],'up')){echo '取消赞';}else{echo '赞';}</php></span>（<span class="up_num">{$v['article_up_number']}</span>）
+                    </button>
+            </span>
+            
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" id="down" style="background-color:#f2f8f2;color:#6e944f" aid="{$v['article_id']}"><span class="down"><php>if(in_list($user_id,$data['article_id'],'down')){echo '取消踩';}else{echo '踩';}</php></span>（<span class="down_num">{$v['article_down_number']}</span>）
+                    </button>
+            </span>
+
+                        <!--赞踩源代码-->
+
+
+
+
+        
+                        <!--赞踩源代码-->
+
+          </div><!--end of 2col-md-4-->
+          
+          </div><!--end of row-->
+            </div><!--end of content-toolbar-->
+            </div><!--end of circleinfo-->
+                </volist>
+
+
+
+      <!--评论列表-->
+            <p class="comment-info" style="padding-bottom:8px;padding-top:8px;border-bottom-style:solid;border-bottom-color:#e6e6e6;border-bottom-width:1px">
+                评论
+              </p>
+      <volist name="user_comment" id="vo">
+        <div id="comment_list">
+          <div class="one-comment" style="padding-bottom:8px;padding-top:8px;border-bottom-style:solid;border-bottom-color:#e6e6e6;border-bottom-width:1px">
+        
+              <!--一级评论card-->
+              <div class="comment-card" >
+                <div class="row">
+                  <div class="col-md-1">
+                    <img align="left" valign="top" class="user-icon" width="40" height="40" src="{$vo.user_avatar_url}" alt="{$vo.user_nickname}"/>
+                  </div><!--end of col-md-1-->
+                  <div class="col-md-10" id="response_user" userreplytoid="{$vo.user_id}"  commentid="{$vo.id}" >
+                    <p class="info" style="display:inline;color:gray;background-color:#f0f6f3">
+                           <a style="margin-left:6px;" href="{:get_url_by_id($vo.user_id)}"  title="作者" >{$vo['user_nickname']}</a>
+                           &nbsp;&nbsp;
+                           {$vo.comment_time}
+                    </p>
+                    <br/><br>
+
+                    <p class="content" >
+                           {$vo.comment_content}
+                           
+                    </p>
+
+
+     <!--回复框-->               
+
+        <a class="" onclick="response(this);">回复</a>
+    
+
+
+
+                  </div><!--end of col-md-10-->
+                
+                </div><!--end of row-->
+              </div><!-- comment-card-->
+            <!--一级评论card-->
+              <!--/div--><!--end of comment_comment-->
+     <!--二级评论-->
+
+     <volist name="vo['comment_id']" id="vos">
+              <div class="comment-card" style="padding-bottom:8px;padding-top:8px;border-top-style:dashed;border-top-color:gray;border-top-width:1px;margin-left:15%;margin-top:5px">
+                <div class="row">
+                  <div class="col-md-1">
+                    <img align="left" valign="top" class="user-icon" width="40" height="40" src="{$vos.send_user_avatar_url}" alt="{$vos.sender_name}"/>
+                  </div><!--end of col-md-1-->
+                  <div class="col-md-10" id="second_response_user" userreplytoid="{$vos.user_id}"  commentid="{$vo.id}" >
+                    <p class="info" style="display:inline;color:gray;background-color:#f0f6f3">
+                           <a style="margin-left:6px;" href="{:get_url_by_id($vos.user_id)}"  title="作者">{$vos.sender_name}</a>回复<a href="">{$vos.receiver_name}</a>
+                           &nbsp;&nbsp;
+                           {$vos.second_comment_time}
+                    </p>
+                    <br/><br>
+
+                    <p class="content" >
+                           {$vos.second_comment_content}
+                    </p>
+
+
+     <!--回复框-->               
+
+        <a id="comment_reply" class="" onclick="response_second(this);">回复{$vos.sender_name}</a>
+
+
+     <!--回复框-->
+
+                  </div><!--end of col-md-10-->
+                
+                </div><!--end of row-->
+              </div><!-- comment-card-->
+                     <!--二级评论-->
+                     </volist>
+            </div><!--one comment-->
+
+     </div><!--end of comment_list-->
+           </volist>
+        <!--分页-->
+        <div class="page-division" style="text-align:center;margin-left:auto;margin-right:auto;font-size:120%">
+        {$page}
+             
+          </div>
+                             <!--一级评论-->
+        <!--评论提示-->
+         <div  class="col-md-8 col-md-offset-3 registertextstyle">
+          <tr id="tr_content" style=" display:block">
+                  <td height="40" colspan="2" align="center">
+                  <div id="div_content" class="span3 offset3"style="color:#FF0000; width:90%; height:29px; padding-top:8px;"></div></td>
+          </tr>
+        </div>
+        <div id="comment" style="margin-top:20px">
+         <form action="" name='post_form' method='post' id="reply_to_article">
+            <p>
+                <label for="inputContent">写下你的评论：</label>
+                <textarea id="inputContent" name="inputContent" rows="8" cols="60" onblur="checkContent(this.value)"></textarea>
+            </p>
+          
+            <!--<input type="submit" />-->
+        </form>
+         <span class="bn-flat"><input id="comment_submit" aid="{$article_id}" cid="{$circle_id}" name="submit" type="button" value="提交" style="margin-left:100px" onclick="post_submit()")/></span>
+        </div>
+        <!--一级评论-->
+
+        
+
+        <script type="text/javascript">
+        var comment_type='circle_post_comment';
+          function checkContent(str){
+  if(str==""){      //当用户名为空时
+    //alert("昵称不能为空！");
+    //document.post_form.inputNickname.focus();
+    document.getElementById("div_content").innerHTML="请输入内容.";//设置提示文字
+    document.getElementById("tr_content").style.display='block'; //显示提示信息
+
+  }
+  else{    //进行异步操作，判断用户名是否被注册
+    document.getElementById("div_content").innerHTML="";
+    document.getElementById("tr_content").style.display='none';
+    //var loader=new net.AjaxRequest("UserServlet?action=checkUser&username="+str+"&nocache="+new Date().getTime(),deal,onerror,"GET");
+  } 
+}
+
+function post_submit(){
+  var flag_content=true;
+
+  if(post_form.inputContent.value==""){   //当用户名为空时
+     document.getElementById("div_content").innerHTML="请输入内容.";//设置提示文字
+    document.getElementById("tr_content").style.display='block'; //显示提示信息
+    flag_content=false;
+  }  
+
+  var handleUrl='{:U("/Home/Circle/reply_to_article")}';
+
+  var newDigi = document.getElementById("comment_submit"); 
+  var article_id=newDigi.getAttribute("aid");
+
+  
+  var newDigi2 = document.getElementById("comment_submit");
+  var circle_id=newDigi2.getAttribute("cid");
+  var content=$('textarea[name=inputContent]');
+  var redirectUrl='{:U("/Home/Circle/post_detail/cid",'','')}';
+      if (content!= "") {
+
+        var a=$.post(handleUrl,{comment_content:content.val(),article_id:article_id,comment_type:comment_type,circle_id:circle_id},function(data){
+          if(data.type==0)
+            alert('评论失败，请重试');
+          else{
+            window.location.href=redirectUrl+"/"+circle_id+"/aid/"+article_id+".html";
+          }
+        },'json');
+        a.error(function(){alert('fail')});
+      } else {
+       alert ("出错了，请您重试");
+      
+       }
+}
+
+function post_submit_second(){
+
+  var child=document.getElementById("add_button");
+  var oComment=child.parentNode.parentNode;//这里是关键。找到当前留言对象。
+
+   var user_reply_to_id=oComment.getAttribute("userreplytoid");
+   var comment_id=oComment.getAttribute("commentid");
+   var user_nickname=oComment.getAttribute("username");
+
+  //定义处理控制器   
+  var handleUrl='{:U("/Home/Circle/reply_to_comment")}';
+
+
+  // var redirectUrl='{:U("/Home/Circle/post_detail")}';
+  //alert(handleUrl);
+  var newDigi = document.getElementById("comment_submit"); 
+  var article_id=newDigi.getAttribute("aid");
+  
+  var newDigi2 = document.getElementById("comment_submit");
+  var circle_id=newDigi2.getAttribute("cid");
+  var content=$('textarea[name=secondinputContent]');
+  var redirectUrl='{:U("/Home/Circle/post_detail/cid",'','')}';
+      if (content.val() != "") {
+        // alert(handleUrl);
+        // alert(content.val());
+        
+
+        var a=$.post(handleUrl,{second_comment_content:content.val(),comment_id:comment_id,user_reply_to_id:user_reply_to_id,article_id:article_id},function(data){
+          if(data.type==0)
+            alert('评论失败，请重试');
+          else{
+            window.location.href=redirectUrl+"/"+circle_id+"/aid/"+article_id+".html";
+          }
+        },'json');
+        a.error(function(){alert('fail')});
+      } else {
+        document.getElementById('secondreplyContent').focus();
+      
+       }
+}
+
+
+//对评论的回复的回复
+function post_submit_second_reply(){
+
+  var child=document.getElementById("second_add_button");
+  var oComment=child.parentNode.parentNode;//这里是关键。找到当前留言对象。
+
+   var user_reply_to_id=oComment.getAttribute("userreplytoid");
+   var comment_id=oComment.getAttribute("commentid");
+
+  //定义处理控制器   
+  var handleUrl='{:U("/Home/Circle/reply_to_comment")}';
+
+
+  // var redirectUrl='{:U("/Home/Circle/post_detail")}';
+  //alert(handleUrl);
+  var newDigi = document.getElementById("comment_submit"); 
+  var article_id=newDigi.getAttribute("aid");
+  
+  var newDigi2 = document.getElementById("comment_submit");
+  var circle_id=newDigi2.getAttribute("cid");
+  var content=$('textarea[name=secondreplyContent]');
+  var redirectUrl='{:U("/Home/Circle/post_detail/cid",'','')}';
+      if (content.val() != "") {
+        // alert(handleUrl);
+        // alert(content.val());
+        
+
+        var a=$.post(handleUrl,{second_comment_content:content.val(),comment_id:comment_id,user_reply_to_id:user_reply_to_id,article_id:article_id},function(data){
+          if(data.type==0)
+            alert('评论失败，请重试');
+          else{
+            window.location.href=redirectUrl+"/"+circle_id+"/aid/"+article_id+".html";
+          }
+        },'json');
+        a.error(function(){alert('fail')});
+      } else {
+       document.getElementById('secondreplyContent').focus();
+      
+       }
+}
+
+        </script>
+
+
+
+      </div>
+            
+			<div class="col-md-4">
+				<div id="detail_right" style="margin-top:50px">
+                    <if condition="$enter_type eq 0">
+                    <p style="color:gray"> 您不是圈子成员，仅有浏览跨圈活动和对其评论的权限</p>
+                   <else/> 
+        		<img align="left" valign="top" class="circle-icon" width="40" height="40" src="{$circle_avatar_url}" alt="{$circle_name}"/>
+        		&nbsp; &nbsp;
+        		<p style="display:inline">
+        			<a href="{:U('/Home/Circle/detail/cid/'.$circle_id)}">  {$circle_name}  </a>
+        			<br/>
+        			&nbsp; &nbsp;<span style="color:gray">我是圈子成员</span>
+        		</p>
+        		<br/><br/>
+        		<p style="color:gray">在圈子中发言</p>
+                    <span class="input-group-btn">
+                    <a href="{:U('/Home/Circle/post/cid/'.$circle_id)}" role="button">
+                    <button class="btn btn-default" type="button submit" style="background-color:#f2f8f2;color:#6e944f" >我要发帖</button>
+                    </a>
+                    </span>
+                <br/>
+                    <span class="input-group-btn">
+                        <a href="{:U('/Home/Circle/start_chat/cid/'.$circle_id)}" role="button">
+                        <button class="btn btn-default" type="button submit" style="background-color:#f2f8f2;color:#6e944f" > 发起群聊</button>
+                        </a>
+                    </span>
+                <br/>
+                    <span class="input-group-btn">
+                        <a href="{:U('/Home/Circle/start_activity/cid/'.$circle_id)}" role="button">
+                        <button class="btn btn-default" type="button submit" style="background-color:#f2f8f2;color:#6e944f" >发起活动</button>
+                        </a>
+                    </span>
+                    </if>
+        		
+        		</div><!-- end of detail-right-->
+			</div><!--end of col-md-4-->
+            
+		</div><!--end of row-->
+
+
+		
+	</div><!-- end of circle-homepage-->
+
+
+   <script type="text/javascript">
+    function getid(el){return document.getElementById(el)}
+
+function response(obj)
+{
+    var oComment=obj.parentNode;//这里是关键。找到当前留言对象。
+    oComment.appendChild(getid("response"));
+    getid("response").style.display="block";
+    //向html传入当前user_id
+
+   //var newDigi=oComment.document.getElementById("response_user"); 
+   var user_nickname=oComment.getAttribute("usernickname");
+   //document.getElementById("response_info").innerHTML=user_nickname;
+
+}
+function response_second(obj)
+{
+    var oComment=obj.parentNode;//这里是关键。找到当前留言对象。
+    oComment.appendChild(getid("response_second"));
+    getid("response_second").style.display="block";
+}
+  </script>
+
+  <div id="response" style="display:none;" class="circle__div-huifudehuifu">
+  
+  <form name="commentform" method="post" action="">
+    评论：<textarea class="form-control" rows="6" id="secondinputContent" name="secondinputContent"></textarea>
+  </form>
+  <button id="add_button" class="btn btn-primary" style="margin-top:3px" onclick="post_submit_second()">评论</button>
+
+</div>
+
+  <div id="response_second" style="display:none;" class="circle__div-huifudehuifu">
+  <form name="commentform" method="post" action="">
+    评论：<textarea name="secondreplyContent" class="form-control" rows="6" id="secondreplyContent"></textarea>
+  </form>
+  <button id="second_add_button" class="btn btn-primary" style="margin-top:3px" onclick="post_submit_second_reply()">评论</button>
+
+</div>
+<!--修改历史2014-3-5 增加返回顶部按钮功能-->
+<a id="BackToTop" href="#">   
+
+  <span><br/><br/><br/></span> 
+
+</a>
+
+	</block>

@@ -1,0 +1,335 @@
+<!--圈子模块
+未登录跳转到登陆页log
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  <script type="text/javascript" src="__ROOT__/Public/Js/circle.js"></script>
+    <load href="__PUBLIC__/Ueditor/ueditor.config.js" />
+    <load href="__PUBLIC__/Ueditor/ueditor.all.min.js" />
+    <load href="__PUBLIC__/Ueditor/lang/zh-cn/zh-cn.js" />
+    <script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
+    <script type="text/javascript">
+        //UEDITOR_HOME_URL、config、all这三个顺序不能改变(绝对路径)
+        window.UEDITOR_HOME_URL = "/ThinkPHP/Public/Ueditor/"; 
+        //实例化编辑器
+        var ue = UE.getEditor('editor');
+    </script>
+
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+<include file="Home/View/Circle/circle_logo.html" />
+	<div id="circle-homepage">
+		<div class="row">
+		<div class="col-md-7">
+    <volist name="circle_info" id="vo">
+		<form name="activity_form" class="circle-form" method="post" action=""> 
+
+			<h3>
+				发起{$vo.circle_name} 活动
+			</h3>
+			<br/>
+      </volist>
+      <div  class="col-md-8 col-md-offset-3 registertextstyle">
+          <tr id="tr_title" style=" display:block">
+                  <td height="40" colspan="2" align="center">
+                  <div id="div_title" class="span3 offset3"style="color:#FF0000; width:90%; height:29px; padding-top:8px;"></div></td>
+          </tr>
+        </div>
+
+
+			<div class="item">
+            	<label style="font-size:130%">主题：</label>
+            	<input name="title" type="text" size="50" maxlength="100"  value="" onblur="checkTitle(this.value)" />
+        	</div>
+
+        	<br/>
+
+
+      <div  class="col-md-8 col-md-offset-3 registertextstyle">
+          <tr id="tr_date" style=" display:block">
+                  <td height="40" colspan="2" align="center">
+                  <div id="div_date" class="span3 offset3"style="color:#FF0000; width:90%; height:29px; padding-top:8px;"></div></td>
+          </tr>
+        </div>
+        	<div class="item">
+            	<label style="font-size:130%">
+                <!--span class="label">正文:</span>
+                
+                    &nbsp;
+            	</label-->
+            	时间：</label>
+            	<input  name="date" type="text" size="50" maxlength="100" value="" onblur="checkDate(this.value)"/>
+        	</div>
+        	<br/>
+
+
+          <div  class="col-md-8 col-md-offset-3 registertextstyle">
+          <tr id="tr_location" style=" display:block">
+                  <td height="40" colspan="2" align="center">
+                  <div id="div_location" class="span3 offset3"style="color:#FF0000; width:90%; height:29px; padding-top:8px;"></div></td>
+          </tr>
+        </div>
+
+        	<div class="item">
+            	<label style="font-size:130%">
+                <!--span class="label">正文:</span>
+                
+                    &nbsp;
+            	</label-->
+            	地点：</label>
+            	<input  name="location" type="text" size="50" maxlength="100" value="" onblur="checkLocation(this.value)"/>
+        	</div>
+        	<br/>
+
+        	<!-- <div class="item toolbar">
+            	<a href="javascript:addPhoto();">添加图片</a>
+            	<span id="send">添加视频</span>
+        	</div> -->
+
+
+          <div  class="col-md-8 col-md-offset-3 registertextstyle">
+          <tr id="tr_content" style=" display:block">
+                  <td height="40" colspan="2" align="center">
+                  <div id="div_content" class="span3 offset3"style="color:#FF0000; width:90%; height:29px; padding-top:8px;"></div></td>
+          </tr>
+        </div>
+        	 <div class="item">
+            	<label style="font-size:130%">
+                <!--span class="label">正文:</span>
+                
+                    &nbsp;
+            	</label-->
+            	内容：</label>
+            	<!-- <textarea name="content" rows="20" cols="55" onblur="checkContent(this.value)"></textarea> -->
+              <script id="editor" name="content" type="text/plain" style="height:600px">
+              </script>
+        	</div>
+        	<br/>
+
+          <div  class="col-md-8 col-md-offset-3 registertextstyle">
+          <tr id="tr_type" style=" display:block">
+                  <td height="40" colspan="2" align="center">
+                  <div id="div_type" class="span3 offset3"style="color:#FF0000; width:90%; height:29px; padding-top:8px;"></div></td>
+          </tr>
+        </div>
+
+          <div class="item">
+              <label style="font-size:130%">
+                <!--span class="label">正文:</span>
+                
+                    &nbsp;
+              </label-->
+              类型：</label>
+              <input type="radio" id="radios" name="type"  value="0" >所有用户可见（默认选项，显示在圈子首页）<br />
+              <input type="radio" id="radios" name="type"  value="1" style="margin-left:60px" >仅圈内成员可见<br />
+          </div>
+          <br/>
+           </form>
+
+        	<volist name="circle_info" id="v">
+          <div class="item item-bns" id="show_alert">
+              <span class="bn-flat"><input name="submit" type="submit" id="submitButton" value="提交" cid="{$v['circle_id']}" onclick="post_submit(document.activity_form.type)"></span>
+              <!--span class="bn-flat"><input name="rev_cancel"  value="撤消" onclick="post_quit()"></span-->
+               <a href="{:U('/Home/Circle/detail/cid/'.$v['circle_id'])}" role="button">
+                撤销
+               </a>
+          </div>
+          </volist>
+
+        	<div id="thumblst" class="item item-thumb-list"></div>
+
+       
+        </div><!--end of col-md-8-->
+        <div class="col-md-4" style="margin-top:100px">
+        <volist name="circle_info" id="v">
+        	<div class="pic">
+					<a href="{:U('/Home/Circle/detail/cid/'.$v['circle_id'])}">
+						<img width="40" height="40" src="{$v.circle_avatar_url}" alt="{$v.circle_name}">
+					</a>
+			</div>
+			<div>
+      <a href="{:U('/Home/Circle/detail/cid/'.$v['circle_id'])}">
+				>回到{$v.circle_name}圈
+      </a>
+			</div>
+      
+      </volist>
+        </div>
+	</div><!--end of row-->
+	</div><!--end of homepage-circle-->
+
+	
+  		<!--div class="rectitle" id="sendform"><span class="m">添加视频</span></div>
+  		<div class="panel add-video-panel">
+  			<form>
+    		<div class="item">
+      			<input name="link" class="basic-input video-url" placeholder="请输入视频播放地址" />
+      			<span class="bn-flat"><input type="submit" value="确定"></span>
+    		</div>
+    		<div class="item">
+      		<p>
+      			请输入视频的网站源地址，目前支持土豆、优酷、酷6、腾讯视频、新浪视频、搜狐视频等多家视频网站
+      		</p>
+    	</div>
+  		</form>
+  		</div-->
+<script type="text/javascript">
+  //alert('1');
+    var flag_title=true;
+    var flag_location=true;
+    var flag_date=true;
+    var flag_content=true;
+    function checkTitle(str){
+  if(str==""){      //当用户名为空时
+    //alert("昵称不能为空！");
+    //document.post_form.inputNickname.focus();
+    document.getElementById("div_title").innerHTML="请输入标题.";//设置提示文字
+    document.getElementById("tr_title").style.display='block'; //显示提示信息
+    flag_title=false;
+  }else if(!checkeUser(str)){ //判断用户名是否符合要求
+    document.getElementById("div_title").innerHTML="标题非法.";  //设置提示文字
+    document.getElementById("tr_title").style.display='block';   //显示提示信息
+    flag_title=false;
+  }else{    //进行异步操作，判断用户名是否被注册
+    document.getElementById("div_title").innerHTML="";
+    document.getElementById("tr_title").style.display='none';
+    //var loader=new net.AjaxRequest("UserServlet?action=checkUser&username="+str+"&nocache="+new Date().getTime(),deal,onerror,"GET");
+  } 
+}
+
+function checkContent(str){
+  if(str==""){      //当用户名为空时
+    //alert("昵称不能为空！");
+    //document.post_form.inputNickname.focus();
+    document.getElementById("div_content").innerHTML="请输入内容.";//设置提示文字
+    document.getElementById("tr_content").style.display='block'; //显示提示信息
+    flag_content=false;
+  }else if(!checkeUser(str)){ //判断用户名是否符合要求
+    document.getElementById("div_content").innerHTML="内容非法.";  //设置提示文字
+    document.getElementById("tr_content").style.display='block';   //显示提示信息
+    flag_content=false;
+  }else{    //进行异步操作，判断用户名是否被注册
+    document.getElementById("div_content").innerHTML="";
+    document.getElementById("tr_content").style.display='none';
+    //var loader=new net.AjaxRequest("UserServlet?action=checkUser&username="+str+"&nocache="+new Date().getTime(),deal,onerror,"GET");
+  } 
+}
+
+function checkDate(str){
+  if(str==""){      //当用户名为空时
+    //alert("昵称不能为空！");
+    //document.post_form.inputNickname.focus();
+    document.getElementById("div_date").innerHTML="请输入时间.";//设置提示文字
+    document.getElementById("tr_date").style.display='block'; //显示提示信息
+    flag_content=false;
+  }else if(!checkeUser(str)){ //判断用户名是否符合要求
+    document.getElementById("div_date").innerHTML="时间非法.";  //设置提示文字
+    document.getElementById("tr_date").style.display='block';   //显示提示信息
+    flag_content=false;
+  }else{    //进行异步操作，判断用户名是否被注册
+    document.getElementById("div_date").innerHTML="";
+    document.getElementById("tr_date").style.display='none';
+    //var loader=new net.AjaxRequest("UserServlet?action=checkUser&username="+str+"&nocache="+new Date().getTime(),deal,onerror,"GET");
+  } 
+}
+
+
+function checkLocation(str){
+  if(str==""){      //当用户名为空时
+    //alert("昵称不能为空！");
+    //document.post_form.inputNickname.focus();
+    document.getElementById("div_location").innerHTML="请输入地点.";//设置提示文字
+    document.getElementById("tr_location").style.display='block'; //显示提示信息
+    flag_content=false;
+  }else if(!checkeUser(str)){ //判断用户名是否符合要求
+    document.getElementById("div_location").innerHTML="地点非法.";  //设置提示文字
+    document.getElementById("tr_location").style.display='block';   //显示提示信息
+    flag_content=false;
+  }else{    //进行异步操作，判断用户名是否被注册
+    document.getElementById("div_location").innerHTML="";
+    document.getElementById("tr_location").style.display='none';
+    //var loader=new net.AjaxRequest("UserServlet?action=checkUser&username="+str+"&nocache="+new Date().getTime(),deal,onerror,"GET");
+  } 
+}
+
+  </script>
+
+  <script type="text/javascript">
+   function post_submit(radionObj){
+    var layer=document.createElement("div");
+    layer.id="layer";
+    var top_num = document.documentElement.scrollTop - 480 + "px";
+    var title = $('input[name=title]');
+    var date = $('input[name=date]');
+    var location = $('input[name=location]');
+    // var content=$('textarea[name=content]');
+    var content=UE.getEditor('editor').getContent();
+    if(content==""){
+      layer.innerHTML = "内容不能为空";
+      layout(layer,top_num);
+       return;
+    }
+
+    for(var i = 0; i < radionObj.length; i ++)      
+    {          
+        if (radionObj[i].checked)   
+        {  
+            str=radionObj[i].value;  
+        }  
+    } 
+     
+    var type = str;
+    var handleUrl='{:U("/Home/Circle/handle_new_activity")}';
+    var circle_id=document.getElementById("submitButton").getAttribute("cid");
+    var redirectUrl='{:U("/Home/Circle/detail/cid",'','')}';
+    if ((title.val() !="" )&&(content != "")&& (type!="") ) {
+
+        var a=$.post(handleUrl,{title:title.val(),date:date.val(),location:location.val(),content:content,circle_id:circle_id,type:type},function(data){
+          if(data.type==0)
+            alert('发送失败，请重试');
+          else{
+              var para=document.createElement("p");
+              para.id="p1";
+              para.style.backgroundColor="#f2f8f2";
+              para.style.color="red";
+
+              var node=document.createTextNode("发布成功，正在跳转...");
+              para.appendChild(node);
+
+              var element=document.getElementById("show_alert");
+              element.appendChild(para);
+              setTimeout("clean()",3000);
+
+             
+              window.location.href=redirectUrl+"/"+circle_id+".html";
+          }
+        },'json');
+        a.error(function(){alert('fail')});
+      } else {
+        document.getElementById('submitButton').focus();
+      
+       }
+      }
+
+      function clean(){
+        var parent=document.getElementById("show_alert");
+        var child=document.getElementById("p1");
+        parent.removeChild(child);
+      }
+   </script>
+	
+</block>

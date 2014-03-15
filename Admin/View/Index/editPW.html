@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title></title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+</head>
+<body background='__PUBLIC__/Images/allbg.gif' leftmargin='8' topmargin='8'>
+	<table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#D6D6D6">
+  <tr>
+    <td height="19" background="__PUBLIC__/Images/tbg.gif" bgcolor="#E7E7E7"> 
+   </tr>
+  <tr>
+  <td height="215" align="center" valign="top" bgcolor="#FFFFFF">
+	<form name="form1" action="{:U('Index/runEditPW')}" method="post">
+        <table width="98%" border="0" cellspacing="1" cellpadding="1">
+          <tr> 
+            <td width="16%" height="30"><span class='red'>*</span>原有密码</td>
+            <td width="84%" style="text-align:left;">
+			<input name="oldpasswd" type="text" id="username" size="16" style="width:200px"/> &nbsp;
+           </td>
+          </tr>
+          
+          <tr> 
+            <td height="30"><span class='red'>*</span>新密码</td>
+            <td style="text-align:left;">
+            	<input name="newpasswd" type="text" id="passwd" size="16" style="width:200px"/> &nbsp;
+            </td>
+          </tr>
+		  <tr> 
+            <td height="30"><span class='red'>*</span>密码确认</td>
+            <td style="text-align:left;">
+            	<input name="repasswd" type="text" id="passwd" size="16" style="width:200px"/> &nbsp;
+            </td>
+          </tr>
+          <tr> 
+            <td height="60">&nbsp;</td>
+            <td>
+            	<input type="submit" name="submit" value="修改" class="coolbg np" />
+            </td>
+          </tr>
+        </table>
+      </form>
+	  </td>
+</tr>
+</table>
+</body>
+</html>

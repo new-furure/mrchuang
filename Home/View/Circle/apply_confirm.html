@@ -1,0 +1,44 @@
+<!--圈子模块
+创建圈子页提交页
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  <script type="text/javascript" src="__ROOT__/Public/Js/circle.js"></script>
+
+  <script type="text/javascript">
+  	window.onload=function(){
+  		setTimeout(function(){
+  			window.location.href="{:U('Circle/index')}"
+  		},5000);
+
+  	}
+  </script>
+
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+<include file="Home/View/Circle/circle_logo.html" />
+
+	<div id="circle-homepage">
+
+	<div class="confirm_title" style="font-size:150%;text-align:center">
+		恭喜您，申请成功
+		<br>页面将在5秒内跳转或者点击<a href="{:U('Circle/index')}">返回首页</a>
+		
+	</div>
+
+	</div><!--end of circle-homepage-->
+</block>

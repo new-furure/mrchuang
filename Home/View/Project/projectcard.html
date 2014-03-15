@@ -1,0 +1,51 @@
+{//项目浏览页使用的项目资料卡}
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+          	<a href="{:U('/Home/Project/detail/aid/'.$vo['article_id'])}"  target="_Blank">
+                <img src="[pic]" id="img" onerror="showimg(this);" data-src="holder.js/300x200" alt="Generic placeholder thumbnail"  style="height:150px">
+            </a>
+            <div class="caption"><center>
+            	<div style="height:30px">
+              		<a href="{:U('/Home/Project/detail/aid/'.$vo['article_id'])}"  target="_Blank"><h4 class="projectcard__title">[title]</h4></a>
+          		</div>
+              	<div style="height:90px">
+                	<h6 id="project_profile" class="text-muted" style="line-height:1.5;letter-spacing:2px">[profile]</h6><!--60-->
+          	  	</div></center>
+              <!--p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p-->
+            </div>
+            <div class="row">
+            	<div class="col-md-4">
+            		{//团队主页？///////////}
+            		<h6><a href="{:get_url_by_id($vo['user_id'])}" class="projectcard__workgroupname infocardshow" onmouseover="SetInfocardPosition()" target="_Blank">[workgroup_name]</a></h6>
+            	</div>
+              <div class="col-md-4">
+                <h6 class="projectcard__workgroupname">关注([focus_number])</h6>
+              </div>
+            	<div class="col-md-4">
+            		<h6 class="text-danger">赞([up_number])</h6>
+            	</div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript">
+        $(document).ready(function(){ 
+          $(".text-muted").each(function()
+          { 
+           /* alert('字数超过了');*/
+            var maxwidth=80;
+            if($(this).text().length>maxwidth){
+                $(this).text($(this).text().substring(0,maxwidth)); 
+                $(this).html($(this).html()+'...'); 
+            } 
+          });
+           $(".projectcard__title").each(function()
+          { 
+           /* alert('字数超过了');*/
+            var maxwidth=15;
+            if($(this).text().length>maxwidth){
+                $(this).text($(this).text().substring(0,maxwidth)); 
+                $(this).html($(this).html()+'...'); 
+            } 
+          });
+        });  
+      </script>

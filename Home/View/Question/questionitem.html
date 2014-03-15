@@ -1,0 +1,37 @@
+{//用户首页使用的问题块,包含从User/index页传来的一些数据}
+        <div>
+          <div class="thumbnail">
+            <div class="row">
+              <div class="col-md-3">
+                <a href="{:U('/Home/Question/detail/aid/'.$vo['article_id'])}" class="infocardshow" onmouseover="SetInfocardPosition()">
+                  <img src="[pic]"  id="img" onerror="showimg(this);" data-src="holder.js/300x200" alt="Generic placeholder thumbnail">
+                </a>
+                <!--V字认证？-->
+                <div style="color:#FF0000;width:90%; height:9px;"></div>
+                <span class="label label-warning" style="font-size:18px"><a href="{:get_url_by_id($vo['user_id'])}" style="color:white" class="infocardshow" onmouseover="SetInfocardPosition()">V[user_name]</a></span>
+                <!--项目团队,链接团队主页？-->
+              </div>
+              <div class="caption col-md-9">
+                <div style="height:20px;padding-left:20px">
+                  <a href="{:U('/Home/Question/detail/aid/'.$vo['article_id'])}"><h2>[title]</h2></a>
+                  <h6 class="text-muted">[time]</h6><!--这里的时间数据怎么显示？-->
+                </div>
+                <div style="height:90px;padding-left:30px">
+                  <h6 class="text-muted" style="line-height:1.5;letter-spacing:2px">[content]</h6><!--52-->
+                </div>
+              </div>
+          </div><!--row end-->
+          <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <p>
+              <h6><a id= "up" style="cursor:pointer" aid="{$vo['article_id']}"><span class="up"><php>if(in_list($curr_user_id,$vo['article_id'],'up')){echo '取消赞';}else{echo '赞';}</php></span>（<span class="up_num">[up_number]</span>）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a id="down" style="cursor:pointer" aid="{$vo['article_id']}"><span class="down"><php>if(in_list($curr_user_id,$vo['article_id'],'down')){echo '取消踩';}else{echo '踩';}</php></span>（<span class="down_num">[down_number]</span>）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a id="focus" style="cursor:pointer" aid="{$vo['article_id']}"><span class="focus"><php>if(in_list($curr_user_id,$vo['article_id'],'focus')){echo '取消关注';}else{echo '关注';}</php></span>（<span class="focus_num">[focus_number]</span>）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a id="collect" style="cursor:pointer" aid="{$vo['article_id']}"><span class="collect"><php>if(in_list($curr_user_id,$vo['article_id'],'collect')){echo '取消收藏';}else{echo '收藏';}</php></span>（<span class="collect_num">[collect_number]</span>）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="{:U('/Home/Question/detail/aid/'.$vo['article_id'])}#content" style="cursor:pointer">评论（[comment_number]）</a></h6>
+            </p>
+          </div>
+          </div><!--row end-->
+
+          </div>
+        </div>

@@ -1,0 +1,164 @@
+<!--圈子模块
+创建圈子页提交页
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  
+
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+<include file="Home/View/Circle/circle_logo.html" />
+
+	<div id="circle-homepage">
+    <div class="row">
+      <div class="col-md-8">
+        <h3>
+        {$circle_name}圈子管理
+        </h3>
+        <div class="nav" style="padding-top:15px">
+
+          <ul class="nav nav-tabs">
+          <li ><a href="{:U('/Home/Circle/manage/cid/'.$circle_id)}">基本信息</a></li>
+          <li ><a href="{:U('/Home/Circle/manage_member/cid/'.$circle_id)}">成员管理</a></li>
+          <li><a href="{:U('/Home/Circle/post_manage/cid/'.$circle_id)}">帖子管理</a></li>
+          <li class="active"><a href="{:U('/Home/Circle/data/cid/'.$circle_id)}">数据统计</a></li>
+          </ul>         
+        </div><!--end of nav-->
+
+        <div class="statistics">
+          <div class="nav" style="padding-top:15px">
+          <!-- Nav tabs -->
+            <ul class="nav nav-pills">
+            <li class="active"><a href="#week" data-toggle="pill" >最近一周</a></li>
+            <li><a href="#month" data-toggle="pill">最近一月</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane active" id="week">
+              <div class="row">
+            <div class="col-md-3">
+              <div class="data" style="width:120px;height:150px;background-color:#edf6ff;margin-top:15px;text-align:center">
+              <br>
+                <p>新增帖子数</p>
+                
+                <h3>{$article_count_week}</h3>
+              </div><!--end of class-->
+            </div><!--end of col-md-3-->
+
+            <div class="col-md-3">
+              <div class="data" style="width:120px;height:150px;background-color:#edf6ff;margin-top:15px;text-align:center">
+              <br>
+                <p>新增评论数</p>
+                
+                <h3>{$comment_count_week}</h3>
+              </div><!--end of class-->
+            </div><!--end of col-md-3-->
+
+            <div class="col-md-3">
+              <div class="data" style="width:120px;height:150px;background-color:#edf6ff;margin-top:15px;text-align:center">
+              <br>
+                <p>新增成员数</p>
+                
+                <h3>{$member_count_week}</h3>
+              </div><!--end of class-->
+            </div><!--end of col-md-3-->
+
+            <div class="col-md-3">
+              <div class="data" style="width:120px;height:150px;background-color:#edf6ff;margin-top:15px;text-align:center">
+              <br>
+                <p>退出成员数</p>
+                
+                <h3>{$quit_count_week}</h3>
+              </div><!--end of class-->
+            </div><!--end of col-md-3-->
+
+
+
+          </div><!--end of row-->
+
+              </div>
+            <div class="tab-pane" id="month">
+            
+
+              
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="data" style="width:120px;height:150px;background-color:#edf6ff;margin-top:15px;text-align:center">
+              <br>
+                <p>新增帖子数</p>
+                
+                <h3>{$article_count_month}</h3>
+              </div><!--end of class-->
+            </div><!--end of col-md-3-->
+
+            <div class="col-md-3">
+              <div class="data" style="width:120px;height:150px;background-color:#edf6ff;margin-top:15px;text-align:center">
+              <br>
+                <p>新增评论数</p>
+                
+                <h3>{$comment_count_month}</h3>
+              </div><!--end of class-->
+            </div><!--end of col-md-3-->
+
+            <div class="col-md-3">
+              <div class="data" style="width:120px;height:150px;background-color:#edf6ff;margin-top:15px;text-align:center">
+              <br>
+                <p>新增成员数</p>
+                
+                <h3>{$member_count_month}</h3>
+              </div><!--end of class-->
+            </div><!--end of col-md-3-->
+
+            <div class="col-md-3">
+              <div class="data" style="width:120px;height:150px;background-color:#edf6ff;margin-top:15px;text-align:center">
+              <br>
+                <p>退出成员数</p>
+                
+                <h3>{$quit_count_month}</h3>
+              </div><!--end of class-->
+            </div><!--end of col-md-3-->
+
+
+
+          </div><!--end of row-->
+          </div><!--end of month-->
+        </div><!--end of nav-->
+
+        </div>
+
+      </div><!--end of statistics-->
+      </div><!--end of col-md-8-->
+      <div class="col-md-4">
+        <div id="detail_right" style="margin-top:80px">
+
+            <img align="left" valign="top" class="circle-icon" width="40" height="40" src="{$circle_avatar_url}" alt="{$circle_name}"/>
+            &nbsp; &nbsp;
+            <p style="display:inline">
+              <a href="{:U('/Home/Circle/detail/cid/'.$circle_id)}">  {$circle_name}  </a>
+              <br/>
+              &nbsp; &nbsp;<span style="color:gray">我是圈子管理者</span>
+              
+            </p>
+            <br/><br/>
+      </div><!--end of col-md-4-->
+      </div>
+    </div><!--end of row-->
+  </div><!--end of circle-homepage-->
+  </include>
+</block>

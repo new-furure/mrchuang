@@ -1,0 +1,105 @@
+{//项目浏览页}
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.png" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+<block name="javascript">
+  <include file="Home/Public/tool_infocard_js.html"/>
+
+</block>
+
+<block name="title">
+  <title>项目-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header1.html" />
+  <script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript">
+  var verify_url='{:U("Base/verify")}';
+  var publish_url='{:U("Project/publish")}';
+  var publish_step1_url='{:U("Project/publish_step1")}';
+  var article_type = 'project';
+  var errorimg = "__ROOT__/Public/Img/error.jpg";
+  </script>
+  <script>
+    document.getElementById("nav_project").className="nav__myactive";
+  </script>
+</block>
+
+<block name="main">
+  <div class="uglydiv">1 </div>
+<div style="color:#000000;width:100%; height:15px;"></div>
+<div class="row article-index__headdiv">
+  <div class="col-md-4 col-md-offset-2">
+    筛选：
+    <a class="text-success public__pointer">最新发布</a>&nbsp;/&nbsp;
+    <a class="text-info public__pointer">本周最热</a>&nbsp;/&nbsp;
+    <a class="text-warning public__pointer">本月最热</a>&nbsp;/&nbsp;
+    <a class="text-primary public__pointer">高级搜索</a>
+  </div>
+  <div class="col-md-2">
+    <button type="button" id="project-publish-button" class="btn project__publish-button btn-block" onclick="publish()" onmouseover="a()" onmouseout="b()"><span class="glyphicon glyphicon-hdd"></span>&nbsp;发布项目</button>
+  </div>
+    <script type="text/javascript">
+    function a()
+    {document.getElementById("project-publish-button").setAttribute("style","background-color:#5b949a;color:white;");}
+    function b()
+    {document.getElementById("project-publish-button").setAttribute("style","background-color:#da9764;color:white;");}
+    </script>
+</div>
+<div class="row">
+
+<!--   <div class="col-md-2">
+
+    <div class="public__left-sidebar">
+      <button type="button" class="btn btn-success btn-lg btn-block" onclick="publish()">发布项目</button>
+    </div>
+
+    <div class="public__left-sidebar">
+      <br/>筛选：<br/>
+      <center>
+      <a class="text-success public__pointer">最新发布</a>
+      <a class="text-info public__pointer">本周最热</a>
+      <a class="text-warning public__pointer">本月最热</a>
+    </center>
+    </div>
+        <br/>
+    <div class="input-group public__left-sidebar">
+      <input type="text" class="form-control" placeholder="搜项目标签~">
+      <span class="input-group-btn">
+        <button class="btn btn-success" type="button">搜!</button>
+      </span>
+    </div>
+      
+
+
+  </div> 
+ -->
+  <div class="col-md-6 col-md-offset-2 main__body__contentcontainer">
+    <!--这里项目展示-->
+        <!--项目展示-->
+        <div>
+          <div class="row text-left">  
+            <volist name="project_list" id="vo">
+                <include file="Project:projectcard" pic="{$vo['project_avatar_url'] | default='__ROOT__/Public/Img/error.jpg'}" workgroup_name="{$vo['user_nickname']}" up_number="{$vo['article_up_number']}" time="{$vo['article_time']}" title="{$vo['article_title']}" profile="{$vo['article_profile']}" id="{$vo['article_id']}" focus_number="{$vo['article_focus_number']}"/>
+            </volist> 
+            <div class="page-division" style="text-align:center;margin-left:auto;margin-right:auto;font-size:120%">
+        {$page}
+             
+          </div>
+          </div>      
+        </div>
+
+    </div>
+  <div class="col-md-2 main__sidebar__container">
+    <include file="User:mysidebar"/>
+    <include file="Home/Public/sidebar.html"/>
+  </div>
+</div>
+<include file="User:infocard"/>
+<include file="Message:sixinmodel"/>
+ </block> 

@@ -1,0 +1,155 @@
+<!--圈子模块
+未登录跳转到登陆页log
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript" src='__PUBLIC__/Js/circle.js'></script>
+  <script type="text/javascript" src='__PUBLIC__/Js/common.js'></script>
+  <script type="text/javascript">
+     var errorimg = "__ROOT__/Public/Img/error.jpg";
+  </script>
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+
+<include file="Home/View/Circle/circle_logo.html" />
+
+<div id="circle-homepage" >
+
+  <h2 class="homepage-title">
+        我的圈子主页
+  </h2>
+  <div class="my-circle">
+  <div class="row">
+    <div class="col-md-10">
+      <h4 >
+        加入的圈子({$circle_count})
+      </h4>
+    </div>
+    <div class="col-md-2">
+      <span class="input-group-btn">
+      <a href="{:U('/Home/Circle/start')}" role="button">
+          <button class="btn btn-default" type="submit" style="background-color:#00868B;color:white;margin-top:5px">创建圈子</button>
+      </span>
+      </a>
+    </div>
+  </div>
+  </div>
+
+
+
+<div id='circle-card'>
+
+    <div class="row">
+
+    
+<volist name='my_circle' id='v'>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail"  style="height:380px">
+      <img id="img" src="{$v.circle_avatar_url}"  onerror="showimg(this);" style="height:150px">
+      <!--script type="text/javascript">
+        function showimg(obj){
+        //var errorimg = "/www1/Public/Img/error.jpg";//替换图…
+        var errorimg = "__ROOT__/Public/Img/error.jpg";
+        obj.src = errorimg;
+        document.getElementById( "errorimg" ).style.height = "150px"; 
+
+   }
+      </script-->
+      <div class="caption">
+        <h3>{$v.circle_name}</h3>
+        <p class="circle-info">
+          {$v.circle_number}/{$v.circle_limit}
+        </p>
+        <div  class="circle_profile">圈子简介：{$v.circle_profile}</div>
+        <p><a href="{:U('/Home/Circle/detail/cid/'.$v['circle_id'])}" class="btn btn-primary" role="button" style="margin-top:3px;width:200px">进入圈子</a> </p>
+      </div>
+    </div>
+  </div>
+</volist>
+
+<script type="text/javascript">
+//用于index.html
+//简介超出85字显示省略号
+//需要有jquery文件
+
+//jquery实现多行文本溢出时显示省略号
+$(document).ready(function(){ 
+//对象：圈子简介
+$(".circle_profile").each(function()
+{ var maxwidth=85;
+ if($(this).text().length>maxwidth){
+ $(this).text($(this).text().substring(0,maxwidth)); 
+$(this).html($(this).html()+'...'); 
+} 
+});
+ });  
+
+</script>
+
+
+
+</div>
+</div>
+
+<div id="circle-activity">
+
+  <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading" style="font-size:120%">跨圈活动({$circle_activity_number})</div>
+  <div class="panel-body">
+    <p style="font-size:150%">活动预告</p>
+  </div>
+  
+
+  <!-- Table -->
+  <table class="table">
+          <tr  style="color:gray;border-bottom-style:dashed;border-bottom-color:gray;border-bottom-width:1px">
+            <td class="td-subject">标题</td>
+            <td class="td-reply">回复数</td>
+            <td class="td-time">发布时间</td>
+            <td class="td-circle">圈子名称</td>
+          </tr>
+      <volist name="circle_post" id="l">
+
+          <tr>
+            <td class="td-subject"><a href="{:U('/Home/Circle/post_detail/cid/'.$l['circle_id'].'/aid/'.$l['article_id'])}">{$l.article_title}</a></td>
+            <td class="td-reply">{$l.article_comment_number}&nbsp;回复</td>
+            <td class="td-time">{$l.article_time}</td>
+            <td class="td-circle">
+            <if condition="($belong_1 eq $l['circle_name']) or ($belong_2 eq $l['circle_name'])">
+            <a href="{:U('/Home/Circle/detail/cid/'.$l['circle_id'])}">{$l.circle_name}</a>
+            <else/>
+            {$l.circle_name}</if></td>
+          </tr>
+      </volist>
+         
+  </table>
+  <div class="page-division" style="text-align:center;margin-left:auto;margin-right:auto;font-size:120%">
+        {$show}
+             
+          </div>
+ 
+</div>
+</div>
+
+
+
+
+
+
+</block>

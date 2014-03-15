@@ -1,0 +1,93 @@
+<div>
+  <php>$current_user=M('user')->getByUserId(get_id());</php>
+  <div class="thumbnail">
+    <div class="row">
+      <div class="col-xs-8 col-md-8">
+        <a class="thumbnail">
+          <img src="{$current_user['user_avatar_url']}" data-src="holder.js/100%x100%" alt="没有上传头像"/>
+        </a>
+      </div>
+
+    </div>
+    <br>
+
+    <IF condition="ac($current_user['user_type'],2)">
+      组织用户
+      <ELSE/>
+      个人用户
+    </IF>
+    <br>
+    <?php
+      $category=ac($current_user['user_type'],3);
+      echo M('category')->
+    getFieldByCategoryId($category,'category_name');
+      
+      switch($category){
+        case C('STARTUP'):
+          # code...
+          break;
+
+       case C('ENTERPRISE'):
+          break;
+
+       case C('VC'):
+            # code...
+            break;
+
+       case C('INCUBATOR'):
+            break;
+
+      case C('INVITEE'):
+       # code...
+          break;
+
+      case C('GOVERNMENT'):
+           break;
+      default :
+         break;
+ 
+      }
+      ?>
+    <p>{$current_user['user_nickname']}</p>
+
+    <div class="caption">
+      <p>{$current_user['user_signature']}</p>
+      <a>
+        <span  class=" glyphicon glyphicon-heart">受关注度</span>
+        <span class="focus_num">({$current_user['user_focus_number']})</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- 悬浮框 私信-->
+<div class="modal fade" id="messagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <p class="modal-title myblue" id="myModalLabel">私信</p>
+      </div>
+      <div class="modal-body">
+
+        <input type="text" class="form-control" id="inputmessage" name="inputmessage" placeholder="收信人：郭鑫">
+        <div style="height:20px"></div>
+
+        <input type="text" class="form-control" id="inputmessage" name="inputmessage" placeholder="收信人：郭鑫"/>
+        <div style="height:20px"></div>
+
+        <textarea id="" class="form-control" rows="3" placeholder="私信"></textarea>
+
+      </div>
+      <div class="modal-footer">
+        <!--这里！！！！！！！！-->
+        <button type="button" class="btn btn-default" data-dismiss="modal" href="{:U('User/')}">
+          <p class="findbackstyle">发送</p>
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content --> </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>系统消息管理</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+	<script>
+//调用时要"return ondel();",不要直接写"ondel()"，这样onclick不能获得返回值。
+function ondel()
+{
+	if(confirm("确定要删除吗")){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+  <tr bgcolor="#FFFFFF"><td height="24" colspan="6"><center><b>历史系统消息</b></center>
+	</td>
+  </tr>
+  <tr bgcolor="#FBFCE2">
+    <td width="12%" height="24" align="center">消息id</td>
+    <td width="12%" align="center">消息类型</td>
+    <td width="40%" align="center">消息内容</td>
+	<td width="16%" align="center">消息时间</td>
+    <td width="20%" align="center">操作</td>
+  </tr>
+  <foreach name='list' item='li'>
+    <tr bgcolor="#FFFFFF" align="center" class="hover">
+    <td width="12%" height="24" align="center">{$li['notice_id']}</td>
+    <td width="12%" align="center">{$carr[$li['notice_type']]}</td>
+    <td width="40%" align="center">{$li['notice_content']}</td>
+    <td width="16%" align="center">{$li['notice_time']}
+	</td>
+    <td>
+	<!--<a href="{:U('Notice/delNotice',array('id'=>$li['notice_id']))}">删除</a>-->
+    </td>
+  </tr>
+</foreach>
+    <tr bgcolor="#F9FCEF">
+    <td height="24" colspan="6" align="center" valign="top">
+      <span>{$page}</span>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

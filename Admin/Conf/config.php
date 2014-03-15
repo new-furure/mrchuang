@@ -1,17 +1,23 @@
 <?php
 return array(
-	// æ·»åŠ æ•°æ®åº“é…ç½®ä¿¡æ¯
-'DB_TYPE'   => 'mysql', // æ•°æ®åº“ç±»åž‹
-'DB_HOST'   => 'db4free.net', // æœåŠ¡å™¨åœ°å€
-'DB_NAME'   => 'newfuturedb', // æ•°æ®åº“å
-'DB_USER'   => 'newfuture', // ç”¨æˆ·å
-'DB_PWD'    => 'c8714e', // å¯†ç 
-'DB_PORT'   => 3306, // ç«¯å£
-'DB_PREFIX' => '', // æ•°æ®åº“è¡¨å‰ç¼€
+	//'ÅäÖÃÏî'=>'ÅäÖÃÖµ'
+	'APP_STATUS'=> 'debug',
+	'URL_MODEL' => URL_COMPAT,
+	'TMPL_PARSE_STRING'=>array(	//¸Ä±äpublicºÍplugin
+        '__PUBLIC__'=>__ROOT__.'/Admin/Public',
+		'GROUP_NAME'=>'Admin',
+    ),
+	// Ìí¼ÓÊý¾Ý¿âÅäÖÃÐÅÏ¢
+	// 'DB_TYPE'   => 'mysql', // Êý¾Ý¿âÀàÐÍ
+	// 'DB_HOST'   => '127.0.0.1', // ·þÎñÆ÷µØÖ·
+	// 'DB_NAME'   => 'testtest', // Êý¾Ý¿âÃû
+	// 'DB_USER'   => 'root', // ÓÃ»§Ãû
+	// 'DB_PWD'    => '314159', // ÃÜÂë
+	// 'DB_PORT'   => 3306, // ¶Ë¿Ú
+	// 'DB_PREFIX' => '', // Êý¾Ý¿â±íÇ°×º
+	// 'SHOW_PAGE_TRACE' =>true, // ÏÔÊ¾Ò³ÃæTraceÐÅÏ¢
 
-//'é…ç½®é¡¹'=>'é…ç½®å€¼'
-'URL_CASE_INSENSITIVE' =>true,//ä¸åŒºåˆ†å¤§å°å†™
-'SHOW_PAGE_TRACE' =>true, // æ˜¾ç¤ºé¡µé¢Traceä¿¡æ¯
-
+	//¸öÈËÅäÖÃ
+	'CFG_PATH' =>'./Admin/Conf/',
 );
 ?>

@@ -1,0 +1,40 @@
+<div id="circle-logo" class="logo" >
+
+<div class="row">
+  <div class="col-md-5">
+
+<div class="logo">
+
+</br></br></br></br></br>
+
+</div><!--end of logo-->
+</div><!--end of col-md-5-->
+
+<div class="col-md-3">
+<div class="logo-search">
+
+<form id="search_form"  name="search_form" action="{:U('Circle/search')}" method="post" role="search">
+   <div class="input-group">
+      <input type="text" name="search"  id="inputSearch" class="form-control" style="width:300px" placeholder="搜圈号~">
+      <span class="input-group-btn">
+        <button class="btn btn-default"  style="background-color:#00868B;color:white" onclick="search_check()">搜!</button>
+      </span>
+    </div><!-- /input-group -->
+</form>
+
+<script type="text/javascript">
+	function search_check(){
+		  if(search_form.inputSearch.value==""){    //当搜索内容为空时
+    		search_form.search.focus();
+    		window.location.href="{:U('Circle/index')}";
+  }
+	}
+</script>
+  
+</div><!--end of logo-search-->
+</div><!--end of col-md-3-->
+
+</div><!--end of row-->
+</div><!--end of circle-logo-->
+
+<

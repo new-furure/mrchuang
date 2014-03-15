@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>发送系统消息</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+</head>
+<body background='__PUBLIC__/Images/allbg.gif' leftmargin='8' topmargin='8'>
+	<table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#D6D6D6">
+  
+  <tr>
+  <td height="215" align="center" valign="top" bgcolor="#FFFFFF">
+	<form name="form1" action="{:U('Notice/runSendPerson')}" method="post">
+        <table width="98%" border="0" cellspacing="1" cellpadding="1">
+		<tr> 
+            <td width="16%" height="30"><span class='red'>*</span>接收者id</td>
+            <td width="84%" style="text-align:left;">
+			<input type="text" name="userid" />
+           </td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30"><span class='red'>*</span>消息标题</td>
+            <td width="84%" style="text-align:left;">
+			<input type="text" name="title" />
+           </td>
+          </tr>
+          <tr> 
+            <td width="16%" height="30"><span class='red'>*</span>消息内容</td>
+            <td width="84%" style="text-align:left;">
+			<textarea name="content" class="textarea_info" style="width:98%;height:50px">发送消息</textarea>
+           </td>
+          </tr>
+		  
+          <tr> 
+            <td height="60">&nbsp;</td>
+            <td>
+            	<input type="submit" name="submit" value="发送消息" class="coolbg np" />
+            </td>
+          </tr>
+        </table>
+      </form>
+	  </td>
+</tr>
+</table>
+</body>
+</html>

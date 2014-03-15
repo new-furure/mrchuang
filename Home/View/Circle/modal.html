@@ -1,0 +1,149 @@
+<!-- Modal -->
+<!--管理员发送私信-->
+              <div class="modal fade" id="myModalMessageOwner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">向圈主{$vn['user_nickname']}发送私信</h4>
+                        </div>
+                        
+                        <form name="message_form" method="post" action="{:U('/Home/Circle/message/cid/'.$circle_id.'/aid/'.$vn['user_id'])}">
+                        <div class="modal-body">
+                        <label style="font-size:130%">
+
+                          私信内容：</label>
+                        <textarea name="content" rows="10" cols="55"></textarea>
+                        
+                          
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button submit" class="btn btn-primary" >确定</button>
+                      </div>
+                      </form>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+<!--管理员私信-->
+<!-- Modal -->
+              <div class="modal fade" id="myModalMessageAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">向管理员{$v['user_nickname']}发送私信</h4>
+                        </div>
+                        
+                        <form name="message_form" method="post" action="{:U('/Home/Circle/message/cid/'.$circle_id.'/aid/'.$v['user_id'])}">
+                        <div class="modal-body">
+                        <label style="font-size:130%">
+
+                          私信内容：</label>
+                        <textarea name="content" rows="8" cols="55"></textarea>
+                       
+                          
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button submit" class="btn btn-primary">确定</button>
+                      </div>
+                       </form>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+                  <!-- Modal -->
+
+<!--向成员发私信-->
+                                   <!-- Modal -->
+              <div class="modal fade" id="myModalMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">向成员{$vo['user_nickname']}发送私信</h4>
+                        </div>
+                        
+                        <form name="message_form" method="post" action="{:U('/Home/Circle/message/cid/'.$circle_id.'/aid/'.$vo['user_id'])}">
+                        <div class="modal-body">
+                        <label style="font-size:130%">
+
+                          私信内容：</label>
+                        <textarea name="content" rows="8" cols="55"></textarea>
+                        
+                          
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button submit" class="btn btn-primary">确定</button>
+                      </div>
+                      </form>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+
+                  <!-- Modal -->
+              <div class="modal fade" id="myModalKickAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">将用户{$v['user_nickname']}踢出圈子</h4>
+                        </div>
+                        <div class="modal-body">
+                          确定将该用户踢出圈子吗？
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <a href="{:U('/Home/Circle/kick/cid/'.$circle_id.'/aid/'.$v['user_id'])}" role="button">
+                        <button type="button" class="btn btn-primary" >确定</button></a>
+                      </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+                   <!-- Modal -->
+              <div class="modal fade" id="myModalDeprive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">免去用户{$v['user_nickname']}管理员</h4>
+                        </div>
+                        <div class="modal-body">
+                          确定免去该用户管理员权限？
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                         <a href="{:U('/Home/Circle/deprive/cid/'.$circle_id.'/aid/'.$v['user_id'])}" role="button">
+                        <button type="button" class="btn btn-primary">确定</button></a>
+                      </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+
+              <div class="modal fade" id="myModalKick" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">将用户{$vo['user_nickname']}踢出圈子</h4>
+                        </div>
+                        <div class="modal-body">
+                          确定将该用户踢出圈子吗？
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <a href="{:U('/Home/Circle/kick/cid/'.$circle_id.'/aid/'.$vo['user_id'])}" role="button">
+                        <button type="button" class="btn btn-primary" >确定</button></a>
+                      </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+                  
+

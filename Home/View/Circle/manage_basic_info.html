@@ -1,0 +1,168 @@
+<!--圈子模块
+创建圈子页提交页
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  
+
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+<include file="Home/View/Circle/circle_logo.html" />
+
+	<div id="circle-homepage">
+    <div class="row">
+      <div class="col-md-8">
+        <h3>
+        {$circle_name}圈子管理
+        </h3>
+        <div class="nav" style="padding-top:15px">
+
+          <ul class="nav nav-tabs">
+          <li class="active"><a href="{:U('/Home/Circle/manage/cid/'.$circle_id)}">基本信息</a></li>
+          <li><a href="{:U('/Home/Circle/manage_member/cid/'.$circle_id)}">成员管理</a></li>
+          <li><a href="{:U('/Home/Circle/post_manage/cid/'.$circle_id)}">帖子管理</a></li>
+          <li><a href="{:U('/Home/Circle/data/cid/'.$circle_id)}">数据统计</a></li>
+          </ul>         
+        </div><!--end of nav-->
+        <div class="intro" style="padding-top:15px">
+          <div class="item">
+                <form name="alter_info_form" method="post" action="{:U('/Home/Circle/handle_basic_info/cid/'.$circle_id)}">
+                <label style="font-size:130%">
+                <!--span class="label">正文:</span>
+                
+                    &nbsp;
+              </label-->
+                圈子介绍：</label>
+                <textarea name="content" rows="10" cols="55">{$circle_profile}</textarea>
+                <div>
+                <br>
+                <span><input  name="submit" type="submit" value="提交"></span>
+                </div>
+            </div><!--end of item-->
+            </form>
+
+            <div class="item" style="padding-top:15px">
+              <div class="row">
+              <div class="origin_avatar col-md-4" >
+                
+                <label style="font-size:130%;border-bottom-style:solid;border-bottom-color:#dddddd;border-bottom-width:1px;width:150px" id="circle_avatar" cid="{$circle_id}" >
+        
+                当前头像：</label>
+                
+                <div class="pic">
+                  <a href="#">
+                  <img width="150" height="100" src="{$circle_avatar_url}"  alt="{$circle_name}">
+                </a>
+                </div><!--end of pic-->
+
+             </div><!--end of origin_avatar-->
+             <div class="new_avatar col-md-8">
+               
+                <br/>
+
+                <label style="font-size:130%;border-bottom-style:solid;border-bottom-color:#dddddd;border-bottom-width:1px;width:400px">
+        
+                小头像：</label>
+
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="pic" style="padding-top:15px">
+                      <a href="#">
+                        <img width="40" height="40" src="{$circle_avatar_url}" alt="{$circle_name}">
+                      </a>
+                </div><!--end of pic-->
+                  </div><!--end of col-md-3-->
+                  
+                </div><!--end of row3-->
+
+
+
+             </div><!--end of col-md-8-->
+             </div><!--end of row-->
+             <style type="text/css" media="screen">
+        html, body { height:100%; background-color: #ffffff;}
+        #flashContent { width:100%; height:100%; }
+        </style>
+        
+       <script type="text/javascript">
+
+         function uploadevent(status){
+        var newDigi = document.getElementById("circle_avatar"); 
+        var circle_id = newDigi.getAttribute("cid");
+
+        status += '';
+        switch(status){
+          case '1':
+            document.getElementById('avatar_priview').innerHTML = "预览 : <img src='__ROOT__/Uploads/Img/circle/manage_basic_info/"+circle_id+".png?'/>";   
+          break;
+          case '-1':
+            window.location.reload();
+          break;
+          default:
+            window.location.reload();
+    } 
+  }
+
+        </script>
+      <label style="font-size:130%;border-bottom-style:solid;border-bottom-color:#dddddd;border-bottom-width:1px;width:400px">
+        
+                设置新头像:</label>
+                <br/>
+        <div id="altContent">
+
+      <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+      codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
+      WIDTH="650" HEIGHT="450" id="myMovieName">
+      <PARAM NAME=movie VALUE="__ROOT__/Public/flash/avatar.swf">
+      <PARAM NAME=quality VALUE=high>
+      <PARAM NAME=bgcolor VALUE=#FFFFFF>
+      <param name="flashvars" value="imgUrl={$circle_avatar_url}&uploadUrl=__URL__/upfile/cid/{$circle_id}&uploadSrc=false" />
+      <EMBED src="__ROOT__/Public/flash/avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl={$circle_avatar_url}&uploadUrl=__URL__/upfile/cid/{$circle_id}&uploadSrc=false"
+      NAME="myMovieName" ALIGN="" TYPE="application/x-shockwave-flash" allowScriptAccess="always"
+      PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+      </EMBED>
+      </OBJECT>
+       
+
+        </div>
+
+        <div id="avatar_priview" style="height:200px">预览区</div>
+            </div><!--end of item-->
+            <br/>
+          </div><!--end of intro-->
+            <br/>
+
+        <!--/div-->
+      </div><!--end of col-md-8-->
+      <div class="col-md-4">
+        <div id="detail_right" style="margin-top:80px">
+
+            <img align="left" valign="top" class="circle-icon" width="40" height="40" src="{$circle_avatar_url}" alt="{$circle_name}"/>
+            &nbsp; &nbsp;
+            <p style="display:inline">
+              <a href="{:U('/Home/Circle/detail/cid/'.$circle_id)}">  {$circle_name}  </a>
+              <br/>
+              &nbsp; &nbsp;<span style="color:gray">我是圈子管理者</span>
+              
+            </p>
+            <br/><br/>
+      </div><!--end of col-md-4-->
+    </div><!--end of row-->
+  
+  </div><!--end of circle-homepage-->
+
+</block>

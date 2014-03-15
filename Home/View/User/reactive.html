@@ -1,0 +1,36 @@
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+
+<block name="title">
+  <title>重新激活-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header.html" />
+</block>
+
+<block name="main">
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <br/><br/>
+<form class="form-horizontal" role="form" name="user" method="post" action="{:U('reactive')}">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="user_email" value="{$email}" placeholder="邮箱">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">发送激活邮件</button>
+    </div>
+  </div>
+</form>
+  </div>
+</div>
+</block>

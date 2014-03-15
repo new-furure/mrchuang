@@ -1,0 +1,190 @@
+<?php
+/*
++---------------------------------------------------
++后台模块
++管理员管理模块
++功能：
++1、显示管理员列表
++2、删除管理员
++3、添加管理员
++4、编辑管理员
++5、首先要添加到admin表中超级管理员的数据：密码用md5加密一下，
++或者直接用e10adc3949ba59abbe56e057f20f883e，对应密码123456，登陆以后再自行修改也可以。
++
++2014、2、16最后更改
++---------------------------------------------------
+*/
+namespace Admin\Controller;
+use Think\Controller;
+class AdminController extends CommonController {
+	//首页管理员列表，管理员数量有限，暂时不用分页。
+	public function index(){
+		//只有超级管理员有此权限。
+		$this->needSuper();
+		$Admin=M('Admin');
+		$list=$Admin->select();
+		$priinfo=M('config')->where(array('config_name'=>'admin_privilege_info'))->getField('config_content');
+		$priinfo=explode('-',$priinfo);
+		$size=count($priinfo)-2;
+		$this->assign('size',$size);
+		$this->assign('list',$list);
+		$this->assign('priinfo',$priinfo);
+		$this->display();
+    }
+	//删除管理员，只是设置权限为无，不实际删除，防止重名麻烦。
+	public function delAdmin()
+	{
+		$this->needSuper();
+		$adminid=I('get.id');
+		$record=M('admin')->find($adminid);
+		if($record['admin_privilege'][0]==0)
+			$this->error("已经被删除");
+		if($record['admin_privilege'][0]==2)
+			$this->error("不能删除超级管理员");
+		//由于数据表中没有设计有效位，所以通过这种方式删除管理员
+		if(M('admin')->where(array('admin_id'=>$adminid))->setField('admin_privilege','0'))
+			$this->success("删除成功",U('index'));
+		else
+			$this->error("删除失败，请重试",U('index'));
+	}
+	//添加普通管理员
+	public function addAdmin()
+	{
+		$this->needSuper();
+		$priinfo=M('config')->where(array('config_name'=>'admin_privilege_info'))->getField('config_content');
+		$priinfo=explode('-',$priinfo);
+		$this->assign('priinfo',$priinfo);
+		$this->display();
+	}
+	//处理添加管理员数据
+	public function runAddAdmin()
+	{
+		if(!IS_POST) 
+		{
+			$this->error('页面不存在');
+		}
+		if(!I("post.submit")) 
+		{
+			return false;
+		}
+		$this->needSuper();
+		//因为添加管理员的时候需要对数据进行验证。
+		$Admin=D('Admin');
+		$data['admin_name']=I('post.adminname');
+		$data['admin_passwd']=md5(I('post.passwd'));
+		$size=I('post.size');
+		$data['admin_privilege']="1";
+		for($i=1;$i<=$size;$i++)
+		{
+			$data['admin_privilege'].=I('post.pri'.$i);
+		}
+		//$data['admin_privilege']="1".I('post.pri1').I('post.pri2').I('post.pri3').I('post.pri4').I('post.pri5').I('post.pri6');;
+		if(!$Admin->create($data))
+			$this->error($Admin->getError());
+		if($Admin->add($data))
+			$this->success("添加成功",U('Admin/index'));
+		else
+			$this->error("添加失败");
+		//添加管理员后，要通知该管理员尽快修改自己的密码。
+	}
+	public function editAdmin()
+	{
+		$this->needSuper();
+		$adminid=I('get.id');
+		$record=M('admin')->find($adminid);
+		if($record==NULL)
+			$this->error("该用户不存在");
+		if($record['admin_privilege'][0]==0)
+			$this->error("该管理员已被删除");
+		if($record['admin_privilege'][0]==2)
+			$this->error("不能编辑超级管理员");
+		$priinfo=M('config')->where(array('config_name'=>'admin_privilege_info'))->getField('config_content');
+		$priinfo=explode('-',$priinfo);
+		$size=count($priinfo)-2;
+		$this->assign('priinfo',$priinfo);
+		$this->assign('size',$size);
+		$this->assign('list',$record);
+		$this->display();
+	}
+	public function runEditAdmin()
+	{
+		if(!IS_POST) 
+		{
+			$this->error('页面不存在');
+		}
+		if(!I("post.submit")) 
+		{
+			return false;
+		}
+		$this->needSuper();
+		$Admin=D('Admin');
+		//判断是否编辑的是超级管理员
+		
+		$data['admin_id']=I('post.id');
+		$record=$Admin->find($data['admin_id']);
+		if($record['admin_privilege'][0]==2)
+			$this->error("不能编辑超级管理员",U(Admin/index));
+		$data['admin_name']=I('post.adminname');
+		//$data['admin_passwd']=I('post.passwd');//感觉还是不要改密码的好吧
+		$size=I('post.size');
+		$data['admin_privilege']="1";
+		for($i=1;$i<=$size;$i++)
+		{
+			$data['admin_privilege'].=I('post.pri'.$i);
+		}
+		//$data['admin_privilege']="1".I('post.pri1').I('post.pri2').I('post.pri3').I('post.pri4').I('post.pri5').I('post.pri6');;
+		if(!$Admin->create($data))
+			$this->error($Admin->getError());
+		if($Admin->save($data)!==false)//尽量用不全等于来做吧！
+			$this->success("修改成功",U('Admin/index'));
+		else
+			$this->error("修改失败");
+	}
+	//可以给新增加的控制器添加权限。
+	public function addPri()
+	{
+		$this->needSuper();
+		$this->display();
+	}
+	public function runAddPri()
+	{
+		if(!IS_POST) 
+		{
+			$this->error('页面不存在');
+		}
+		if(!I("post.submit")) 
+		{
+			return false;
+		}
+		$this->needSuper();
+		$name=I('post.name');
+		$info=I('post.info');
+		if($name==""||$info=="")
+		{
+			$this->error("添加数据错误");
+		}
+		//添加到配置表。
+		$privilege=M('config')->where(array('config_name'=>'admin_privilege'))->getField('config_content');
+		$privilege=$privilege.$name."-";
+		M('config')->where(array('config_name'=>'admin_privilege'))->setField('config_content',$privilege);
+		$priinfo=M('config')->where(array('config_name'=>'admin_privilege_info'))->getField('config_content');
+		$priinfo=$priinfo.$info."-";
+		M('config')->where(array('config_name'=>'admin_privilege_info'))->setField('config_content',$priinfo);
+		//给每一位管理员加一个位数。
+		$arr=M('admin')->getField('admin_id,admin_privilege');
+		foreach($arr as $key=>$value)
+		{
+			$where['admin_id']=$key;
+			M('admin')->where($where)->setField('admin_privilege',$value."0");
+		}
+		//超级管理员,不管他。
+		/*$size=count(explode('-',$privilege))-2;
+		$superpri="2";
+		for($i=0;$i<=$size;$i++)
+		{
+			$superpri.="1";
+		}
+		*/
+		$this->success("添加新控制器权限成功");
+	}
+}

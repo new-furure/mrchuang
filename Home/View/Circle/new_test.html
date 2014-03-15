@@ -1,0 +1,32 @@
+<html>
+<head>
+<script type="text/javascript" src="__ROOT__/Public/Js/Base.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Js/prototype.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Js/mootools.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Js/ThinkAjax.js"></script>
+<script type="text/javascript">
+    function add(){
+        //ThinkAjax.sendForm(表单ID,URL,回调函数,信息显示的地方);
+        alert('1');
+        ThinkAjax.sendForm('frm',"{:U('Circle/addtwo')}",wc);  
+        alert('2'); 
+    }
+    function wc(data){
+        if(data['status']!=1){
+            alert('发送失败');
+        }else{
+            $('list').innerHTML+='信息'+data['comment_content'];   
+        }   
+    }
+</script>
+
+</head>
+<body>
+<div id="list"></div>
+<form action="" method="POST" id="frm">
+
+  信息：<input type="text" name="comment_content" /><br />
+       <input type="button" value="提交" onClick="add()" />
+</form>
+</body>
+</html>

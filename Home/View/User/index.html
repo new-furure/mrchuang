@@ -1,0 +1,53 @@
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+
+<block name="title">
+  <title>{$user_name}的首页-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header1.html" />
+  <script>
+    document.getElementById("nav_home").className="nav__myactive";
+  </script>
+</block>
+
+<block name="main">
+  <div class="uglydiv">1</div>
+  <div style="color:#FF0000;width:100%; height:15px;"></div>
+  <div class="row">
+
+    <div class="col-md-6 col-md-offset-2 main__body__contentcontainer">
+
+      <div>
+        <p>关注的文章</p>
+        {$focus_article_content|default="您还没有关注任何内容"}
+      </div>
+
+      <div>
+        <p>关注的用户</p>
+        <div class="row">
+       
+           {$focus_users_content|default="您还没有关注任何人，赶紧去认识一下大家吧！"}            
+        </div>
+       
+      </div>
+
+    </div>
+
+    <div class="col-md-2 main__sidebar__container">
+      <include file="User:mysidebar"/>
+      <include file="Home/Public/sidebar.html"/>
+    </div>
+    
+  </div>
+
+</block>
+
+<block name="javascript">
+  <script  src="/Public/Js/user.js" type="text/javascript"></script>
+</block>

@@ -1,0 +1,32 @@
+{//关注模块}
+<script type="text/javascript">
+  document.getElementById("focus").className="nav__active";
+</script>
+  <div class="tab-pane well active">
+<!--   <div class="btn-group" data-toggle="buttons" style="padding-bottom:1em">
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="option1"><a href="{:U('Message/index?bar=7')}">全部关注内容</a>
+    </label>
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="option2"><a href="{:U('Message/index?bar=7&notice_type=21')}"> 我关注的项目</a>
+    </label>
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="option3"><a href="{:U('Message/index?bar=7&notice_type=22')}"> 我关注的政策</a>
+    </label>
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="option4"><a href="{:U('Message/index?bar=7&notice_type=23')}"> 我关注的问答</a>
+    </label>
+    <label >
+      <a href="{:U('Message/index?bar=7&notice_type=25')}"> 我关注的人</a>
+    </label>
+  </div> -->
+  <ul class="nav nav-pills">
+    <li class="active"><a href="{:U('Message/index?bar=4')}">全部关注内容</a></li>
+    <li><a href="{:U('Message/index?bar=4&notice_type=21')}"> 关注的项目</a></li>
+    <li><a href="{:U('Message/index?bar=4&notice_type=22')}"> 关注的政策</a></li>
+    <li><a href="{:U('Message/index?bar=4&notice_type=23')}"> 关注的问题</a></li>
+    <li><a href="{:U('Message/index?bar=4&notice_type=25')}"> 关注的人</a></li>
+  </ul>
+  <include file="focus_policyitem"/>
+  <h5 class="col-md-offset-8">{$page}</h5>
+  </div>

@@ -1,0 +1,77 @@
+<script src="/Public/Js/jquery.min.js"></script>
+
+<!-- Uploadify 上传插件-->
+
+<script src="/Public/Js/jquery.uploadify.min.js"></script>
+
+<!-- msgBox 信息弹出插件-->
+
+<script src="/Public/Js/jquery.msgbox.min.js"></script>
+
+<!-- Url 获取URL地址参数的插件-->
+
+<script src="/Public/Js/url.min.js"></script>
+<div class="control-group">
+
+    <label class="control-label">头像</label>
+
+    <div class="controls">
+
+        <img alt="您还没有上传头像" src="__ROOT__{$wx.avatar}">//上传成功的头像缩略图将在这里显示
+
+        <input type="hidden" name="wx[avatarid]"  value="">//接收上传成功后的数据表img的id
+
+        <input type="file" id="wx-avatar">//上传点击按钮
+
+    </div>
+
+</div>
+<script type="text/javascript">
+	$(function(){
+    var swfurl = "../Public/plugins/uploadify/";
+    var uploaderurl = "{:U('uploadavatar')}";
+    var sessionid = "{:session_id()}";
+    var __root__ = "__ROOT__";
+
+    $('#wx-avatar').uploadify({
+        swf : swfurl + 'uploadify.swf',//swf文件路径
+        uploader : uploaderurl + "?wxid=" + url('?wxid'),  // 服务器端接收处理文件上传的地址，这里使用url插件取得地址栏里面的用户ID，并发送到服务器端
+         // Options
+        auto : true,  // 文件添加到队列后自动上传
+        buttonText : '点击上传头像图片',  // 上传按钮上面的文字
+        fileSizeLimit : '2 MB',    // 上传文件的大小限制，可以使用B\KB\MB\GB单位，填0表示不限制。
+        fileTypeDesc  : '图片',    //选择文件时关于文件类型的描述
+        fileTypeExts : '*.jpeg;*.jpg;*.png;*.bmp',    // 选择文件时允许的扩展名
+        height : 30,   // 上传按钮的高度
+        width  : 120,    // 上传按钮的宽度
+        formData  : {'session_id' : sessionid},   // 当文件上传时，随文件一起发送到服务器的其他数据,要将当前登录用户的session数据一起发送给服务器，否则服务器会报302错误，这是因为文件上传时，uploadify插件没有发送包括session在内的其他数据给服务器，thinkphp检测不到session，会认为用户没有登录，所以拒绝操作。
+        overrideEvents  : ['onDialogClose','onSelectError','onUploadSuccess'],   //重写事件， 如果自定义了弹出窗，一定要重写onDialogClose事件，否则会跳两次窗（uploadify插件预设的警告+自己定义的弹出窗），onDialogClose设定后，uploadify预设的警告窗将不会弹出。
+        onSelectError   : function(file, errorCode, errorMsg) { //重写选择时候出现的错误
+            var msgText = "上传失败！\n\n";
+            switch(errorCode){
+                case -100:
+                    msgText += "单次上传的文件最多"+this.settings.queueSizeLimit+" 个";
+                    break;
+                case -110:
+                    msgText += "文件 [" + file.name + "] 大小超过限制!<br><br>温馨提示：图片大小不能超过 "+this.settings.fileSizeLimit;
+                    break;
+                case -120:
+                    msgText += "文件 [" + file.name + "] 大小为0，不能上传";
+                    break;
+                case -130:
+                    msgText += "文件 [" + file.name + "] 格式不正确，限： "+this.settings.fileTypeExts;
+                    break;
+                default: 
+                    msgText += "错误代码:"+errorCode+"\n"+errorMsg;
+            }
+            $.msgbox(msgText);//调用msgbox插件弹出信息。
+         },
+         onUploadSuccess : function(file, data, response){
+            var data=eval("("+ data +")");   //将回传的数据转换成json格式，这里我没有搞明白为什么要转换一次，我在其他地方后台使用$this->ajaxReturn($data)返回数据后就直接是json格式，不用转换，但是在这里不行，有知道原因的童鞋能否告知一下，谢谢。
+            $('#wx-avatar').parent('.controls').find('img').remove();//将页面上原有的缩略图删除
+            $('#wx-avatar').before("<img src='" + __root__ + data.imgdata.savepath + "sma_" + data.imgdata.name +"'>");//显示刚上传的图片的缩略图
+            $('#wx-avatar').parent('.controls').find("input[name='wx[avatarid]']").val(data.imgdata.id);//将图片img表中的id给到input。
+         }
+      });
+});
+</script>

@@ -1,0 +1,93 @@
+	<script type="text/javascript" defer src="__ROOT__/Public/Js/index.js"></script>
+
+<form name="user" action="{:U('User/register')}" class="form-horizontal" method="post" >
+  <br/>
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="inputEmail" class="col-sm-5 control-label">邮箱</label>
+      <div class="col-sm-7">
+        <input type="email" class="form-control" name="user_email" id="inputEmail" placeholder="Email" onblur="checkEmail(this.value)">
+      </div>
+    </div>
+    <div class="col-md-4 registertextstyle">
+      <tr id="tr_email" style=" display:block">
+        <td height="40" colspan="2" align="left">
+        <div id="div_email"  style="color:lightcoral; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="inputNickname"class="col-sm-5 control-label"><IF condition="$isorg">组织名称<ELSE/>姓名</IF></label>
+      <div class="col-sm-7">
+        <input class="form-control"  name="user_nickname" id="inputNickname" placeholder="Name" onblur="checkUser(this.value)">
+      </div>
+    </div>
+    <div class="col-md-4 registertextstyle">
+      <tr id="tr_user" style=" display:block">
+        <td height="40" colspan="2" align="center">
+          <div id="div_user" class="span3 offset3"style="color:lightcoral; width:90%; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="inputPassword" class="col-sm-5 control-label">密码</label>
+      <div class="col-sm-7">
+        <input type="password" name="user_passwd" class="form-control" id="inputPassword" placeholder="Password" onblur="checkPwd(this.value)">
+      </div>
+    </div>
+    <div class="col-md-4 registertextstyle">
+      <tr id="tr_pwd" style=" display:block">
+          <td height="40" colspan="2" align="center">
+          <div id="div_pwd" class="span3 offset3" style="color:lightcoral; width:90%; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="inputRepassword" class="col-sm-5 control-label">确认密码</label>
+      <div class="col-sm-7">
+        <input type="password" name="re_passwd" class="form-control" id="inputRepassword" placeholder="Password" onblur="registerallcheck()">
+      </div>
+    </div>
+    <div class="col-md-8 col-md-offset-3 registertextstyle">
+      <tr id="tr_repwd" style=" display:block">
+        <td height="40" colspan="2" align="center">
+        <div id="div_repwd" class="span3 offset3" style="color:lightcoral; width:90%; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+    <INPUT type="hidden" name="isorg" value="{$isorg|default=0}"/>
+    <INPUT type="hidden" name="goto" value="{$goto}"/>
+ 
+      <IF condition="C('IS_CODE_NEED') AND !$isorg">
+          <div class="row">
+    <div class="form-group col-md-8">
+      <label for="invite_code" class="col-sm-5 control-label">邀请码</label>
+      <div class="col-sm-7">
+        <input type="text" name="invite_code" class="form-control" id="invite_code" placeholder="邀请码"  value="{:I('invite_code')}" onblur="">
+      </div>
+    </div>
+    <div class="col-md-8 col-md-offset-3 registertextstyle">
+      <tr id="tr_invite" style=" display:block">
+        <td height="40" colspan="2" align="center">
+        <div id="div_invite" class="span3 offset3" style="color:lightcoral; width:90%; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+       <ELSE/>
+       </IF>
+  <br/>
+    <div class="form-group">
+      <label for="" class="col-sm-3 control-label"></label>
+      <div class="col-sm-3">
+        <button type="submit" class="btn btn-primary btn-large controls registertextstyle" id="registerbutton">注册</button>
+        <p class="text-muted">信息无误之后方可注册。</p>
+      </div>
+    </div>
+</form>
+<a class="col-sm-offset-3"  href="{:U('User/Log')}">&nbsp;&nbsp;登录</a>

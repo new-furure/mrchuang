@@ -1,0 +1,11 @@
+  <include file="Project:projectitem"/>  
+  <a class="text-success">
+  	<span class="edit-article glyphicon glyphicon-edit">编辑</span>
+  </a>
+
+  <a class="text-muted">
+  	<span class="delete-article glyphicon glyphicon-remove-circle">删除</span>
+  </a>
+  <IF condition="$data['article_draft']">
+  	<span class="glyphicon glyphicon-tasks">草稿</span>
+  </IF>

@@ -1,0 +1,98 @@
+{//私信————私信详细页}
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/mystyle.css" media="all"/>
+</block>
+
+<block name="title">
+  <title>私信-{$data['username']}-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header.html" />
+  <script>
+    document.getElementById("nav_message").className="nav__myactive";
+  </script>
+</block>
+
+<block name="main">
+  <div style="color:#000000;width:100%; height:15px;"></div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-2 well main__body__contentcontainer">
+    <!-- 是不是用个iframe什么的随时刷新？ -->
+    <div id="sixinlist"><!--这个div不要删，他的id也不要变~~-->
+    <input type="hidden" id="user_id" value="{$data['user_id_other']}">
+    <volist name="list" id="msg">
+      <eq name="msg['user_id']" value="$_SESSION['user_id']">
+        <include file="privateletter_detail_mytalk" content="{$msg.content}" pic="__ROOT__/{$msg['user_avatar_url']}" time="{$msg['time']||substr=0,16}" msgid="{$msg.message_id}"/>
+      <else/>
+        <include file="privateletter_detail_yourtalk" content="{$msg.content}" pic="__ROOT__/{$msg['user_avatar_url']}" time="{$msg['time']||substr=0,16}" msgid="{$msg.message_id}"/>
+      </eq>
+      <!--头像地址-->
+    </volist>    
+    </div><!--sixinlist end-->
+    <h5 class="col-md-offset-7">{$page}</h5>
+    <textarea class="form-control" rows="5" id="inputtalk"></textarea>
+    <button class="btn btn-primary" style="margin-left:92%;margin-top:1em;" onclick="add_sixin()">发送</button>
+  </div>
+  <div class="col-md-2">
+
+  </div>
+</div>
+<script type="text/javascript">
+
+function getid(el){return document.getElementById(el)}
+function delete_sixin(obj,msgid)
+{
+    var oComment=obj.parentNode;//这里是关键。找到当前留言对象。
+    var oComment2=oComment.parentNode;
+    oComment2.style.display="none";    
+    var user_id_other=$('#user_id').val();
+    $.ajax({
+      type:"post",
+      url:"{:U('Message/delete_message')}",
+      data:{message_id:msgid,user_id_other:user_id_other},
+      success: function(data, textStatus, xhr) {
+        if(data.status==1)
+          alert("删除成功！");                  
+      }
+    });
+}
+function add_sixin()
+{
+  getid("sixinlist").appendChild(getid("mytalk"));
+  var content=$("#inputtalk").val();
+  $("#mytalk—content").html(content);
+  getid("mytalk").style.display="block";
+  $("#inputtalk").val("");
+  $('#mytalk_time').html("刚刚");
+  var user_id_other=$('#user_id').val();
+  $.ajax({
+      type:"post",
+      url:"{:U('Message/send_message')}",
+      data:{content:content,user_id_other:user_id_other},
+      success: function(data, textStatus, xhr) {
+        if(data.status==1)
+          alert("发送成功！");                  
+      }
+  });
+}
+</script>
+
+
+      <div class="row sixindetail__block" id="mytalk" style="display:none">
+        <div class="col-md-6 col-md-offset-3 panel sixindetail__block__talk--blue">
+          <button type="button" class="close" onclick="delete_sixin(this)">&times;</button>
+          <h4 id="mytalk—content">
+          【自己发送的内容】</h4>
+          <h6 id='mytalk_time' class="pull-right" style="color:white">[time]</h6>
+        </div>
+        <div class="col-md-2 thumbnail">
+          <img class="sixindetail__block__img" src="__ROOT__/Public/Img/111.jpg"/>
+        </div>
+      </div>
+ </block>  
+

@@ -1,0 +1,19 @@
+<div class="thumbnail" align="center">
+  <a href="{:get_url_by_id($user['user_id'])}" >
+    <img style="width:100%" src="{$user['user_avatar_url']}" ></a>
+  <div class="caption">
+    <h6>
+      <a href="{:get_url_by_id($user['user_id'])}" class="infocardshow"  target="_blank" onmouseover="SetInfocardPosition()">{$user.user_nickname}</a>
+    </h6>
+    <h6>{$user.user_signature}</h6>
+      <button class="focus_user_btn btn btn-danger" to="{:U('User/focus','id='.$user['user_id'])}">
+        <span class="glyphicon glyphicon-heart">
+          {$user['user_focus_number']}
+          <php>//echo is_focus_on($user['user_id'])?"取消关注" : "关注TA";</php>
+        </span>
+      </button>
+      <button class="btn btn-success" style="margin-left:2px" onclick="ajax_send_message({$user['user_id']})">
+        <span class="glyphicon glyphicon-envelope"></span>
+      </button>
+  </div>
+</div>

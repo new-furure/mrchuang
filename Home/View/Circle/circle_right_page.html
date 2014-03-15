@@ -1,0 +1,43 @@
+<div id="circle-right-page">
+<div>
+	<p>最近加入</p>
+	<div class="member-list">
+		<ul class="list">
+		<volist name="belong" id="vo">
+		{$belong}
+			<li>
+				<div class="pic">
+					<a href="{:get_url_by_id($vo.user_id)}">
+						<img width="40" height="40" src="{$vo.user_avatar_url | default='__ROOT__/Public/Img/error.jpg'}" alt="{$vo.user_nickname}">
+					</a>
+				</div>
+				<div>
+					<a href="{:get_url_by_id($vo.user_id)}">{$vo.user_nickname}</a>
+				</div>
+			</li>
+		</volist>
+			<li>
+				
+			</li>
+		</ul>
+	</div>
+</div>
+<br/><br/>
+<span class="input-group-btn">
+    <a href="{:U('Circle/post')}" role="button">
+        <button class="btn btn-default" type="submit" style="background-color:#f2f8f2;color:#6e944f">我要发帖</button>
+    </a>
+</span>
+<br/>
+<span class="input-group-btn">
+    <a href="{:U('Circle/start_chat')}" role="button">
+        <button class="btn btn-default" type="submit" style="background-color:#f2f8f2;color:#6e944f"> 发起群聊</button>
+    </a>
+</span>
+<br/>
+<span class="input-group-btn">
+    <a href="{:U('Circle/start_activity')}" role="button">
+        <button class="btn btn-default" type="submit" style="background-color:#f2f8f2;color:#6e944f">发起活动</button>
+    </a>
+</span>
+</div>

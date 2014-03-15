@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>用户详细信息</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+</head>
+<body background='__PUBLIC__/Images/allbg.gif' leftmargin='8' topmargin='8'>
+	<table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#D6D6D6">
+  <tr>
+    <td height="19" background="__PUBLIC__/Images/tbg.gif" bgcolor="#E7E7E7"> 
+      <table width="96%" border="0" cellspacing="1" cellpadding="1">
+        <tr> 
+          <td style="padding-left:10px;"><b><strong>详细信息</strong></b> </td>
+          <td></td>
+        </tr>
+      </table></td>
+   </tr>
+  <tr>
+  <td height="215" align="center" valign="top" bgcolor="#FFFFFF">
+        <table width="98%" border="0" cellspacing="1" cellpadding="1">
+           <tr> 
+            <td width="16%" height="30">用户名称</td>
+            <td width="84%" style="text-align:left;">$list['user_name'];
+           </td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">用户邮箱</td>
+            <td width="84%" style="text-align:left;">$list['user_email'];
+           </td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">用户昵称</td>
+            <td width="84%" style="text-align:left;">$list['user_nickname'];
+           </td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">用户登录时间</td>
+            <td width="84%" style="text-align:left;">$list['user_time'];
+           </td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">用户简介</td>
+            <td width="84%" style="text-align:left;">$list['user_profile'];
+           </td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">具体要什么</td>
+            <td width="84%" style="text-align:left;">再加什么
+           </td>
+          </tr>
+        </table>
+	  </td>
+</tr>
+</table>
+</body>
+</html>

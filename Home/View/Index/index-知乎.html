@@ -1,0 +1,354 @@
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.png" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+
+<block name="main">
+  <div class="hidden-xs">
+  <div class="index__up-div" id="all"></div>
+  <div class="index__down-div"></div>
+  <div class="index__backgroundimg-div" id="div1">
+    <div class="row">
+      <div class="col-md-6" id="changeable-logo-div">
+        <img src="__ROOT__/Public/Img/Index/Logo.png" class="index__logo" id="Logo-Text-area"/>
+        <img src="__ROOT__/Public/Img/Index/Logo-text.png" class="index__logo-text" id="Logo-Text-area"/>
+        <div class="row">
+          <img src="__ROOT__/Public/Img/Index/video-usual.png" id="video-button" class="index__video" onmouseover="videoButtonOver()" onmouseout="videoButtonOut()" data-toggle="modal" data-target="#videoModal"/>          
+          <img src="__ROOT__/Public/Img/Index/video-text.png" id="video-button" class="index__video-text"/>
+        </div>
+      </div>
+<!--===========================================================-->      
+      <div class="col-md-4 col-md-offset-2" style="padding-top:34px">
+        <div id="log-div"><!--Login  div-->
+        <div class="row" style="width:90%;">
+          <div class="col-md-6">
+            <p class="index__log-reg-title-text" style="margin-top:5px;">登录账号</p>
+          </div>
+          <div class="col-md-6">
+            <a class="pull-right index__log-reg-title-text" id="change-to-reg" onclick="toggleLogToReg()">注册<img src="__ROOT__/Public/Img/Index/arrow.png" style="width:30px;"/>
+            </a>
+          </div>
+        </div><!--row end-->
+        <input class="form-control index__input" type="email" placeholder="邮箱"/>
+        <input class="form-control index__input" type="password" placeholder="密码"/>
+        <button class="btn btn-block index__log-reg-button">登录闯先生</button>
+        </div><!--Login div end-->
+<!--===============================================================-->
+        <div id="reg-div" style="display:none">
+        <div class="row" style="width:90%;"><!--Register  div-->
+          <div class="col-md-6">
+            <p class="index__log-reg-title-text" style="margin-top:5px;">注册账号</p>
+          </div>
+          <div class="col-md-6">
+            <a class="pull-right index__log-reg-title-text" onclick="toggleRegToLog()">登录<img src="__ROOT__/Public/Img/Index/arrow.png" style="width:30px"/>
+            </a>
+          </div>
+        </div><!--row end-->
+        <div class="row">
+          <div class="col-md-5">
+            <input class="form-control index__input-short" type="text" placeholder="姓" id="input-reg-name1"/>
+          </div>
+          <div class="col-md-6">
+            <input class="form-control index__input-short-2" type="text" placeholder="名" id="input-reg-name2"/>
+          </div>
+        </div>
+        <input class="form-control index__input" type="email" placeholder="邮箱" id="input-reg-email"/>
+        <input class="form-control index__input" type="password" placeholder="密码" id="input-reg-password"/>
+        <div class="index__alert">
+          <p id="alert-name1" >
+            <img src="__ROOT__/Public/Img/Index/alert-sign.png" style="width:30px"/>姓氏未填写
+          </p>
+          <p id="alert-name2" >
+            <img src="__ROOT__/Public/Img/Index/alert-sign.png" style="width:30px"/>名字未填写
+          </p>
+          <p id="alert-email" >
+            <img src="__ROOT__/Public/Img/Index/alert-sign.png" style="width:30px"/>邮箱未填写
+          </p>
+          <p id="alert-password" >
+            <img src="__ROOT__/Public/Img/Index/alert-sign.png" style="width:30px"/>密码未填写
+          </p>
+        </div>
+        <button class="btn btn-block index__log-reg-button" id="register-button">注册闯先生</button>
+        </div><!--Register div end-->
+<!--===========================================================-->
+        <div class="row">
+          <a class="index__contactus">联系我们</a>
+          <img class="index__icon-img1" id="img_apple" src="__ROOT__/Public/Img/Index/apple.png" onmouseover="mOver2()" onmouseout="mOut2()"/>
+          <img class="index__icon-img2" id="img_android" src="__ROOT__/Public/Img/Index/android.png" onmouseover="mOver1()" onmouseout="mOut1()"/>
+          <img class="index__icon-img3" id="img_weixin" src="__ROOT__/Public/Img/Index/weixin.png" onmouseover="mOver3()" onmouseout="mOut3()"/>
+        </div>
+      </div>
+
+    </div><!--row end-->
+  </div><!--background-img div end-->
+
+<div style="width:100%;height:500px;background-color: #eeeeee;">
+</div><!--background div-->
+
+  <div class="index__people-div row" id="div2">
+    <!--===========================================================-->
+    <div class="col-md-4 row">
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/1.png" class="index__people-avatar"/>
+      </div>
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/2.png" class="index__people-avatar"/>
+      </div>
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/3.png" class="index__people-avatar"/>
+      </div>
+      <!--===========================================================-->
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/4.png" class="index__people-avatar"/>
+      </div>
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/5.png" class="index__people-avatar"/>
+      </div>
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/6.png" class="index__people-avatar"/>
+      </div>
+      <!--===========================================================-->
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/7.png" class="index__people-avatar"/>
+      </div>
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/8.png" class="index__people-avatar"/>
+      </div>
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/9.png" class="index__people-avatar"/>
+      </div>
+      <!--===========================================================-->
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/10.png" class="index__people-avatar"/>
+      </div>
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/11.png" class="index__people-avatar"/>
+      </div>
+      <div class="col-md-4">
+        <img src="__ROOT__/Public/Img/Index/avatar/1/12.png" class="index__people-avatar"/>
+      </div>
+      <!--===========================================================-->
+    </div>
+    <!--===========================================================-->
+    <div class="col-md-8">
+      <img id="base-img" style="width:100%" src="__ROOT__/Public/Img/Index/avatar/people-base.jpg"/>
+      <img id="detail-img"style="position:absolute;top:34px;left:60px;width:50px;" src="__ROOT__/Public/Img/Index/avatar/2/1.png" />
+    </div>
+  </div><!--people div end-->
+
+  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery
+/jquery-1.4.min.js"></script>
+  <script defer type="text/javascript">
+    function videoButtonOver()
+    {
+      document.getElementById("video-button").src="__ROOT__/Public/Img/Index/video-down.png";
+    }
+    function videoButtonOut()
+    {
+      document.getElementById("video-button").src="__ROOT__/Public/Img/Index/video-usual.png";
+    }
+    function toggleLogToReg()
+    {
+        document.getElementById("log-div").style.display="none";
+        document.getElementById("reg-div").style.display="block";
+        $(".index__down-div").css("height","75px");
+        $(".index__people-div").css("top","400px");
+        $("#changeable-logo-div").css("top","0px");
+        $("#alert-name1").css("display","none");
+        $("#alert-name2").css("display","none");
+        $("#alert-email").css("display","none");
+        $("#alert-password").css("display","none");
+
+    }
+    function toggleRegToLog()
+    {
+        document.getElementById("reg-div").style.display="none";
+        document.getElementById("log-div").style.display="block";
+        $(".index__down-div").css("height","75px");
+        $(".index__people-div").css("top","400px");
+        $("#changeable-logo-div").css("top","0px");
+        $("#alert-name1").css("display","none");
+        $("#alert-name2").css("display","none");
+        $("#alert-email").css("display","none");
+        $("#alert-password").css("display","none");
+    }
+
+    $(document).ready(function(){
+     $("input").focus(function(){
+    $(this).css("border-color","#1abc9a");
+    $(this).css("background-color","white");
+    });
+    $("input").blur(function(){
+    $(this).css("border-color","#7cbde5");
+    $(this).css("background-color","#dcdcdc");
+    });
+    $("button").mousedown(function(){
+    $(this).css("color","white");
+    $(this).css("background-color","#16a085");
+    });
+    $("button").mouseup(function(){
+    $(this).css("color","white");
+    $(this).css("background-color","#48c9b0");
+    });
+    $(".index__people-avatar").mouseover(function(){
+      var n=this.src;
+      var s=n.replace(/1/,"/2/");
+      $(this).attr("src",s);
+      $("#detail-img").attr("src",s);
+    });
+    $(".index__people-avatar").mouseout(function(){
+      var n=this.src;
+      var s=n.replace(/2/,"/1/");
+      $(this).attr("src",s);
+    });
+    $(".index__log-reg-title-text").mousedown(function(){
+    $(this).css("margin-right","10px");
+    //$(this).css("background-color","#dcdcdc");
+    });
+    $(".index__log-reg-title-text").mouseup(function(){
+    $(this).css("margin-right","0px");
+    //$(this).css("background-color","#dcdcdc");
+    });
+    //
+    $("#register-button").click(function(){
+      var count=0;
+      if($("#input-reg-name1").val() == "")
+      {count++;}
+      else
+        {$("#alert-name1").css("display","none");}
+      //
+      if($("#input-reg-name2").val() == "")
+      {count++;}
+      else
+        {$("#alert-name2").css("display","none");}
+      //
+      if($("#input-reg-email").val() == "")
+      {count++;}
+      else
+        {$("#alert-email").css("display","none");}
+      //
+      if($("#input-reg-password").val() == "")
+      {count++;}
+      else
+        {$("#alert-password").css("display","none");}
+      //
+      if(count==2 || count==3 || count==4)
+      {
+        $(".index__down-div").css("height","200px");
+        $(".index__people-div").css("top","560px");
+        $("#changeable-logo-div").css("top","21px");
+      }
+      else
+      {
+        $(".index__down-div").css("height","75px");
+        $(".index__people-div").css("top","400px");
+        $("#changeable-logo-div").css("top","0px");
+      }
+      if($("#input-reg-name1").val() == "")
+      {$("#alert-name1").css("display","block");}
+      else
+        {$("#alert-name1").css("display","none");}
+      //
+      if($("#input-reg-name2").val() == "")
+      {$("#alert-name2").css("display","block");}
+      else
+        {$("#alert-name2").css("display","none");}
+      //
+      if($("#input-reg-email").val() == "")
+      {$("#alert-email").css("display","block");}
+      else
+        {$("#alert-email").css("display","none");}
+      //
+      if($("#input-reg-password").val() == "")
+      {$("#alert-password").css("display","block");}
+      else
+        {$("#alert-password").css("display","none");}
+      //////////////////////////////////
+      if(count==0)
+      {
+        $("#congratulation-model").css("display","block");
+        var s_name1=$("#input-reg-name1").val();
+        var s_name2=$("#input-reg-name2").val();
+        var s_name=s_name1+s_name2;
+        document.getElementById("congratulation_username").innerHTML=s_name;
+      }
+    });
+});
+    ///
+function mOver1()
+ {document.getElementById("img_android").style.opacity="0.7";}
+function mOut1()
+ {document.getElementById("img_android").style.opacity="1";}
+ function mOver2()
+ {document.getElementById("img_apple").style.opacity="0.7";}
+function mOut2()
+ {document.getElementById("img_apple").style.opacity="1";}
+ function mOver3()
+ {document.getElementById("img_weixin").style.opacity="0.7";}
+function mOut3()
+ {document.getElementById("img_weixin").style.opacity="1";}
+  </script>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content index__videx-model">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <embed src="http://player.youku.com/player.php/sid/XNjgxODQ3ODMy/v.swf" allowFullScreen="true" quality="high" width="100%" height="500px" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="congratulation-model" style="display:none">
+<div class="index__congratulation-model"></div>
+  <div class="index__congratulation-box" id="congratulation-box">
+    <img src="__ROOT__/Public/Img/Index/blue-white-logo.jpg" style="width:50%"/>
+    <h3 class="text-muted" id="congratulation_username"></h3>
+    <h3 class="text-muted">恭喜你成为第<strong style="color:#48c9b0">0001</strong>位闯先生</h3>
+    <button class="btn index__btn-wanshan">完善资料</button>
+    <button class="btn index__btn-tiyan">开始体验</button>
+  </div>
+  <script type="text/javascript">
+   var screen_w=screen.width;
+   var left_w=(screen_w-400)/2;
+   var s_left_w=left_w.toString();
+   $("#congratulation-box").css("margin-left",s_left_w+"px");
+   ////////
+   // var s_name1=$("#input-reg-name1").val();
+  </script>
+  </script>
+</div>
+</div><!--响应式布局-电脑版 end-->
+
+<div class="visible-xs">
+<div style="background-color:#196790;height:500px;">
+    <div style="width:500px;margin:auto;padding-top:20px;">
+      <img src ="__ROOT__/Public/Img/Index/Logo.png" style="width:450px;"/>
+      <img src ="__ROOT__/Public/Img/Index/Logo-text.png" style="width:450px"/>
+      <h2 style="color:#dddddd">
+        网站正处于内测阶段，<br/><br/>
+        请输入邀请码：<br/><br/>
+    <div class="input-group" style="width:450px;">
+      <input type="text" class="form-control index__TopInput">
+      <span class="input-group-btn">
+        <button class="btn btn-default index__TopInput2" type="button" onclick="bingo()">进入</button>
+      </span>
+    </div><!-- /input-group -->
+      </h2>
+      <h5 id="bingo" style="color:#bbbbbb"></h5>
+    </div>
+  </div>
+    <script type="text/javascript" defer src="__ROOT__/Public/Js/index.js"></script>
+    <script type="text/javascript" defer>
+      function bingo()
+      {document.getElementById("bingo").innerHTML="验证码不正确，请检验输入是否正确。";}
+    </script>
+
+
+</div>
+</block>

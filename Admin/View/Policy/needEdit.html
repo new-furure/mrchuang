@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>添加会员帐号</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+</head>
+<body background='__PUBLIC__/Images/allbg.gif' leftmargin='8' topmargin='8'>
+	<table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#D6D6D6">
+  <tr>
+    
+   </tr>
+  <tr>
+  <td height="215" align="center" valign="top" bgcolor="#FFFFFF">
+	<form name="form1" action="{:U('Policy/runNeedEdit')}" method="post">
+	<input type="hidden" name="uid" value="{$uid}" />
+	<input type="hidden" name="title" value="{$title}" />
+        <table width="98%" border="0" cellspacing="1" cellpadding="1">
+          <tr> 
+            <td width="16%" height="30">政策标题</td>
+            <td width="84%" style="text-align:left;"> {$title}</td>
+          </tr>
+          
+		  <tr> 
+            <td width="16%" height="30">通知标题</td>
+            <td width="84%" style="text-align:left;"> <input type="text" name='title'></td>
+          </tr>
+          <tr> 
+            <td height="30">通知内容</td>
+            <td style="text-align:left;">
+				对您的文章“{$title}”通知如下：
+            	<textarea name="content" class="textarea_info" style="width:98%;height:50px">理由如下：</textarea>
+            </td>
+          </tr>
+          <tr> 
+            <td height="60">&nbsp;</td>
+            <td>
+            	<input type="submit" name="submit" value="发送通知" class="coolbg np" />
+            </td>
+          </tr>
+        </table>
+      </form>
+	  </td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,102 @@
+{//政策浏览页}
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.png" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+<block name="javascript">
+  <include file="Home/Public/tool_infocard_js.html"/>
+</block>
+
+<block name="title">
+  <title>政策-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header1.html" />
+  <script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
+  <script type="text/javascript">
+  var verify_url='{:U("Base/verify")}';
+  var publish_url='{:U("Policy/publish")}';
+  var article_type = 'policy';
+  var errorimg = "__ROOT__/Public/Img/error.jpg";
+  </script>
+  <script>
+    document.getElementById("nav_policy").className="nav__myactive";
+  </script>
+</block>
+
+<block name="main">
+     <div class="uglydiv">1 </div>
+<div style="width:100%; height:15px;"></div>
+<div class="row article-index__headdiv">
+  <div class="col-md-4 col-md-offset-2">
+    筛选：
+    <a class="text-success public__pointer">最新发布</a>&nbsp;/&nbsp;
+    <a class="text-info public__pointer">本周最热</a>&nbsp;/&nbsp;
+    <a class="text-warning public__pointer">本月最热</a>&nbsp;/&nbsp;
+    <a class="text-primary public__pointer">高级搜索</a>
+  </div>
+  <div class="col-md-2">
+    <if condition="$verify">
+    <button type="button" id="policy-publish-button" class="btn btn-block policy__publish-button" onclick="publish()" onmouseover="a()" onmouseout="b()"><span class="glyphicon glyphicon-file"></span>&nbsp;发布政策</button>
+    </if>
+  </div>
+    <script type="text/javascript">
+    function a()
+    {document.getElementById("policy-publish-button").setAttribute("style","background-color:#5b949a;color:white;");}
+    function b()
+    {document.getElementById("policy-publish-button").setAttribute("style","background-color:#8cb7bd;color:white;");}
+    </script>
+</div>
+<div class="row">
+  <!-- <div class="col-md-2">
+
+    <div class="public__left-sidebar">
+      <button type="button" class="btn btn-info btn-lg btn-block" onclick="publish()">发布政策</button>
+    </div>
+
+    <div class="public__left-sidebar">
+      <br/>筛选：<br/>
+      <center>
+      <a class="text-success public__pointer">最新发布</a>
+      <a class="text-info public__pointer">本周最热</a>
+      <a class="text-warning public__pointer">本月最热</a>
+    </center>
+    </div>
+
+        <br/>
+    <div class="input-group public__left-sidebar">
+      <input type="text" class="form-control" placeholder="搜政策~">
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button">搜!</button>
+      </span>
+    </div>
+
+  </div> -->
+
+
+  <div class="col-md-6 col-md-offset-2 main__body__contentcontainer">
+    <!--这里新鲜事-->
+
+    <div>
+      <volist name="policy_list" id="vo">
+    <include file="Policy:policyitem" pic="{$vo['user_avatar_url'] | default='__ROOT__/Public/Img/error.jpg'}" government_name="{$vo['user_nickname']}" up_number="{$vo['article_up_number']}" down_number="{$vo['article_down_number']}" focus_number="{$vo['article_focus_number']}" collect_number="{$vo['article_collect_number']}" comment_number="{$vo['article_comment_number']}" time="{$vo['article_time']|date = 'Y-m-d H:i',strtotime(###)}" title="{$vo['article_title']}" content="{$vo['article_profile']}" id="{$vo['article_id']}" uid="{$vo['user_id']}"/>
+      </volist>
+      <div class="page-division" style="text-align:center;margin-left:auto;margin-right:auto;font-size:120%">
+        {$page}
+             
+          </div>
+    </div>
+
+  </div><!--main__body__contentcontainer end -->
+  <div class="col-md-2 main__sidebar__container">
+    <include file="User:mysidebar"/>
+    <include file="Home/Public/sidebar.html"/>
+  </div>
+</div>
+
+<include file="User:infocard"/>
+<include file="Message:sixinmodel"/>
+ </block> 

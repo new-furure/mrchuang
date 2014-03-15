@@ -1,0 +1,399 @@
+<extend name="Home/Public/base.html" />
+
+<block name="javascript">
+  <include file="Home/Public/tool_infocard_js.html"/>
+
+  
+  <IF condition="!$isself">
+    <script type="text/javascript">$(".glyphicon-edit").hide();</script>
+    <ELSE/> 
+     <script type="text/javascript" src="/Public/Js/jquery.cityselect.js"></script>
+     <script type="text/javascript" src="/Public/Js/jquery-ui-datepicker.js"></script>
+    <script type="text/javascript"> $("#date").datepicker({maxDate:0});</script>
+  </IF>
+  
+<script  src="/Public/Js/user.js" type="text/javascript"></script>
+</block>
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/jquery-ui.min.css" />
+</block>
+
+<block name="title">
+  <title>{$user['user_nickname']}的主页-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header1.html"/>
+</block>
+
+<block name="main">
+  <div style="width:100%; height:40px;"></div>
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 main__body__contentcontainer">
+      <!--body start-->
+      <div class="well info__mywell row">
+        <include file="User:photo"/>
+        <div class="col-md-7">
+
+          <p>
+            <div class="edit-form" url="{:U('User/edit')}">
+              <div class="edit-file">
+                <span class="content">{$user.user_nickname}</span>
+                <a>
+                  <span class="edit glyphicon glyphicon-edit"></span>
+                </a>
+              </div>
+              <div class="edit-input" style="display: none" >
+                <input class="input" name="user_nickname" value="">
+                <a>
+                  <span class="save glyphicon glyphicon-check">保存</span>
+                </a>
+              </div>
+            </div>
+          </p>
+
+          <h4 class="text-muted">
+            <p>
+              <span class="glyphicon glyphicon-envelope"></span>
+              {$user.user_email}
+            </p>
+            <IF condition="$type eq 'p'">
+
+              <p>
+                <span class="glyphicon glyphicon-map-marker">城市</span>
+                <div id="city" class="user_info">
+                  <div class="edit-file"  >
+                    <span id="loaction_display" >{$user['user_location']|default="我在哪儿并不重要！"}</span>
+                    <a>
+                      <span class="edit_location glyphicon glyphicon-edit"></span>
+                    </a>
+                  </div>
+                  <div class="edit-input" style="display: none" url="{:U('User/edit')}">
+                    <select class="prov"></select>
+                    <select class="city" disabled="disabled"></select>
+                    <select class="dist" disabled="disabled"></select>
+                    <a>
+                      <span class="save_location glyphicon glyphicon-check">保存</span>
+                    </a>
+                  </div>
+                </div>
+              </p>
+
+            </IF>
+
+            <span class="glyphicon glyphicon-comment">签名</span>
+            <p>
+              <div class="edit-form" url="{:U('User/edit')}">
+                <div class="edit-file">
+                  <span class="content">{$user['user_signature']|default="没什么好说的！"}</span>
+                  <a>
+                    <span class="edit glyphicon glyphicon-edit"></span>
+                  </a>
+                </div>
+                <div class="edit-input" style="display: none" >
+                  <input class="input" name="user_signature" value="">
+                  <a>
+                    <span class="save glyphicon glyphicon-check">保存</span>
+                  </a>
+                </div>
+              </div>
+            </p>
+          </h4>
+        </div>
+
+        <div class="col-md-3">
+          <IF condition="$isself">
+
+            <a style="color:white;" align="right">
+              <button class="btn btn-danger">
+                <span  class=" glyphicon glyphicon-heart">受关注度</span>
+                <span class="focus_num">({$user['user_focus_number']})</span>
+              </button>
+            </a>
+
+            <ELSE/>
+
+            <IF condition="$type eq 'o'">
+              <div class="public__bottom-border">
+                <php>
+                  $conf["user_id"]=get_id(false);
+                  $conf["organization_user_id"]=$user['user_id'];
+                  $user_status=M("belong_to_organization")->where($conf)->field("user_status")->find();
+
+                if(!$user_status){
+                 $url=U('User/applyJoin');$string="申请加入";
+                 }else
+                  switch($user_status['user_status']){
+                  case C("PENDING_USER"):
+                 //待验证
+                 $url=U('User/quit'); $string="撤销申请";
+                 break;
+
+                 case C("NORMAL_USER"):      //普通成员
+                 case C("ADMIN_USER"):        //管理员成员
+                  $url=U('User/quit');  $string="退出组织";
+                  break;
+
+                  defualt:
+                  $url=U('User/applyJoin');  $string="申请加入";
+                  break;
+                }
+                </php>
+                <button  class="apply_jion btn btn-block btn-lg btn-danger" url="{$url}" id="{$user['user_id']}">{$string|default="申请加入"}</button>
+              </div>
+
+            </IF>
+
+            <a style="color:white;" align="right">
+              <button class="focus_user btn btn-danger" to="{:U('User/focus','id='.$user['user_id'])}">
+                <span  class="glyphicon glyphicon-heart" >
+                  <IF condition="$isfocuson">
+                    取消关注
+                    <ELSE />
+                    关注TA
+                  </IF>
+                </span>
+                (
+                <span class="focus_num">{$user['user_focus_number']}</span>
+                )
+              </button>
+            </a>
+
+            <a style="color:white;" align="right">
+              <button class="btn btn-success" style="margin-left:10px">
+                <span class="glyphicon glyphicon-envelope"></span>
+                发私信
+              </button>
+            </a>
+
+          </IF>
+        </div>
+
+      </div>
+
+      <!-- Nav tabs -->
+      <ul class="nav nav-pills">
+        <li class="active">
+          <a href="#gerenxinxi" data-toggle="tab">信息</a>
+        </li>
+        <li>
+          <a href="#article" id="show-article" data-toggle="tab">文章</a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+
+        <div class="tab-pane row active well info__mywell" id="gerenxinxi">
+          <IF condition="$type eq 'p'">
+
+            <div class="col-md-10 col-md-offset-1">
+              <label class="col-sm-4 col-md-3 control-label">性别</label>
+              <div class="col-sm-6 col-md-7">
+                <div class="edit-form" url="{:U('User/edit')}">
+                  <div class="edit-file">
+                    <span class="content">{$user['user_sex']|default='保密'}</span>
+                    <a>
+                      <span class="edit glyphicon glyphicon-edit"></span>
+                    </a>
+                  </div>
+                  <div class="edit-input" style="display: none">
+                    <select id="sex" class="info__select input" name="user_sex" {$enable}   value="保密">
+                      <option value='保密'>保密</option>
+                      <option value='男'>男</option>
+                      <option value='女'>女</option>
+                      <option value='中性'>中性</option>
+                    </select>
+                    <a>
+                      <span class="save glyphicon glyphicon-check">保存</span>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1">
+              <label class="col-sm-4 col-md-3 control-label">出生日期</label>
+              <div class="col-sm-6 col-md-7">
+                <div class="edit-form" url="{:U('User/edit')}">
+                  <div class="edit-file">
+                    <span class="content">{$user.user_birthday|default="某年某月末日"}</span>
+                    <a>
+                      <span class="edit glyphicon glyphicon-edit"></span>
+                    </a>
+                  </div>
+
+                  <div class="edit-input" style="display: none" >
+                    <input class="input" id="date" name="user_birthday" readonly type="text" value="{$user['user_birthday']}">
+                    <a>
+                      <span class="save glyphicon glyphicon-check">保存</span>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1">
+              <label class="col-sm-4 col-md-3 control-label">当前职业</label>
+              <div class="col-sm-6 col-md-7">
+                <div class="edit-form" url="{:U('User/edit')}">
+                  <div class="edit-file">
+                    <span class="content">{$user.user_business|default="在干什么呢?"}</span>
+                    <a>
+                      <span class="edit glyphicon glyphicon-edit"></span>
+                    </a>
+                  </div>
+
+                  <div class="edit-input" style="display: none" >
+                    <input class="input" name="user_business" value="">
+                    <a>
+                      <span class="save glyphicon glyphicon-check">保存</span>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1">
+
+              <label class="col-sm-4 col-md-3 control-label">教育经历</label>
+              <div class="col-sm-6 col-md-7">
+                <div class="edit-form" url="{:U('User/edit')}">
+                  <div class="edit-file">
+                    <span class="content">{$user['user_education_experience']|default="学历似乎不那么重要"}</span>
+                    <a>
+                      <span class="edit glyphicon glyphicon-edit"></span>
+                    </a>
+                  </div>
+                  <div class="edit-input" style="display: none" >
+                    <textarea class="input" name="user_education_experience" type="textarea" value=""></textarea>
+                    <a>
+                      <span class="save glyphicon glyphicon-check">保存</span>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1">
+              <label class="col-sm-4 col-md-3 control-label">擅长领域</label>
+              <div class="col-sm-6 col-md-7">
+                <div class="edit-form" url="{:U('User/edit')}">
+                  <div class="edit-file">
+                    <span class="content">{$user.user_startup_point|default="酝酿中"}</span>
+                    <a>
+                      <span class="edit glyphicon glyphicon-edit"></span>
+                    </a>
+                  </div>
+
+                  <div class="edit-input" style="display: none">
+                    <input class="input" name="user_startup_point" value=""/>
+                    <a>
+                      <span class="save glyphicon glyphicon-check">保存</span>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1">
+              <label class="col-sm-4 col-md-3 control-label">职业经历</label>
+              <div class="col-sm-6 col-md-7">
+                <div class="edit-form" url="{:U('User/edit')}">
+                  <div class="edit-file">
+                    <span class="content">{$user['user_career_experience']|default="从这里开始"}</span>
+                    <a>
+                      <span class="edit glyphicon glyphicon-edit"></span>
+                    </a>
+                  </div>
+
+                  <div class="edit-input" style="display: none" >
+                    <textarea class="input" name="user_career_experience" type="textarea" value=""></textarea>
+                    <a>
+                      <span class="save glyphicon glyphicon-check">保存</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ELSEIF condition="$type eq 'o'"/>
+            <div class="col-md-10 col-md-offset-1">
+              <label class="col-sm-4 col-md-3 control-label">发展历程</label>
+              <div class="col-sm-6 col-md-7">
+                <div class="edit-form" url="{:U('User/edit')}">
+                  <div class="edit-file">
+                    <span class="content">{$user['organization_milestone']|default="尚处于保密期"}</span>
+                    <a>
+                      <span class="edit glyphicon glyphicon-edit"></span>
+                    </a>
+                  </div>
+
+                  <div class="edit-input" style="display: none" >
+                    <textarea class="input" name="organization_milestone" type="textarea" value=""></textarea>
+                    <a>
+                      <span class="save glyphicon glyphicon-check">保存</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </IF>
+
+          <div class="col-md-10 col-md-offset-1">
+            <label class="col-sm-4 col-md-3 control-label">详细介绍</label>
+            <div class="col-sm-6 col-md-7">
+              <div class="edit-form" url="{:U('User/edit')}">
+                <div class="edit-file">
+                  <span class="content">{$user['user_profile']|default="此处省略N个字"}</span>
+                  <a>
+                    <span class="edit glyphicon glyphicon-edit"></span>
+                  </a>
+                </div>
+
+                <div class="edit-input" style="display: none" >
+                  <textarea class="input" name="user_profile" type="textarea" value=""></textarea>
+                  <a>
+                    <span class="save glyphicon glyphicon-check">保存</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <IF condition="$type eq 'o'">
+            {//组织}
+            <div class="col-md-10 col-md-offset-1">
+              <div class="public__bottom-border">
+                <h2>组织成员</h2>
+              </div>
+
+              <div class="row public__bottom-border">
+                {$members}
+                <IF condition="$isself">{$applys}</IF>
+              </div>
+            </div>
+          </IF>
+
+        </div>
+        <!--gerenxinxi end-->
+
+        <div class="tab-pane row well info__mywell" id="article" from="{:U('User/displayArticle')}">
+          <div class="col-md-10 col-md-offset-1">{$articlecontent|default="蛟龙隐海，潜行无声"}</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</block>

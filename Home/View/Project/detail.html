@@ -1,0 +1,196 @@
+{//单个项目大概查看页}
+<extend name="Home/Public/base.html" />
+<block name="javascript">
+<include file="Home/Public/tool_infocard_js.html"/>
+<script type="text/javascript">
+/*各种处理方法路径*/
+var up_url='{:U("/Home/Base/up_article")}';
+var down_url='{:U("/Home/Base/down_article")}';
+var focus_url='{:U("/Home/Base/focus")}';
+var collect_url='{:U("/Home/Base/collect")}';
+var report='{:U("/Home/Base/report")}';
+var edit_url='{:U("/Home/Project/edit/aid/","","")}';
+var delete_url='{:U("/Home/Base/delete","","")}';
+var report_article_url='{:U/Home/Base/report_article}';
+var report_comment_url='{:U/Home/Base/report_comment}';
+var errorimg = "__ROOT__/Public/Img/error.jpg";
+</script>  
+<script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    //$('#content').load('/example/jquery/demo_test.txt');//路径！
+})
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#dianjizhediewenda").click(function(){
+  $("#wenda").toggle();
+  });
+});
+</script>
+<script defer type="text/javascript" language="javascript">
+
+function getid(el){return document.getElementById(el)}
+
+function response(obj)
+{
+    var oComment=obj.parentNode;//找到当前留言对象。
+    oComment.appendChild(getid("response"));
+    getid("response").style.display="block";
+}
+function response2()
+{
+  getid("wendalist").appendChild(getid("111"));
+  document.getElementById("aaa").innerHTML=document.getElementById("content1").value;
+  getid("111").style.display="block";
+  document.getElementById("content1").value="";
+}
+function response3()
+{
+  getid("pinglunlist").appendChild(getid("222"));
+  document.getElementById("bbb").innerHTML=document.getElementById("content2").value;
+  getid("222").style.display="block";
+  document.getElementById("content2").value="";
+}
+
+
+  </script>
+</block>  
+
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.png" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+
+<block name="title">
+  <title>项目-{$data['article_title']}-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1 </div>
+<div style="width:100%; height:15px;"></div>
+<div class="row">
+<div class="col-md-8 col-md-offset-2 well">
+  <div class="row">
+  <div class="col-md-3">
+    <a href="{:get_url_by_id($data['user_id'])}" class="thumbnail infocardshow" onmouseover="SetInfocardPosition()">
+      <img data-src="holder.js/100%x180" alt="项目头像"  id="img" onerror="showimg(this);" src="{$data['project_avatar_url'] | default='__ROOT__/Public/Img/error.jpg'}" height="180px" width ="180px"/>
+    </a>
+    <a href="{:get_url_by_id($data['user_id'])}" class="infocardshow" onmouseover="SetInfocardPosition()">
+      <span class="label label-warning">V{$data['user_nickname']}</span>
+    </a>
+  </div>
+  <div class="col-md-9 detail__includeimg">
+    <h3>{$data['article_title']}</h3>
+    <h5 class="text-muted">发布于{$data['article_time']|date = 'Y-m-d,H:i',strtotime(###)}</h5>
+    <volist name="tag" id="v">
+    <span class="label label-info" style="margin-right:1em">{$v['tag_title']}</span>
+    </volist>
+    <h5>项目简介：</h5>
+    <h4 id="profile">{$data['article_profile']}</h4>
+      <br/>    
+  </div>
+  </div><!--top row-->
+
+ <div class="btn-group">
+      <button id="up" aid="{$data['article_id']}" class="btn detail__btn btn--blue1" onmouseover="mOver1()" onmouseout="mOut1()">
+          <h6 style="cursor:pointer"  ><span class="glyphicon glyphicon-thumbs-up"></span><span class="up"><php>if(in_list($curr_user_id,$data['article_id'],'up')){echo '取消赞';}else{echo '赞';}</php></span>（<span class="up_num">{$data['article_up_number']}</span>）</h6>
+      </button>
+      <button id="down" aid="{$data['article_id']}" class="btn detail__btn btn--blue2" onmouseover="mOver2()" onmouseout="mOut2()">
+          <h6 style="cursor:pointer" ><span class="glyphicon glyphicon-thumbs-down"></span><span class="down"><php>if(in_list($curr_user_id,$data['article_id'],'down')){echo '取消踩';}else{echo '踩';}</php></span>（<span class="down_num">{$data['article_down_number']}</span>）</h6>
+      </button>
+      <button aid="{$data['article_id']}" id="focus"class="btn detail__btn btn--blue3" onmouseover="mOver3()" onmouseout="mOut3()">
+          <h6 style="cursor:pointer" ><span class="glyphicon glyphicon-heart"><span class="focus"><php>if(in_list($curr_user_id,$data['article_id'],'focus')){echo '取消关注';}else{echo '关注';}</php></span>（<span class="focus_num">{$data['article_focus_number']}</span>）</h6>
+      </button>
+      <button  aid="{$data['article_id']}" id="collect" class="btn detail__btn btn--blue4" onmouseover="mOver4()" onmouseout="mOut4()">
+          <h6 style="cursor:pointer"><span class="collect"><php>if(in_list($curr_user_id,$data['article_id'],'collect')){echo '取消收藏';}else{echo '收藏';}</php></span>（<span class="collect_num">{$data['article_collect_number']}</span>）</h6>
+      </button>
+      <button id="pinglun_button" class="btn detail__btn btn--blue5" onmouseover="mOver5()" onmouseout="mOut5()">
+          <h6 style="cursor:pointer">评论（{$data['article_comment_number']}）</h6>
+      </button>
+      <button id="fenxiang_button" class="btn detail__btn btn--blue6" onmouseover="mOver6()" onmouseout="mOut6()" data-toggle="dropdown" href="#">
+          <h6 >分享</h6>
+      </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <!-- <li><a style="cursor:pointer" data-toggle="modal" data-target="#fenxiangmodal">私信分享</a></li> -->
+              <li><a class="shareto_button_tsina"></a></li>
+              <li><a class="shareto_button_kaixin001"></a></li>
+              <li><a class="shareto_button_renren"></a></li></li>
+              <li><a class="shareto_button_douban"></a></li>
+              <li><a href="http://shareto.com.cn/share.html" class="shareto_button_compact">更多</a></li>
+
+              <script type="text/javascript" src="http://s.shareto.com.cn/js/shareto_button.js" charset="utf-8"></script>
+            </ul>
+      <php>
+        if(edit_verify($data['article_id'])){
+        echo '<button id="edit" onclick="edit();" class="btn detail__btn btn--blue7"><h6>修改</h6></button>
+              <button id="delete" data-toggle="modal" data-target="#deletemodal" class="btn detail__btn btn--blue7"><h6>删除</h6></button>';
+            }
+      </php>
+            <include file="Home/Public/tool_detail_button_js.html"/>
+
+    </div><!--btn-group-->
+
+    <div>
+        <h5>项目内容：</h5>
+        <h4 id="content" style="text-align:center">{$data['article_content']|htmlspecialchars_decode}</h4>
+    </div>
+
+</div><!--8__2 well end-->
+</div><!--row end-->
+
+
+
+<div class="table-responsive row">
+ <div class="col-md-6 col-md-offset-2"><!--评论开始-->
+  <include file="Home/Public/comment_list.html" />
+  <include file="Home/Public/improve_list.html" />
+  </div><!--评论、问答 结束-->
+
+
+    <script type="text/javascript">
+    var comment_type='project_comment';
+    var improve_type='project_improve';
+    var handleUrlRA='{:U("/Home/Project/reply_to_article")}';
+    var redirectUrl='{:U("/Home/Project/detail",'','')}';
+    var handleUrlRC='{:U("/Home/Project/reply_to_comment")}';
+  </script>
+  <script type="text/javascript" src="__ROOT__/Public/Js/handleComment.js"></script>
+  <script type="text/javascript" src="__ROOT__/Public/Js/handleImprove.js"></script>
+  <include file="Home/Public/comment_form.html" />
+    <div class="col-md-2">
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          <h3 class="panel-title">创建者信息</h3>
+        </div>
+        <div class="panel-body">
+          {//workgroup_name}
+          <a href="{:U('Project/projectxiangxi')}" target="_blank">详细</a>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<div id="response" style="display:none;" class="project__div-huifudehuifu">
+  <form name="commentform" method="post" action="">
+    评论：<textarea name="content" class="form-control" rows="6" id="content"></textarea>
+  </form>
+  <button id="add" onclick="add()" class="btn btn-primary">评论</button>
+</div>
+
+<include file="Project:fenxiangmodel"/>
+<include file="Project:canyumodel"/>
+<include file="User:infocard"/>
+<include file="Message:sixinmodel"/>
+<include file="Project:deletemodal"/>
+
+</block>

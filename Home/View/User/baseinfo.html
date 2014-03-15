@@ -1,0 +1,103 @@
+<form method="post" name="user" action="__URL__/update" class="form-horizontal" role="form">
+  <h4>
+    <div class="form-group">
+      <label class="col-sm-4 control-label">姓名</label>
+      <div class="col-sm-7">
+        <input type="text" name="user_nickname" {$enable} value="{$user.user_nickname}" class="form-control"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-4 control-label">一句话签名</label>
+      <div class="col-sm-7">
+        <input name="user_signature" type="text" {$enable} value="{$user.user_signature}" class="form-control"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-4 control-label">邮箱</label>
+      <div class="col-sm-7">{$user.user_email}</div>
+    </div>
+
+    <IF condition="$type eq 'p'">
+      {//个人}
+      <div class="form-group">
+
+        <label class="col-sm-4 control-label"  >性别</label>
+        <select id="sex" class="info__select" name="user_sex" {$enable}  >
+          <option value='保密' >保密</option>
+          <option value='男'>男</option>
+          <option value='女'>女</option>
+          <option value='其他' >其他</option>
+        </select>
+        <script LANGUAGE="JavaScript">document.getElementById('sex').value = '{$user["user_sex"]}';</script>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">所在城市</label>
+        <div class="col-sm-7">
+          <input name="user_location" type="text" {$enable}  value="{$user.user_location}" class="form-control"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">教育背景</label>
+        <div class="col-sm-7">
+          <input name="user_education_experience" type="text" {$enable}  value="{$user['user_education_experience']}" class="form-control"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">擅长领域</label>
+        <div class="col-sm-7">
+          <input name="user_startup_point" type="text" {$enable}  value="{$user['user_startup_point']}" class="form-control"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">当前职业</label>
+        <div class="col-sm-7">
+          <input name="user_business" type="text" {$enable}  value="{$user['user_business']}" class="form-control"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">生日</label>
+        <div class="col-sm-7">
+          <input name="user_birthday" type="date" {$enable}  value="{$user.user_birthday}" class="form-control"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">职业经历</label>
+        <div class="col-sm-7">
+          <textarea name="user_career_experience" type="text" {$enable}  class="form-control">{$user.user_career_experience}</textarea>
+        </div>
+      </div>
+
+      <ELSEIF condition="$type eq 'o'"/>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">组织发展历程</label>
+        <div class="col-sm-7">
+          <textarea name="organization_milestone"  class="form-control" rows="3" {$enable}>{$user['organization_milestone']}</textarea>
+        </div>
+      </div>
+
+    </IF>
+
+    <div class="form-group">
+      <label class="col-sm-4 control-label">详细介绍</label>
+      <div class="col-sm-7">
+        <textarea name="user_profile"   {$enable} class="form-control" rows="3">{$user.user_profile}</textarea>
+      </div>
+    </div>
+    {//隐藏提交用户类型,个人或者组织}
+    <input type="hidden" name="type" value="{$type}"/>
+
+    <IF condition="$isself">
+      <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+          <input class="sunmit btn btn-primary" type="submit" value="保存修改"></div>
+      </div>
+    </IF>
+
+  </h4>
+</form>

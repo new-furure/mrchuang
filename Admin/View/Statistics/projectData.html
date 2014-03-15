@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>项目统计</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+</head>
+<body background='__PUBLIC__/Images/allbg.gif' leftmargin='8' topmargin='8'>
+	<table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#D6D6D6">
+  <tr bgcolor="#FFFFFF"><td height="24" colspan="7"><center><b>项目统计</b></center>
+	</td>
+  </tr>
+  <tr>
+  <td height="215" align="center" valign="top" bgcolor="#FFFFFF">
+  <b>
+        <table width="98%" border="0" cellspacing="1" cellpadding="1">
+          <tr> 
+            <td width="16%" height="30">项目总数：</td>
+            <td width="84%" style="text-align:left;">{$project_sum}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">评论总数：</td>
+            <td width="84%" style="text-align:left;">{$comment_sum}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">最大赞数：</td>
+            <td width="84%" style="text-align:left;">{$project_maxup}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">最大评论数：</td>
+            <td width="84%" style="text-align:left;">{$project_maxcomment}</td>
+          </tr>
+		  <tr> 
+            <td width="16%" height="30">最大点击量：</td>
+            <td width="84%" style="text-align:left;">{$project_maxhits}</td>
+          </tr>
+        </table>
+		</b>
+	  </td>
+</tr>
+</table>
+</body>
+</html>

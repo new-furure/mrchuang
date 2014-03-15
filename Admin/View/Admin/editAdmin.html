@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>编辑管理员</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+</head>
+<body background='__PUBLIC__/Images/allbg.gif' leftmargin='8' topmargin='8'>
+	<table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#D6D6D6">
+  <tr>
+    <td height="19" background="__PUBLIC__/Images/tbg.gif" bgcolor="#E7E7E7"> 
+      <table width="96%" border="0" cellspacing="1" cellpadding="1">
+        <tr> 
+          <td style="padding-left:10px;"><b><strong>编辑</strong></b> </td>
+          <td align='right'><a href="{:U('Admin/index')}"><b><strong>列表</strong></b></a> </td>
+        </tr>
+      </table></td>
+   </tr>
+  <tr>
+  <td height="215" align="center" valign="top" bgcolor="#FFFFFF">
+	<form name="form1" action="{:U('Admin/runEditAdmin')}" method="post">
+	<input type="hidden" name="id" value="{$list['admin_id']}">
+        <table width="98%" border="0" cellspacing="1" cellpadding="1">
+          <tr> 
+            <td width="16%" height="30"><span class='red'>*</span>管理员名称</td>
+            <td width="84%" style="text-align:left;"><input name="adminname" type="text" id="username" size="16" style="width:200px" value="{$list['admin_name']}"/> &nbsp;
+           </td>
+          </tr>
+          <tr> 
+            <td height="90">管理员权限</td>
+            <td style="text-align:left;">
+			<?php
+			for($i=1;$i<=$size;$i++)
+			{
+				if($list['admin_privilege'][$i]==1)
+				{
+					echo $priinfo[$i].':<input type="radio" name="pri'.$i.'" value="1"  checked="checked">有 &nbsp;
+	<input type="radio" name="pri'.$i.'" value="0">无<br />';
+				}
+				else
+				{
+					echo $priinfo[$i].':<input type="radio" name="pri'.$i.'" value="1">有 &nbsp;
+	<input type="radio" name="pri'.$i.'" value="0"  checked="checked">无<br />';
+				}
+			}
+			echo "<input type='hidden' name='size' value='".$size."' />"
+			/*if ($list["admin_privilege"][1]==1)
+	echo '用户<input type="radio" name="pri1" value="1"  checked="checked">有 &nbsp;
+	<input type="radio" name="pri1" value="0">无<br />';
+else
+	echo '用户<input type="radio" name="pri1" value="1">有 &nbsp;
+	<input type="radio" name="pri1" value="0"  checked="checked">无<br />';
+if ($list["admin_privilege"][2]==1)
+	echo '项目<input type="radio" name="pri2" value="1"  checked="checked">有 &nbsp;
+	<input type="radio" name="pri2" value="0">无<br />';
+else
+	echo '项目<input type="radio" name="pri2" value="1">有 &nbsp;
+	<input type="radio" name="pri2" value="0"  checked="checked">无<br />';
+if ($list["admin_privilege"][3]==1)
+	echo '政策<input type="radio" name="pri3" value="1"  checked="checked">有 &nbsp;
+	<input type="radio" name="pri3" value="0">无<br />';
+else
+	echo '政策<input type="radio" name="pri3" value="1">有 &nbsp;
+	<input type="radio" name="pri3" value="0"  checked="checked">无<br />';
+if ($list["admin_privilege"][4]==1)
+	echo '垃圾<input type="radio" name="pri4" value="1"  checked="checked">有 &nbsp;
+	<input type="radio" name="pri4" value="0">无<br />';
+else
+	echo '垃圾<input type="radio" name="pri4" value="1">有 &nbsp;
+	<input type="radio" name="pri4" value="0"  checked="checked">无<br />';
+if ($list["admin_privilege"][5]==1)
+	echo '信息<input type="radio" name="pri5" value="1"  checked="checked">有 &nbsp;
+	<input type="radio" name="pri5" value="0">无<br />';
+else
+	echo '信息<input type="radio" name="pri5" value="1">有 &nbsp;
+	<input type="radio" name="pri5" value="0"  checked="checked">无<br />';
+if ($list["admin_privilege"][6]==1)
+	echo '统计<input type="radio" name="pri6" value="1"  checked="checked">有 &nbsp;
+	<input type="radio" name="pri6" value="0">无<br />';
+else
+	echo '统计<input type="radio" name="pri6" value="1">有 &nbsp;
+	<input type="radio" name="pri6" value="0"  checked="checked">无<br />';*/
+			?>
+            </td>
+          </tr>
+          <tr> 
+            <td height="60">&nbsp;</td>
+            <td>
+            	<input type="submit" name="submit" value="修改" class="coolbg np" />
+            </td>
+          </tr>
+        </table>
+      </form>
+	  </td>
+</tr>
+</table>
+</body>
+</html>

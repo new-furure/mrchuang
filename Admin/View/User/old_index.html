@@ -1,0 +1,27 @@
+<table>
+<tr><th>id</th><th>用户名</th><th>邮箱</th><th>组别</th><th>有效</th>
+<th>审核</th><th>操作</th></tr>
+<?php
+	foreach($list as $key=>$value)
+	{
+		echo "<tr><td>".$key."</td><td>".$value['user_name']."</td><td>".$value['user_email']."</td>
+		<td>".$value['Category_ID']."</td><td>".$value['user_effective']."</td><td>".$value['user_certified']."</td>";
+		echo '<td><a href="'.U("User/detailUser?id=".$value["user_id"]).'">detail</a>&nbsp;
+		<a href="'.U("User/passUser?id=".$value["user_id"]).'">pass</a>&nbsp;
+		<a href="'.U("User/lockUser?id=".$value["user_id"]."&lock=".$value["user_effective"]).'">lock/unlock</a>&nbsp;
+		</td>';
+	}
+?>
+</table>
+<a href={:U("User/index?type=1")}>待审核用户</a>&nbsp;
+<a href={:U("User/index?type=2")}>已锁定用户</a>&nbsp;
+<a href={:U("User/index?cid=1")}>分组1</a>&nbsp;
+<a href={:U("User/index?cid=2")}>分组2</a>&nbsp;
+<a href={:U("User/index?cid=3")}>分组3</a>&nbsp;
+<a href={:U("User/index?cid=4")}>分组4</a>&nbsp;
+
+<form action={:U("User/sechUser")} method="post">
+<input type="text" name="sname" />
+<input type="submit" name="submit" value="查找">
+</form>
+<a href={:U("User/addUser")}>添加用户</a>&nbsp;

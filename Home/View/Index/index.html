@@ -1,0 +1,197 @@
+ <!--网站首页
+ <head>
+   <title>MR.Chuang-{$title}</title>
+ </head>
+
+ <body>
+  <a href="{$href}">{$word}</a>
+ </body-->
+
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.png" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+
+<block name="main">
+<div class="index__TopBackground">
+<div class="">
+<div class="row">
+  <div class="col-md-1 col-md-offset-2">
+    <img src="__ROOT__/Public/Img/white_logo_index.png" class="index__TopLogo">
+  </div>
+  <div class="col-md-2">
+    <img src="Public/Img/white-text-logo.gif" class="index__TopLogoText"/>
+  </div>
+  <!-- <div class="index__TopNav col-md-1">
+    <h3><a class="index__TopNav">Home</a></h3>
+  </div>
+  <div class="index__TopNav col-md-1">
+    <h3><a class="index__TopNav">What</a></h3>
+  </div>
+  <div class="index__TopNav col-md-1">
+    <h3><a class="index__TopNav">Why</a></h3>
+  </div>
+  <div class="index__TopNav col-md-1">
+    <h3><a class="index__TopNav">How</a></h3>
+  </div> -->
+   <div class="index__TopNav col-md-5 ">
+    <h5 class="index__TopSkinWord">南开大学一站式创业服务平台</h5>
+  </div>
+</div><!--row 1 end-->
+<div class="row">
+  <div class="index__TopMotto col-md-4 col-md-offset-2">
+    <p class="index__TopMottoWord1">将来的你</p><br/>
+    <strong class="index__TopMottoWord2">一定会感激现在的自己</strong><br/>
+    <strong class="index__TopMottoWord3">闯先生</strong><br/>
+    <strong class="index__TopMottoWord2">中国最好的创业交流平台</strong>
+  </div>
+  <div class="col-md-4" style="width:35%;margin-top:6em">
+    <div>
+    <form id="logform" action="{:U('User/login')}" name="logform" method="post" class="form-horizontal" role="form">
+      <h5>
+      <input type="email" name="user_email" id="user_email" class="form-control index__TopInput" placeholder="Email" onmouseover="mOverInpute()" onmouseout="mOutInpute()" />
+      <input type="password" name="user_passwd" id="user_passwd" class="form-control index__TopInput" placeholder="Password" onmouseover="mOverInputp()" onmouseout="mOutInputp()"/>
+      <button class="btn index__TopLoginButton" id="login_button" >登录</button>
+      <button type="button" class="btn index__TopRegisterButton" data-toggle="modal" data-target="#registermodal">注册</button>
+      <a class="index__TopFindBack" href="{:U('User/findpassword')}">找回密码</a>
+      </h5>
+    </form>
+    </div>
+    <script type="text/javascript" defer src="__ROOT__/Public/Js/index.js"></script>
+
+
+
+
+
+    <div class="row">
+      <div class="col-md-5">
+        <button class="btn index__TopContactButton" data-toggle="modal" data-target="#lianxiwomenmodal"><strong>联系我们</strong></button>
+      </div>
+      <div class="col-md-7">
+        <a href="">
+          <img src="__ROOT__/Public/Img/android.png" class="index__TopAppImg" id="img_android" onmouseover="mOver1()" onmouseout="mOut1()"/>
+        </a>
+        <a href="">
+          <img src="__ROOT__/Public/Img/apple.png" class="index__TopAppImg" id="img_apple" onmouseover="mOver2()" onmouseout="mOut2()"/>
+        </a>
+        <a href="">
+          <img src="__ROOT__/Public/Img/weixin.png" class="index__TopAppImg" id="img_weixin" onmouseover="mOver3()" onmouseout="mOut3()"/>
+        </a>
+<script defer>
+function mOver1()
+ {document.getElementById("img_android").style.opacity="0.7";}
+function mOut1()
+ {document.getElementById("img_android").style.opacity="1";}
+ function mOver2()
+ {document.getElementById("img_apple").style.opacity="0.7";}
+function mOut2()
+ {document.getElementById("img_apple").style.opacity="1";}
+ function mOver3()
+ {document.getElementById("img_weixin").style.opacity="0.7";}
+function mOut3()
+ {document.getElementById("img_weixin").style.opacity="1";}
+function mOverInpute()
+ {document.getElementById("user_email").style.opacity="0.5";}
+function mOutInpute()
+ {document.getElementById("user_email").style.opacity="0.2";}
+function mOverInputp()
+ {document.getElementById("user_passwd").style.opacity="0.5";}
+function mOutInputp()
+ {document.getElementById("user_passwd").style.opacity="0.2";}
+</script>
+      </div>
+    </div>
+
+
+
+
+
+
+  </div>
+</div><!--row 2 end-->
+<div style="margin-top:2em">
+ <img src="__ROOT__/Public/Img/white.png" class="index__TopWhite"/>
+</div>
+</div>
+</div>
+
+<!--悬浮框 注册-->
+<div class="modal fade" id="registermodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="opacity:0.9;background-color:#404040">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 style="color:white" class="modal-title" id="myModalLabel">注册</h4>
+        <a href="{:U('User/regfullscreen')}" class="">切换到全屏页面</a>
+      </div>
+      <div class="modal-body" style="color:white">
+        <include file="User:reg"/>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+<div class="modal fade" id="lianxiwomenmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" id="lianxiwomenmodal2" onmouseover="mOver4()" onmouseout="mOut4()">
+    <div class="modal-content" style="opacity:0.8;background-color:#404040">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel" style="color:white">联系我们</h4>
+      </div>
+      <div class="modal-body" style="color:white">
+        联系电话：12345678<br/>
+        电子邮箱：31efwefwvfwe
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script defer>
+function mOver4()
+ {document.getElementById("lianxiwomenmodal2").style.opacity="1";}
+function mOut4()
+ {document.getElementById("lianxiwomenmodal2").style.opacity="0.8";}
+</script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function()    {  
+    $("#user_email").val() ="Email";
+    $("#user_email").focusin(function() {
+        if($(this).val() =="Email"){  
+            $(this).val("");
+        }
+    });
+    $("#user_email").focusout(function() {
+        if($(this).val() ==""){ 
+            $(this).val("Email");
+        }
+    });
+    $("#user_passwd").val() ="Password";
+    $("#user_passwd").focusin(function() {
+        if($(this).val() =="Password"){  
+            $(this).val("");
+        }
+    });
+    $("#user_passwd").focusout(function() {
+        if($(this).val() ==""){ 
+            $(this).val("Password");
+        }
+    });
+
+    $("#login_button").onclick(function() {
+      var url=$("#logform").attr("too");
+      alert(url);
+      document.getElementById("logform").setAttribute("action",url);
+    });
+});
+</script>
+</block>

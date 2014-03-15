@@ -1,0 +1,165 @@
+<!--圈子模块
+未登录跳转到登陆页log
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+	<include file="Home/View/Circle/circle_logo.html" />
+<div id="circle-homepage">
+	<div class="row">
+	  <div class="col-md-8">
+	    <div id="circle-search" >
+	    <h4>
+	    	圈子搜索：
+	    </h4>
+      <!--
+      $searh_result 的含义
+      0——没有输入搜索内容
+      1——没有找到输入的圈号
+      2——找到了，用户属于圈子
+      3——找到了，用户不属于圈子
+      -->
+	    <p style="border-bottom-style:solid;border-bottom-color:#e6e6e6;color:gray;border-bottom-width:1px">
+	    	搜索结果
+	    </p>
+      <if condition="$search_result eq 0">
+        <p style="color:gray">您未输入任何搜索内容</p>
+        <elseif condition="$search_result eq 1"/>
+        <p style="color:gray">您搜索的圈号不存在</p>
+        <elseif condition="$search_result eq 2"/>
+         <volist name="result" id="v">
+        <p style="color:gray">您已是圈子的成员</p>
+         <div class="comment-card">
+                <div class="row">
+                  <div class="col-md-1">
+                    <img align="left" valign="top" class="user-icon" width="40" height="40" src="{$v.circle_avatar_url}" alt="{$v.circle_name}"/>
+                  </div><!--end of col-md-1-->
+                  <div class="col-md-10">
+                    <p class="info" style="display:inline;color:gray;background-color:#f0f6f3">
+                           <a style="margin-left:6px;" href=""  title="圈子">{$v.circle_name}</a>
+                           &nbsp;&nbsp;
+                           创建于{$v.circle_time}
+                    </p>
+                    <br/><br>
+
+                    <p class="circle_profile" >
+                           {$v.circle_profile}
+                           
+                    </p>
+
+        <!-- Button trigger modal -->
+              <button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="background-color:#f2f8f2;color:#6e944f">
+                退出圈子
+              </button>
+
+          <!-- Modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">退出圈子</h4>
+                        </div>
+                        <div class="modal-body">
+                        确定要退出圈子吗？
+                        <br>
+                        <p style="color:gray">退出圈子后，您不再是圈子的成员，也无法再浏览到圈子内的信息</p>
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <a href="{:U('/Home/Circle/quit/cid/'.$v['circle_id'])}" role="button">
+                        <button type="button submit"  class="btn btn-default"  > 确定 </button></a>
+                       
+                       
+                      </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+                  
+                  </div><!--end of col-md-10-->
+                  </volist>
+        <else/>
+        <volist name="result" id="v">
+ 
+	    <div class="comment-card">
+        				<div class="row">
+        					<div class="col-md-1">
+        						<img align="left" valign="top" class="user-icon" width="40" height="40" src="{$v.circle_avatar_url}" alt="{$v.circle_name}"/>
+        					</div><!--end of col-md-1-->
+        					<div class="col-md-10">
+        						<p class="info" style="display:inline;color:gray;background-color:#f0f6f3">
+                    			 <a style="margin-left:6px;" href=""  title="圈子">{$v.circle_name}</a>
+                    			 &nbsp;&nbsp;
+                    			 创建于{$v.circle_time}
+        						</p>
+        						<br/><br>
+
+        						<p class="circle_profile" >
+                    			 {$v.circle_profile}
+                    			 
+        						</p>
+
+        						<span class="input-group-btn">
+    								<a href="{:U('Circle/apply_confirm')}" role="button">
+        							<button class="btn btn-default" type="submit" style="background-color:#f2f8f2;color:#6e944f" data-toggle="modal" data-target="#myModalApply"> + 申请加入</button>
+    								</a>
+								</span>
+
+								<!-- Modal -->
+              <div class="modal fade" id="myModalApply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">申请加入圈子</h4>
+                        </div>
+                        <div class="modal-body">
+                        	确定要申请加入{$v.circle_name} 圈吗？
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <a href="{:U('/Home/Circle/member/cid/'.$v['circle_id'])}" role="button">
+                        <button type="button" class="btn btn-primary">确定</button></a>
+                      </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+    	   </div><!--end of circle-info-->
+
+        					</div><!--end of col-md-10-->
+        				
+        				</div><!--end of row-->
+        			</div><!-- comment-card-->
+              </volist>
+      </if>
+
+	    </div><!--end of circle-search-->
+	   </div><!--end of col-md-8-->
+     <!--修改历史2014-3-5 搜索页面可以返回圈子首页-->
+     <div class="col-md-3">
+       <span class="input-group-btn">
+        <a href="{:U('/Home/Circle/index')}" role="button">
+          <button class="btn btn-default" type="button submit" style="background-color:#f2f8f2;color:#6e944f;margin-top:30px" >回我的圈子首页</button>
+        </a>
+      </span>
+     </div><!--end of col-md-3-->
+	</div><!--end of row-->
+</div><!--end of circle-homepage-->
+
+</block>

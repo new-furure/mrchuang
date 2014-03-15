@@ -1,0 +1,71 @@
+{//发送私信的模态框}
+<div class="modal fade" id="sixinmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title public__myblue" id="myModalLabel">发送私信</h4>
+      </div>
+      <div class="modal-body">
+        <h3 class="public__myblue">发给:</h3>
+        <input type="text" id="receive_user" class="form-control">
+        <input type="hidden" id="receive_user_id" class="form-control">
+        <h3 class="public__myblue">内容:</h3>
+        <textarea name="content" class="form-control" rows="3" id="content"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="send_message()">发送</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+
+$().ready(function () {
+    function log(event, data, formatted) {
+        $("#receive_user").val(data.name);
+        $("#receive_user_id").val(data.value);
+    }
+    var objects=[];
+    //判断是否第一次加载
+    if(objects.length==0){
+      $.ajax({
+          type:"post",
+          url:"{:U('Message/user_info')}",
+          dataType: "json", 
+          success: function(data, textStatus, xhr) {
+            if(data){
+              $.each(data,function(idx,item){ //遍历填充数据 
+                objects[idx]={'name':item.user_name,'value':item.user_id};
+              }); 
+              //objects为json数据源对象
+              $("#receive_user").autocomplete(objects, {
+                  minChars: 0, //表示在自动完成激活之前填入的最小字符
+                  max: 5, //表示列表里的条目数
+                  autoFill: true, //表示自动填充
+                  mustMatch: false, //表示必须匹配条目,文本框里输入的内容,必须是data参数里的数据,如果不匹配,文本框就被清空
+                  matchContains: true, //表示包含匹配,相当于模糊匹配
+                  scrollHeight: 200, //表示列表显示高度,默认高度为180
+
+                  formatItem: function (row) {
+                      return row.name;
+                  },
+                  formatMatch: function (row) {
+                      return row.name;
+                  },
+                  formatResult: function (row) {
+                      return row.value;
+                  }
+              });
+
+              $(":text, textarea").result(log).next("#receive_user_id").click(function () {
+                  $(this).prev().search();
+              });
+            }                
+          }
+      });
+    }
+    
+});
+</script>

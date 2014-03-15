@@ -1,0 +1,121 @@
+ <!--提取评论列表-->
+
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+        <!--修改历史 2014-3-6 增加项目评论的折叠效果-->
+          共有{$article_comment_number}条评论(点击查看)
+        </a>
+      </h4>
+    </div>
+
+    <if condition="$article_type eq C('PROJECT_TYPE')">
+    <div id="collapseOne" class="panel-collapse collapse ">
+    <else />
+    <div id="collapseOne" class="panel-collapse collapse in">
+    </if>
+
+      <div class="panel-body">
+        <!--评论列表-->
+
+      <p class="comment-info" style="padding-bottom:8px;padding-top:8px;border-bottom-style:solid;border-bottom-color:#e6e6e6;border-bottom-width:1px">
+        评论
+      </p>
+         <volist name="user_comment" id="vo">
+        <div id="comment_list">
+          <div class="one-comment" style="padding-bottom:8px;padding-top:8px;border-bottom-style:solid;border-bottom-color:#e6e6e6;border-bottom-width:1px">
+
+              <!--一级评论card-->
+              <div class="comment-card" id="{$vo.comment_id}">
+                <div class="row">
+                  <div class="col-md-1">
+                    <img align="left" id="img" onerror="alert('没有找到图片')"  valign="top" class="user-icon" width="40" height="40" src="{$vo.user_avatar_url | default='__ROOT__/Public/Img/error.jpg'}"/>
+                  </div><!--end of col-md-1-->
+                  <div class="col-md-10" id="response_user" userreplytoid="{$vo.user_id}"  commentid="{$vo.id}" >
+                    <p class="info" style="display:inline;color:gray;background-color:#f0f6f3">
+                           <a style="margin-left:6px;"   title="作者" >{$vo['user_nickname']}</a>
+                           &nbsp;&nbsp;
+                           {$vo.comment_time}
+                    </p>
+                    <br/><br>
+
+                    <p class="content" >
+                           {$vo.comment_content}                           
+                    </p>
+
+     <!--回复框-->               
+
+        <a class="" onclick="response(this);">回复</a>    
+                  </div><!--end of col-md-10-->
+                
+                </div><!--end of row-->
+              </div><!-- comment-card-->
+            <!--一级评论card-->
+              <!--/div--><!--end of comment_comment-->
+     <!--二级评论-->
+
+     <volist name="vo['comment_id']" id="vos">
+              <div class="comment-card" style="padding-bottom:8px;padding-top:8px;border-top-style:dashed;border-top-color:gray;border-top-width:1px;margin-left:15%;margin-top:5px"
+              id="{$vo.second_comment_id}">
+                <div class="row">
+                  <div class="col-md-1">
+                    <img align="left" id="img" onerror="showimg(this);" valign="top" class="user-icon" width="40" height="40" src="{$vos['send_user_avatar_url']| default='__ROOT__/Public/Img/error.jpg'}" />
+                  </div><!--end of col-md-1-->
+                  <div class="col-md-10" id="second_response_user" userreplytoid="{$vos.user_id}"  commentid="{$vo.id}" >
+                    <p class="info" style="display:inline;color:gray;background-color:#f0f6f3">
+                           <a style="margin-left:6px;" href=""  title="作者">{$vos.sender_name}</a>回复<a href="">{$vos.receiver_name}</a>
+                           &nbsp;&nbsp;
+                           {$vos.second_comment_time}
+                    </p>
+                    <br/><br>
+
+                    <p class="content" >
+                           {$vos.second_comment_content}
+                    </p>
+     <!--回复框-->               
+
+        <a id="comment_reply" class="" onclick="response_second(this);">回复{$vos.sender_name}</a>
+    <!--回复框-->
+
+                  </div><!--end of col-md-10-->
+                
+                </div><!--end of row-->
+          </div><!-- comment-card-->
+                     <!--二级评论-->
+      </volist>
+            </div><!--one comment-->
+
+     </div><!--end of comment_list-->
+           </volist>
+        <!--分页-->
+        <div class="page-division" style="text-align:center;margin-left:auto;margin-right:auto;font-size:120%">
+        {$page}
+             
+        </div>
+                             <!--一级评论-->
+        <!--评论提示-->
+         <div  class="col-md-8 col-md-offset-3 registertextstyle">
+          <tr id="tr_content" style=" display:block">
+                  <td height="40" colspan="2" align="center">
+                  <div id="div_content" class="span3 offset3"style="color:#FF0000; width:90%; height:29px; padding-top:8px;"></div></td>
+          </tr>
+        </div>
+        <div id="comment" style="margin-top:20px">
+         <form action="" name='post_form' method='post' id="reply_to_article">
+            <p>
+                <label for="inputContent">写下你的评论：</label>
+                <textarea id="inputContent" name="inputContent" rows="8" cols="60" onblur="checkContent(this.value)"></textarea>
+            </p>
+          
+            <!--<input type="submit" />-->
+        </form>
+         <span class="bn-flat"><input id="comment_submit" aid="{$article_id}"  name="submit" type="button" value="提交" style="margin-left:100px" onclick="post_submit()" /></span>
+        </div>
+        <!--一级评论-->
+      </div>
+    </div><!--end of collapseone-->
+  </div><!--end of panel default-->
+</div><!--end of panel-group-->
+      

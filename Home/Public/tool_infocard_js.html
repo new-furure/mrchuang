@@ -1,0 +1,29 @@
+<script defer type="text/javascript" language="javascript">
+$(document).ready(function(){
+  $(".infocardshow").mouseover(function(){
+  $("#infocard").fadeIn();
+  });
+  $(".infocardshow").mouseout(function(){
+  $("#infocard").fadeOut();
+  //$("#infocard").css("background-color","#D6D6FF");
+  });
+  $("#infocard").mouseenter(function(){
+  $("#infocard").fadeIn();
+  });
+  $("#infocard").mouseleave(function(){
+  $("#infocard").fadeOut(800);
+  });
+});
+function getid(el){return document.getElementById(el)}
+
+function SetInfocardPosition()
+{
+  var s1=event.clientX+13;
+  var s2=s1.toString();
+  getid("infocard").style.left=s2+"px";
+  var s3=event.clientY+13;
+  var s4=s3.toString();
+  getid("infocard").style.top=s4+"px";
+}
+</script>
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>邀请码管理</title>
+	<load href="__PUBLIC__/Css/base.css" />
+	<load href='__PUBLIC__/Js/jquery.js'/>
+    <load href='__PUBLIC__/Js/style.js'/>
+</head>
+<body>
+<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+  <tr bgcolor="#FFFFFF"><td height="24" colspan="6">
+  <a href="{:U('Invitation/index',array('type'=>1))}">未使用</a>&nbsp;&nbsp;
+  <a href="{:U('Invitation/index',array('type'=>2))}">已使用</a>
+  <center><b>邀请码列表</b></center>
+	</td>
+  </tr>
+  <tr bgcolor="#FBFCE2">
+    <td width="50%" height="24" align="center">邀请码</td>
+    <td width="30%" align="center">生成时间</td>
+	<td width="20%" align="center">状态</td>
+  </tr>
+  <foreach name='list' item='li'>
+    <tr bgcolor="#FFFFFF" align="center" class="hover">
+    <td width="50%" height="24" align="center">{$li['invitation_code']}</td>
+    <td width="30%" align="center">{$li['invitation_time']}</td>
+    <td width="20%" align="center">
+	<if condition="$li['invitation_effective'] eq 0">已使用
+	<else />未使用
+	</if>
+	</td>
+  </tr>
+</foreach>
+    <tr bgcolor="#F9FCEF">
+    <td height="24" colspan="6" align="center" valign="top">
+      <span>{$page}</span>
+    </td>
+  </tr>
+  
+</table>
+<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+<form action="{:U('Invitation/sendOne')}" method="post" name="form1">
+  <tr bgcolor="#FFFFFF">
+   <td align="center" width="40%">生成一个邀请码</td>
+   <td colspan=""  align='left'>
+	发送到邮箱：
+   <input type='text' name="email" style="width:200px;"/>&nbsp;&nbsp;<input type="submit" value="发送" /></td>
+  </tr>
+  </form>
+  <form action="{:U('Invitation/createMany')}" method="post" name="form2">
+  <tr bgcolor="#FFFFFF">
+   <td align="left" width="40%">批量生成邀请码<input type='text' name="num" style="width:100px;"/>个</td>
+   <td colspan="6"  align='left'>
+	发送到邮箱：
+   <input type='text' name="email" style="width:200px;"/>&nbsp;&nbsp;<input type="submit" value="发送" /></td>
+  </tr>
+  </form>
+  </table>
+</body>
+</html>

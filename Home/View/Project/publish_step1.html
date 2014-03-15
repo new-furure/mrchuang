@@ -1,0 +1,101 @@
+{//政策发布页}
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.png" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+</block>
+
+<block name="title">
+  <title>项目发布-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+  <include file="Home/Public/header.html" />
+</block>
+
+<block name="main">
+  <script type="text/javascript" defer src="__ROOT__/Public/Js/index.js"></script>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2"><br/>
+      <h4 class="text-muted" align="center">发布项目需要拥有组织账号，请先注册一个组织账号再开启你的创业成就吧！~</h4><br/>
+
+  <script type="text/javascript" defer src="__ROOT__/Public/Js/index.js"></script>
+
+<!-- <form name="user" action="{:U('Project/next_step')}" class="form-horizontal" method="post" >
+  <br/>
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="inputEmail" class="col-sm-5 control-label">邮箱</label>
+      <div class="col-sm-7">
+        <input type="email" class="form-control" name="user_email" id="inputEmail" placeholder="Email" onblur="checkEmail(this.value)">
+      </div>
+    </div>
+    <div class="col-md-4 registertextstyle">
+      <tr id="tr_email" style=" display:block">
+        <td height="40" colspan="2" align="left">
+        <div id="div_email"  style="color:lightcoral; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="inputNickname"class="col-sm-5 control-label">组织名称</label>
+      <div class="col-sm-7">
+        <input class="form-control"  name="user_nickname" id="inputNickname" placeholder="Name" onblur="checkUser(this.value)">
+      </div>
+    </div>
+    <div class="col-md-4 registertextstyle">
+      <tr id="tr_user" style=" display:block">
+        <td height="40" colspan="2" align="center">
+          <div id="div_user" class="span3 offset3"style="color:lightcoral; width:90%; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="inputPassword" class="col-sm-5 control-label">密码</label>
+      <div class="col-sm-7">
+        <input type="password" name="user_passwd" class="form-control" id="inputPassword" placeholder="Password" onblur="checkPwd(this.value)">
+      </div>
+    </div>
+    <div class="col-md-4 registertextstyle">
+      <tr id="tr_pwd" style=" display:block">
+          <td height="40" colspan="2" align="center">
+          <div id="div_pwd" class="span3 offset3" style="color:lightcoral; width:90%; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="inputRepassword" class="col-sm-5 control-label">确认密码</label>
+      <div class="col-sm-7">
+        <input type="password" name="re_passwd" class="form-control" id="inputRepassword" placeholder="Password" onblur="registerallcheck()">
+      </div>
+    </div>
+    <div class="col-md-8 col-md-offset-3 registertextstyle">
+      <tr id="tr_repwd" style=" display:block">
+        <td height="40" colspan="2" align="center">
+        <div id="div_repwd" class="span3 offset3" style="color:lightcoral; width:90%; height:29px; padding-top:8px;"></div></td>
+      </tr>
+    </div>
+  </div>
+  <br/>
+    <div class="form-group">
+      <label for="" class="col-sm-3 control-label"></label>
+      <div class="col-sm-3">
+        <button type="submit" class="btn btn-primary btn-large controls registertextstyle" id="registerbutton" {//disabled="false"}>下一步</button>
+        <p class="text-muted">信息无误之后方可进行下一步。</p>
+      </div>
+    </div>
+</form> -->
+<include file="User:reg"/>
+
+
+    </div>
+  </div>
+<script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
+ </block> 

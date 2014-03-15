@@ -1,0 +1,74 @@
+<!--圈子模块
+创建圈子确认页
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  <script type="text/javascript" src="__ROOT__/Public/Js/circle.js"></script>
+
+
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+<include file="Home/View/Circle/circle_logo.html" />
+	<div id="circle-homepage">
+		<div class="row">
+			<div class="col-md-8" style="margin-top:30px">
+				<h4>
+					申请创建圈子
+				</h4>
+
+				<p>
+					如果想就某一类话题跟别人交流，可以创建一个圈子。
+					<br><br>	
+					圈子是对同一个话题感兴趣的人的聚集地。
+				</p>
+
+				<br><br>
+				
+				<!--span class="input-group-btn">
+    				<a href="{:U('Circle/new_circle')}" role="button">
+        				<button class="btn btn-default" type="submit" style="background-color:#f2f8f2;color:#6e944f"> 开始创建圈子
+        				</button>
+
+    				</a>
+				</span-->
+
+				<volist name="user_t" id="v">
+				<if condition="$reg_time lt 30">
+				<p style='color:red'>您的注册时间不足30天,<br>还有 {$wait_time} 天才可以申请创建圈子</p>
+				
+				<elseif condition="($belong_number gt 2) OR ($belong_number eq 2)"/>
+				<p style='color:red'>您已是2个圈子的成员,<br>圈子的加入上限是2个</p>
+				<else />
+				<span >
+
+    						<a href="{:U('/Home/Circle/new_circle/aid/'.$user_id)}" role="button">
+        					<button class="btn btn-default" type="submit" style="background-color:#f2f8f2;color:#6e944f"> 开始创建圈子
+        					</button>
+
+    						</a>
+				</span>
+				
+				</if>
+				</volist>
+			</div><!--end of col-md-8-->
+
+			<div class="col-md-4" style="margin-top:50px;color:gray">
+				考虑到中国法律法规和相关政策的要求,爱闯圈不欢迎色情、激进话题、意识形态方面的讨论, 并保留解散这类主题圈子的权利。
+			</div>
+		</div><!--end of row-->
+	</div><!--end of circle-homepage-->
+	</block><!--end of main block-->

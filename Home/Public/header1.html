@@ -1,0 +1,90 @@
+<nav class="navbar navbar-default navbar-fixed-top navbar__color" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+      <img src="__ROOT__/Public/Img/white_logo_index.png" style="height:20px">
+      <img src="__ROOT__/Public/Img/white-text-logo.gif" style="height:20px">
+    </a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li id="nav_home">
+        <a href="{:U('User/index')}">
+          <strong class="nav__home">首  页</strong>
+        </a>
+      </li>
+      <li id="nav_project">
+        <a href="{:U('Project/index')}">
+          <strong class="nav__project">项  目</strong>
+        </a>
+      </li>
+      <li id="nav_question">
+        <a href="{:U('Question/index')}">
+          <strong class="nav__question">问  答</strong>
+        </a>
+      </li>
+      <li id="nav_policy">
+        <a href="{:U('Policy/index')}">
+          <strong class="nav__policy">政  策</strong>
+        </a>
+      </li>
+      <li id="nav_message">
+        <a href="{:U('Message/index')}">
+          <strong class="nav__message">消  息</strong>
+        </a>
+      </li>
+      <li>
+        <a href="{:U('Circle/index')}">
+          <strong class="nav__message">圈  子</strong>
+        </a>
+      </li>
+<!--       <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <strong class="nav__resource">资源</strong> 
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#"><strong class="public__myblue">投资人</strong></a></li>
+          <li class="divider"></li>
+          <li><a href="#"><strong class="public__myblue">创业服务提供商</strong></a></li>
+          <li class="divider"></li>
+          <li><a href="#"><strong class="public__myblue">创业导师</strong></a></li>
+          <li class="divider"></li>
+          <li><a href="#"><strong class="public__myblue">政府部门</strong></a></li>
+        </ul>
+      </li> -->
+    </ul>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+      <button type="submit" class="btn" style="background-color:#6384a7;color:white;">
+        <strong class="nav__search" style="color:white;">搜索</strong>
+      </button>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong class="nav__setting">设置</strong> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="{:U('User/info')}"><strong class="nav__informationsetting">个人主页</strong></a></li>
+          <li class="divider"></li>
+          <li><a href="{:U('User/Logout')}">
+            <strong class="nav__exit">退出登录</strong></a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <strong class=""></strong>
+        </a>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>

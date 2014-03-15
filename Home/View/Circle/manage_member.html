@@ -1,0 +1,279 @@
+<!--圈子模块
+创建圈子页提交页
+-->
+<extend name="Home/Public/base.html" />
+
+<block name="headfiles">
+  <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/Public/Img/blue-logo.jpg" />
+  <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Css/mystyle.css" media="all"/>
+  
+
+</block>
+
+<block name="title">
+        <title>圈子-Mr.Chuang</title>
+</block>
+
+<block name="nav">
+      <include file="Home/Public/header1.html" />
+</block>
+
+<block name="main">
+<div class="uglydiv">1</div>
+
+<include file="Home/View/Circle/circle_logo.html" />
+
+
+	<div id="circle-homepage">
+    <div class="row">
+      <div class="col-md-8">
+        <h3>
+        {$circle_name}圈子管理
+        </h3>
+        <div class="nav" style="padding-top:15px">
+
+          <ul class="nav nav-tabs">
+          <li ><a href="{:U('/Home/Circle/manage/cid/'.$circle_id)}">基本信息</a></li>
+          <li class="active"><a href="{:U('/Home/Circle/manage_member/cid/'.$circle_id)}">成员管理</a></li>
+          <li><a href="{:U('/Home/Circle/post_manage/cid/'.$circle_id)}">帖子管理</a></li>
+          <li><a href="{:U('/Home/Circle/data/cid/'.$circle_id)}">数据统计</a></li>
+          </ul>         
+        </div><!--end of nav-->
+
+        
+       
+        <h4 style="margin-top:15px">
+          圈主
+        </h4>
+        <div id="manage-member-list">
+          <ul class="list">
+           <volist name="circle_owner" id="vn"> 
+            <li>
+              <div class="thumbnail">
+                <div class="row">
+                  <div class="col-xs-6 col-md-6">
+                    <a class="thumbnail">
+                    <img src="{$vn['user_avatar_url'] | default='__ROOT__/Public/Img/error.jpg'}" data-src="holder.js/100%x100%" alt="{$vn[user_nickname]}"/>
+                    </a>
+                  </div><!--end of col-md-6-->
+                  <div class="col-md-6">
+                    <p>{$vn['user_nickname']}</p>
+                    
+                  </div><!--end of col-md-6-->
+                </div><!--end of row-->
+                <if condition="$status eq 1">
+                  <div class="caption">
+                    <a href="#" data-toggle="modal" data-target="#myModalDelete" class="btn btn-default" role="button">解散圈子</a> &nbsp;
+                    
+                  </div>
+                <else/>
+                <div class="caption">
+                    <a href="{:U('/Home/Circle/message/aid/'.$vn['user_id'].'/cid/'.$vn['circle_id'])}" class="btn btn-default" role="button" >私信TA</a> &nbsp;
+                     <include file="Home/View/Circle/modal.html" />
+                    
+                  </div>
+                </if>
+                  
+            </div><!--end of thumbnail-->
+
+            </li>
+            
+          
+          </volist>
+
+          </ul>
+        </div><!--end of member-list-->
+
+        
+
+
+        <h4 style="margin-top:15px">
+          管理员
+        </h4>
+        <div id="manage-member-list">
+          <ul class="list">
+          <volist name="circle_admin" id="v">
+       
+              <if condition="$status eq 1">
+                  <li>
+              <div class="thumbnail">
+                <div class="row">
+                  <div class="col-xs-6 col-md-6">
+                    <a class="thumbnail">
+                    <img src="{$v['user_avatar_url']}" data-src="holder.js/100%x100%" alt="{$v['user_nickname']}"/>
+                    </a>
+                  </div><!--end of col-md-6-->
+                  <div class="col-md-6">
+                    <p>{$v['user_nickname']}</p>
+                    <a href="{:U('/Home/Circle/message/uid/'.$v['user_id'].'/cid/'.$v['circle_id'])}" class="btn btn-default" role="button" >私信TA</a>
+                    
+                  </div><!--end of col-md-6-->
+                </div><!--end of row-->
+                  <div class="caption">
+                    <a href="{:U('/Home/Circle/kick/cid/'.$circle_id.'/aid/'.$v['user_id'])}"  class="btn btn-default" role="button">踢出圈子</a> &nbsp;
+                   <a href="{:U('/Home/Circle/deprive/cid/'.$circle_id.'/aid/'.$v['user_id'])}" class="btn btn-default"v role="button">免去管理员</a>
+                     <include file="Home/View/Circle/modal.html" />
+                     <!--a href="#" class="btn btn-default" role="button" data-toggle="modal" data-target="#myModalMessage">私信TA</a-->
+                  </div>
+                  </li>
+                <elseif condition="$user_id eq $v['user_id']"/>
+                    <li>
+              <div class="thumbnail">
+                <div class="row">
+                  <div class="col-xs-6 col-md-6">
+                    <a class="thumbnail">
+                    <img src="{$v['user_avatar_url']}" data-src="holder.js/100%x100%" alt="{$v['user_nickname']}"/>
+                    </a>
+                  </div><!--end of col-md-6-->
+                  <div class="col-md-6">
+                    <p>{$v['user_nickname']}</p>
+                    
+                  </div><!--end of col-md-6-->
+                </div><!--end of row-->
+                  <div class="caption">
+                    <!--a href="#" class="btn btn-default" role="button" data-toggle="modal" data-target="#myModalKickAdmin">踢出圈子</a> &nbsp;
+                    <a href="#" class="btn btn-default" role="button" data-toggle="modal" data-target="#myModalDeprive">免去管理员</a>
+                     <a href="#" class="btn btn-default" role="button" data-toggle="modal" data-target="#myModalMessage">私信TA</a-->
+                      <include file="Home/View/Circle/modal.html" />
+                  </div>
+                  </li>
+                <else/>
+                    <li>
+              <div class="thumbnail">
+                <div class="row">
+                  <div class="col-xs-6 col-md-6">
+                    <a class="thumbnail">
+                    <img src="{$v['user_avatar_url']}" data-src="holder.js/100%x100%" alt="{$v['user_nickname']}"/>
+                    </a>
+                  </div><!--end of col-md-6-->
+                  <div class="col-md-6">
+                    <p>{$v['user_nickname']}</p>
+                    <a href="{:U('/Home/Circle/message/uid/'.$v['user_id'].'/cid/'.$v['circle_id'])}" class="btn btn-default" role="button" >私信TA</a>
+                     <include file="Home/View/Circle/modal.html" />
+                    
+                  </div><!--end of col-md-6-->
+                </div><!--end of row-->
+                </li>
+                  </if>
+            
+            </volist>
+
+          </ul>
+          
+
+                 
+        </div><!--end of member-list-->
+
+        <h4 style="margin-top:15px">
+          成员
+        </h4>
+        <div id="manage-member-list">
+          <ul class="list">
+            <volist name="circle_member" id="vo">
+            <if condition="$status eq 1"> 
+            <li>
+              <div class="thumbnail">
+                <div class="row">
+                  <div class="col-xs-6 col-md-6">
+                    <a class="thumbnail">
+                    <img src="{$vo['user_avatar_url']}" data-src="holder.js/100%x100%" alt="{$vo['user_nickname']}"/>
+                    </a>
+                  </div><!--end of col-md-6-->
+                  <div class="col-md-6">
+                    <p>{$vo['user_nickname']}</p>
+                    <a href="{:U('/Home/Circle/message/uid/'.$vo['user_id'].'/cid/'.$vo['circle_id'])}" class="btn btn-default" role="button" >私信TA</a> &nbsp;
+                    
+                  </div><!--end of col-md-6-->
+                </div><!--end of row-->
+                  <div class="caption">
+                    <a href="{:U('/Home/Circle/kick/cid/'.$circle_id.'/aid/'.$vo['user_id'])}" class="btn btn-default" role="button">踢出圈子</a> &nbsp;
+                    <a href="{:U('/Home/Circle/admin/cid/'.$circle_id.'/aid/'.$vo['user_id'])}" class="btn btn-default" role="button" >设为管理员</a>
+                     <include file="Home/View/Circle/modal.html" />
+                  </div>
+            </div><!--end of thumbnail-->
+            </li>
+            <else />
+            <li>
+              <div class="thumbnail">
+                <div class="row">
+                  <div class="col-xs-6 col-md-6">
+                    <a class="thumbnail">
+                    <img src="{$vo['user_avatar_url']}" data-src="holder.js/100%x100%" alt="{$vo['user_nickname']}"/>
+                    </a>
+                  </div><!--end of col-md-6-->
+                  <div class="col-md-6">
+                    <p>{$vo['user_nickname']}</p>
+                    <a href="{:U('/Home/Circle/message/uid/'.$vo['user_id'].'/cid/'.$vo['circle_id'])}" class="btn btn-default" role="button" >私信TA</a> &nbsp;
+                    
+                  </div><!--end of col-md-6-->
+                </div><!--end of row-->
+                  <div class="caption">
+                    <a href="{:U('/Home/Circle/kick/cid/'.$circle_id.'/aid/'.$vo['user_id'])}"  class="btn btn-default" role="button">踢出圈子</a> &nbsp;
+                     <include file="Home/View/Circle/modal.html" />
+                  </div>
+            </div><!--end of thumbnail-->
+            </li>
+            </if>
+
+             
+            </volist>
+          </ul>
+        </div><!--end of member-list-->
+         
+
+
+
+      </div><!--col-md-8-->
+
+      <div class="col-md-4">
+        <div id="detail_right" style="margin-top:80px">
+
+            <img align="left" valign="top" class="circle-icon" width="40" height="40" src="{$circle_avatar_url}" alt="{$circle_name}"/>
+            &nbsp; &nbsp;
+            <p style="display:inline">
+              <a href="{:U('/Home/Circle/detail/cid/'.$circle_id)}">  {$circle_name}  </a>
+              <br/>
+              &nbsp; &nbsp;<span style="color:gray">我是圈子管理者</span>
+              
+            </p>
+            <br/><br/>
+      </div><!--end of col-md-4-->
+    </div><!--end of row-->
+ <div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">解散圈子</h4>
+                        </div>
+                        <div class="modal-body">
+                        您确定要解散该圈子吗？
+                        </div>
+                       
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <a href="">
+                         <a href="{:U('/Home/Circle/delete_circle/cid/'.$vn['circle_id'])}" class="btn btn-default" role="button" >确定</a>
+                      </div>
+                      
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+
+
+    
+
+
+                  
+
+                  
+
+                  
+
+                 
+
+
+
+  </div><!--end of circle-homapage-->
+  
+  </block>

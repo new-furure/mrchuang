@@ -1,0 +1,13 @@
+{//评论模块}
+<script type="text/javascript">
+	document.getElementById("reply").className="nav__active";
+</script>
+  <div class="tab-pane active" id="pinglun">
+  	<ul class="nav nav-pills">
+    <li class="active"><a href="{:U('Message/index?bar=3&notice_type=11')}">评  论</a></li>
+    <li><a href="{:U('Message/index?bar=3&notice_type=12')}">完  善</a></li> 
+  	</ul>
+    <include file="comment_comment"/>
+    <h5 class="col-md-offset-9">{$page}</h5>
+  </div>
+

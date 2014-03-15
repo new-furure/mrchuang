@@ -1,0 +1,15 @@
+{//消息————评论模块}
+<div class="well row">
+  <div class="col-md-3 thumbnail">
+    <img src="[pic]"/>
+  </div>
+  <div class="col-md-9">
+    <a class="pull-right" onclick="delete_block2(this,11)">已读</a>
+    <h2><strong>评论</strong></h2>
+    <h5 class="text-muted">
+      {$_SESSION['comment_notice'].notice_time|substr=0,16}<br/>
+      {$_SESSION['comment_notice'].username}评论“{$_SESSION['comment_notice'].article_title}”<br/>
+      {$_SESSION['comment_notice'].notice_content}
+    </h5>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+{//消息设置模块}
+<div class="well row">
+
+<form role="form" action="{:U('Message/save_setting')}" method="post">
+	<h4><strong>谁可以给我发私信</strong></h4>
+	<div  class="radio">
+	    <label>      
+	      <input id="receive_sixin_set" name="receive_sixin_set" type="radio" value="1"> 全部的人
+	    </label>
+	</div>
+	<div class="radio">
+	    <label>      
+	      <input id="receive_sixin_set" name="receive_sixin_set" type="radio" value="2"> 我关注的人
+	    </label>
+	</div>
+	<h4><strong>接收哪些提醒</strong></h4>
+	<span>有人回复我的项目，这些人为</span>
+	<div  class="radio">
+	    <span>      
+	      <input id="reply_set" name="reply_set" type="radio" value="1"> 全部的人
+	    </span>
+	</div>
+	<div class="radio">
+	    <span>      
+	      <input id="reply_set" name="reply_set" type="radio" value="2"> 我关注的人
+	    </span>
+	</div>
+	<div class="radio">
+	    <span>      
+	      <input id="reply_set" name="reply_set" type="radio" value="3"> 我不接受这类提醒
+	    </span>
+	</div>
+
+	<span>有人给我评论时，这些人为</span>
+	<div  class="radio">
+	    <span>      
+	      <input id="comment_set" name="comment_set" type="radio" value="1"> 全部的人
+	    </span>
+	</div>
+	<div class="radio">
+	    <span>      
+	      <input id="comment_set" name="comment_set" type="radio" value="2"> 我关注的人
+	    </span>
+	</div>
+	<div class="radio">
+	    <span>      
+	      <input id="comment_set" name="comment_set" type="radio" value="3"> 我不接受这类提醒
+	    </span>
+	</div>
+	<button type="submit" class="btn btn-default">保存</button>
+</form>
+
+</div>

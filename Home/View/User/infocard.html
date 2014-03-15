@@ -1,0 +1,34 @@
+<!-- {//个人信息小卡} -->
+<div id="infocard" class="panel panel-default" style="display:none;position:absolute;top:0px;left:0px;width:500px">
+
+  <div class="media user__infocard">
+    <a class="pull-left" style="width:100px;height:100px;" href="{:get_url_by_id($user['user_id'])}">
+      <img class="media-object user__infocard__img" style="width:100%" src="{$user.user_avatar_url}" alt="{$user.user_nickname}的头像"/>
+      <h5>
+        <br/>
+        <span class="label label-warning">{$user.user_nickname}</span>
+      </h5>
+    </a>
+    <div class="media-body">
+      <p>{$user.user_signature}</p>
+      <h5>{$user['user_profile']|default="此处省略N个字"}</h5>
+      <div class="text-right">
+        
+        <button class="focus_user btn btn-danger" to="{:U('User/focus','id='.$user['user_id'])}">
+          <span class="glyphicon glyphicon-heart">
+            <php>echo is_focus_on($user['user_id'])?"取消关注" : "关注TA"</php>
+          </span>
+          (
+          <span class="focus_num">{$user['user_focus_number']}</span>
+          )
+        </button>
+
+        <button class="btn btn-default" onclick="ajax_send_message({$user['user_id']})">
+          <span class="glyphicon glyphicon-envelope"></span>
+          发私信
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--media body end-->
+</div>

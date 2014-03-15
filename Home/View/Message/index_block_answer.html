@@ -1,0 +1,14 @@
+{//消息————回答模块}
+<div class="well row">
+  <div class="col-md-3 thumbnail">
+    <img src="[pic]"/>
+  </div>
+  <div class="col-md-9">
+    <a class="pull-right" onclick="delete_block2(this,13)">已读</a>
+    <h2><strong>回答</strong></h2>
+    <h5 class="text-muted">{$answer_notice['notice_time']|substr=0,16}<br/>
+      {$answer_notice['username']}回答“{$answer_notice['notice_title']}”<br/>
+      {$answer_notice['notice_content']}
+    </h5>
+  </div>
+</div>

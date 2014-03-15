@@ -1,0 +1,14 @@
+{//消息————完善模块}
+<div class="well row">
+  <div class="col-md-3 thumbnail">
+    <img src="[pic]"/>
+  </div>
+  <div class="col-md-9">
+    <a class="pull-right" onclick="delete_block2(this,12)">已读</a>
+    <h2><strong>完善</strong></h2>
+    <h5 class="text-muted">{$_SESSION['improve_notice'].notice_time|substr=0,16}<br/>
+      {$_SESSION['improve_notice'].username}完善“{$_SESSION['improve_notice'].notice_title}”<br/>
+      {$_SESSION['improve_notice'].notice_content}
+    </h5>
+  </div>
+</div>
