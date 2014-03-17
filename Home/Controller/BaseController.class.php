@@ -8,7 +8,7 @@ namespace Home\Controller;
 use Think\Controller;
 
 class BaseController extends Controller {
-
+	public $pic_url;  // 公用变量，上传图片后赋值，提交文章的时候需要用到。
 //赞文章
 	public function up_article(){
 		if(!IS_AJAX){
@@ -499,24 +499,54 @@ class BaseController extends Controller {
 		$user_id = get_id(false);	
 		$article_type=I('post.article_type');
 		switch($article_type){
+			//时光机
+			case 'talk':
+				$data['article_type'] = C('TALK_TYPE');
+				break;
+			//创意汇
+			case 'idea':
+				$data['article_type'] = C('IDEA_TYPE');
+				break;
+			//风投
+			case 'vc':
+				$data['article_type'] = C('VC_TYPE');
+				break;
+			//孵化器
+			case 'incubator':
+				$data['article_type'] = C('INCUBATOR_TYPE');
+				break;
+			//政策
 			case 'policy':
 				$data['article_type'] = C('POLICY_TYPE');
 				$data['article_profile']=I('post.profile');
 				break;
+			//项目
 			case 'project':
 				$data['article_type'] = C('PROJECT_TYPE');
 				$data['article_profile']=I('post.profile');
 				break;
+			//问题
 			case 'question':
 				$data['article_type'] = C('QUESTION_TYPE');
-				break;	
+				break;
+			//帖子	
 			case 'post':
 				$data['article_type'] = C('POST_TYPE');
 				break;
 		}
-		$data['user_id'] = $user_id;
+		//$data['user_id'] = $user_id;
+		$data['user_id'] = 134217735;
 		$data['article_title']=I('post.title');				
-		$data['article_content']=I('post.content');				
+		$data['article_content']=I('post.content');	
+		if($pic_url != '')
+			$data['article_picture_url']=$pic_url;
+    	//$pic_name = I('post.pic_name');
+    	//判断是否有传图片
+    	/*if($pic_name){
+    		$sava_name=time();
+    		$url=upload_file( $savePath, $sava_name,"picture");
+    		$data['article_picture_url'] = $url;	
+    	}*/
 		$article = D('Article');
 		$result = $article->create($data);
 		if(!$result){
@@ -524,7 +554,9 @@ class BaseController extends Controller {
 		}
 		//dump($result);
 		if($result){
-			$article_id=$article->add();
+			$article_id=$article->add($data);
+			//echo '提交文章';
+			//echo $article_id;
 			$data1['article_id']=$article_id;
 			switch ($article_type) {
 				case 'project':
@@ -564,7 +596,7 @@ class BaseController extends Controller {
 					break;
 			}
 		}
-		$tag_list=I('post.array');
+		/*$tag_list=I('post.array');
 		$article_tag=M('article_have_tag');
 		$tag=M('tag');
 		$num=0;
@@ -573,7 +605,7 @@ class BaseController extends Controller {
 			$data['tag_title']=$value;
 			$data1['tag_id']=$tag->add($data);
 			$article_tag->add($data1);
-		}	
+		}	*/
 		if(!$result){
 		$data['type'] = 1; 
 		$this->ajaxReturn($data,'json');
@@ -668,6 +700,22 @@ class BaseController extends Controller {
 		$article_effective=1;
 		switch($article_type)
 		{
+			//时光机
+			case 'talk':
+				$data['article_type'] = C('TALK_TYPE');
+				break;
+			//创意汇
+			case 'idea':
+				$data['article_type'] = C('IDEA_TYPE');
+				break;
+			//风投
+			case 'vc':
+				$data['article_type'] = C('VC_TYPE');
+				break;
+			//孵化器
+			case 'incubator':
+				$data['article_type'] = C('INCUBATOR_TYPE');
+				break;
 			case 'project':
 				$data['article_type'] = C('PROJECT_TYPE');
 				$data['article_profile']=I('post.profile');
@@ -729,6 +777,22 @@ class BaseController extends Controller {
 		$article_type = $article['article_type'];
 		if($result){
 			switch ($article_type) {
+			//时光机
+			case C('TALK_TYPE'):
+				$this->success('删除成功',U('/Home/Project/index'));
+				break;
+			//创意汇
+			case C('IDEA_TYPE'):
+				$this->success('删除成功',U('/Home/Project/index'));
+				break;
+			//风投
+			case C('VC_TYPE'):
+				$this->success('删除成功',U('/Home/Project/index'));
+				break;
+			//孵化器
+			case C('INCUBATOR_TYPE'):
+				$this->success('删除成功',U('/Home/Project/index'));
+				break;
 			case C("PROJECT_TYPE"):
 				$this->success('删除成功',U('/Home/Project/index'));
 				break;
@@ -976,7 +1040,54 @@ public function test(){
 	/*dump(ac_by_id(get_id()));
 	dump(M('User')->getByUserId(get_id()));
 	echo ac(5);*/
-	$time = time();
+	$time = time(); 
 	echo $time;
 }
+public function uploadPicture(){
+        $saveName=time();
+        $savePath  = '/Img/Article/project';
+        $url=$this->upload_file1( $savePath, $saveName, "photo" );
+        if ( $url==null ) {
+          // 上传错误
+          $this->error( "头像上传失败！" );
+          return;
+        }else {
+          //更新数据库
+         /* $User=M( 'user' );
+          $conditon['user_id']=$id;
+          $user_info['user_avatar_url']=$url;
+          $User->where( $conditon )->save( $user_info );*/
+          $pic_url = $url;
+          $this->success( "修改成功！" );
+    }
+}
+/*function upload_file1( $savePath, $saveName, $postName, $fileexts="img" ) {
+  $upload = new \Think\Upload();// 实例化上传类
+  $upload->maxSize   =     5*1024*1024;//5M ;// 设置附件上传大小
+  // 设置附件上传类型
+  if ( is_array( $fileexts ) ) {
+    $upload->exts =$fileexts;
+  }  elseif ( strcasecmp( $fileexts, "img" )==0 ) {
+    $upload->exts      =   array( 'jpg', 'jpeg', 'png', 'gif' );
+  }elseif ( strcasecmp( $fileexts, "doc" )==0 ) {
+    $upload->exts=array( 'doc', 'docx', 'pdf', 'wps', 'txt', 'htm', 'html' );
+  }else {
+    $upload->exts=null;
+  }
+  $upload->savePath = __ROOT__'./Uploads/'.$savePath; // 设置附件上传目录
+  $upload->saveName = $saveName;
+  $upload->autoSub =false;//不创建子目录
+  $upload->replace =ture;//同名覆盖
+  // 上传单个文件
+  $info   =   $upload->uploadOne( $_FILES[$postName] );
+  if ( !$info ) {
+    // 上传错误
+    return null;
+  }else {
+    // 上传成功 获取上传文件信息
+    return $info;
+    $st = new SaeStorage();
+    return $st->getUrl( 'Uploads', 'upload' ).'/'.$savePath.$info['savename'];
+  }
+}*/
 }

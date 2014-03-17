@@ -17,7 +17,9 @@ class IndexController extends Controller {
     public function index(){
         $this->display();
     }
-
+    public function indexAll(){
+        $this->display();
+    }
 
     //几个搜索方面的方法
     //@author:牛亮

@@ -1,0 +1,126 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 全局初始化 */
+body{ margin:0px; padding:0px; font-family:"微软雅黑"; font-size:12px; line-height:15px;background:#FFF;}
+ul,ol,li{ list-style:none; margin:0px; padding:0px;}
+p,img,dl,dt,dd,textarea,font,strong,b,i,em{ border:none; margin:0px; padding:0px; font-size:12px; font-weight:normal; font-style:normal;}
+table,th,td,pre{ margin:0px; padding:0px;}
+a{ text-decoration:none;}
+/* 通用 */
+.rs{-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}
+.rn{-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;}
+.space{ height:10px; overflow:hidden;}
+.ss{-webkit-box-shadow:#333 0px 0px 4px;-moz-box-shadow:#333 0px 0px 4px;box-shadow:#333 0px 0px 4px;}
+/* 顶部 */
+.top{ overflow:hidden; background:#196790}
+.top .topBox{ width:960px; height:28px; padding:9px 0px; margin:auto;;}
+.top .logo{ float:left; overflow:hidden;}
+.top .logo img{ margin:0px;}
+.top .searchInput{ display:block; overflow:hidden; float:left; background:url(../img/iconSearch.gif) right center no-repeat #DDD; border:solid 2px #7abdf5; width:320px; height:24px; margin:0px 10px 0px 0px;}
+.top .searchInput input{ border:none; background:transparent; margin:4px 0px 0px 0px; color:#999; font-size:14px; line-height:14px; padding:0px 10px; width:90%;}
+.top .searchButton{ float:left; background:#48c9b0; color:#FFF; font-weight:bold; width:64px; border:none; height:28px; margin:0px 20px 0px 0px; cursor:pointer;}
+.top ul{ float:left; overflow:hidden;}
+.top li{ float:left; padding:0px 5px 0px 4px; line-height:28px; color:#48c9b0; font-size:14px;}
+.top li a{ display:block; color:#FFF; line-height:28px; font-size:14px;}
+.top li a:hover{ color:#48c9b0; text-decoration:underline;}
+.top .userImg{ float:right;}
+/* 主体 */
+.main{ width:960px; margin:auto; overflow:hidden; background:#f7f7f7;}
+.mainListMenu{ width:110px; float:left; overflow:hidden;}
+.mainListMenu ul{ margin:0px 0px 0px 5px;}
+.mainListMenu li{ line-height:30px;}
+.mainListMenu li a{ display:block; line-height:30px; color:#196790; background-image:url(../img/mainListMenuIcon.png); background-color:#196790; background-repeat:no-repeat; padding:0px 0px 0px 25px;}
+.mainListMenu li a.mlmIcon_1{ background-position:0px -30px;}
+.mainListMenu li a.mlmIcon_2{ background-position:0px -60px;}
+.mainListMenu li a.mlmIcon_3{ background-position:0px -90px;}
+.mainListMenu li a.mlmIcon_4{ background-position:0px -120px;}
+.mainListMenu li a.mlmIcon_5{ background-position:0px -150px;}
+.mainListMenu li a.mlmIcon_6{ background-position:0px -180px;}
+.mainListMenu li a.mlmIcon_7{ background-position:0px -210px;}
+.mainListMenu li a.mlmIcon_8{ background-position:0px -240px;}
+.mainListMenu li a.mlmIcon_9{ background-position:0px -270px;}
+.mainListMenu li a:hover{ color:#48c9b0; background-color:#48c9b0;}
+.mainListMenu li a.sel{ color:#48c9b0; background-color:#48c9b0;}
+.mainCon{ width:850px; float:left; overflow:hidden; background:#FFF;}
+.mainConCenter{ float:left; width:590px;}
+.mainConRight{ float:right; width:235px;}
+
+.sender{ position:relative; z-index:100; margin:0px 0px 0px 20px;}
+.sender span{ display:block; width:474px; height:95px; border:solid 3px #7abdf5; overflow:hidden; background:#EEE;}
+.sender span textarea{ width:460px; height:85px; font-size:12px; line-height:22px; padding:5px 10px; color:#BBB; background:transparent;}
+.sender em{ position:absolute; z-index:110; display:block; width:14px; height:22px; top:40px; left:477px; background:url(../img/senderRight.gif);}
+.sender b{ position:absolute; z-index:110; display:block; width:60px; height:60px; top:10px; left:500px; background-image:url(../img/senderButton.png); background-color:#48c9b0; color:#FFF; text-align:center; font-size:14px; font-weight:bold; line-height:60px; padding:10px 0px 0px 0px; cursor:pointer;}
+.sender b.over{ background-color:#7abdf5;}
+.sender dl{ display:block; width:480px; height:20px; padding:5px 0px;}
+.sender dt{ display:block; height:20px; line-height:20px; float:left; background-image:url(../img/senderIcon.png); background-repeat:no-repeat; background-color:#196790; color:#196790; padding:0px 0px 0px 25px; margin:0px 20px 0px 0px; font-size:14px; font-weight:bold; cursor:pointer;}
+.sender dt.over{ background-color:#7abdf5; color:#7abdf5;}
+.sender dt.senderIcon_1{ background-position:0px 0px;}
+.sender dt.senderIcon_2{ background-position:0px -20px;}
+.sender dt.senderIcon_3{ background-position:0px -40px;}
+.sender dd{ display:block; height:20px; line-height:20px; float:right; background:url(../img/senderRadioButton.png) 0px 0px no-repeat; color:#196790; padding:0px 0px 0px 20px; font-size:14px; font-weight:bold; margin:0px 0px 0px 20px; cursor:pointer;}
+.sender dd.sel{ background:url(../img/senderRadioButton.png) 0px -20px no-repeat;}
+
+.newMsgBtn{ display:block; border:solid 3px #e5e6e8; margin:0px 0px 0px 20px; }
+.newMsgBtn div{ background:#f1f2f2; font-size:12px; line-height:24px; color:#CCC; font-weight:bold; text-align:center; cursor:pointer;}
+.newMsgBtn div.over{ background:#FFF; color:#666;}
+
+.msgBox{ overflow:hidden;}
+.msgBox dl{ overflow:hidden; margin:0px 0px 0px 20px; padding:30px 0px; border-bottom:solid 1px #BBB;}
+.msgBox dt{ float:left; width:70px; padding:0px; position:relative; z-index:100;}
+.msgBox dt img{}
+.msgBox dd{ float:right; width:485px;}
+.msgBox dl i{ float:left; color:#BBB; line-height:18px;}
+.msgBox dl em{ float:right; color:#BBB; line-height:18px;}
+.msgBox dl h3{ float:left; color:#196790; font-size:16px; line-height:18px; clear:both;}
+.msgBox dl font{ float:left; color:#BBB; line-height:18px; clear:both;}
+.msgBox dl p{ float:left; margin:10px 0px 0px 0px; color:#777; line-height:22px;}
+.msgBox dl strong{ color:#196790; padding:0px 10px;}
+.msgBox dl ul{ float:left; overflow:hidden; margin:20px 0px 0px 0px;}
+.msgBox dl li{ float:left; margin:0px 15px 0px 0px; padding:0px 0px 0px 15px; background-image:url(../img/msgIcon.png); background-repeat:no-repeat; background-color:#aaa; color:#aaa; cursor:pointer;}
+.msgBox dl li.over{ background-color:#48c9b0; color:#48c9b0;}
+.msgBox dl li.sel{ background-color:#196790; color:#196790;}
+.msgBox dl li.msgIcon_1{ background-position:0px -11px;}
+.msgBox dl li.msgIcon_2{ background-position:0px -23px;}
+.msgBox dl li.msgIcon_3{ background-position:0px -35px;}
+.msgBox dl li.msgIcon_4{ background-position:0px -47px;}
+.msgBox dl li.msgIcon_5{ background-position:0px -59px;}
+.msgBox dl li.msgIcon_6{ background-position:0px -71px;}
+
+.mainConRight dl{ overflow:hidden; padding:10px 0px; border-bottom:solid 1px #BBB;}
+.mainConRight dt{ line-height:30px; color:#196790; font-size:14px; font-weight:bold; padding:0px 0px 10px 0px;}
+.mainConRight dd{ overflow:hidden;}
+
+.recommendUser a{ overflow:hidden;}
+.hotActivity span{ display:block; position:relative; z-index:100;}
+.hotActivity img{ display:block; position:absolute; top:5px; left:0px; z-index:110;}
+.hotActivity p{ display:block; line-height:14px; color:#777; padding:0px 0px 10px 70px;}
+.hotActivity b{ display:block; padding:0px 0px 5px 0px; font-size:14px; color:#777; line-height:22px}
+
+.findOut a{ display:block; width:40px; height:50px; background-image:url(../img/findOut.png); background-repeat:no-repeat; background-color:#BBB; color:#FFF; text-align:center; overflow:hidden; line-height:55px; float:left; margin:2px 3px;}
+.findOut a.type_0{ margin:0px 0px 0px 20px;}
+.findOut a.type_1{ background-color:#196790;}
+.findOut a.type_2{ background-color:#48c9b0;}
+
+.upImg{ position:relative; z-index:100;}
+.upImgWindow{ display:none; position:absolute; z-index:120; top:30px; left:-20px; width:300px; border:solid 3px #196790; background:#EEE;}
+.upImgWindow table{ border-collapse:collapse; width:100%;}
+.upImgWindow td{ font-size:12px; background:#FFF; text-align:center; border:solid 1px #999;}
+.upImgWindow font{ display:block; font-size:14px; line-height:35px; background:#EEE; text-align:left; padding:0px 20px; color:#222; position:relative; z-index:130; font-weight:bold;}
+.upImgWindow font i{ display:block; position:absolute; z-index:140; top:-8px; left:50px; width:10px; height:8px; background:url(../img/upImgArrow.png);}
+.upImgWindow a{ display:block; line-height:35px; color:#333;}
+.upImgWindow a:hover{ background:#f5f5f5; font-weight:bold;}
+
+.userConWindow{ display:none; position:absolute; z-index:110; top:5px; left:5px; background:#FFF; width:380px; height:150px; border:solid 2px #48c9b0;}
+.userConWindowBox{ position:relative; z-index:120; overflow:hidden;}
+.userConWindow .userConImg{ position:absolute; z-index:130; top:10px; left:10px;}
+.userConWindow span{ display:block; overflow:hidden; width:270px; float:right; text-align:right; margin:10px;}
+.userConWindow span b{ display:inline-block; font-size:12px; line-height:14px; padding:3px 10px; background:#48c9b0; color:#FFF; margin:0px 0px 0px 10px; cursor:pointer;}
+.userConWindow .userConWindowBox p{ display:block; overflow:hidden; width:270px; float:right; text-align:left; margin:0px 10px; padding:10px 0px; border-top:solid 1px #BBB;}
+.userConWindow p a{ color:#777; line-height:40px;}
+.userConWindow p strong{ color:#48c9b0; padding:0px 10px; line-height:40px;}
+.userConWindow .userConWindowUserName{ font-size:14px; font-weight:bold; background:url(../img/userConWindowSex.gif) left center no-repeat; line-height:15px; padding:0px 0px 0px 20px;}
+.userConWindow .userConWindowBox font{ display:block; overflow:hidden; width:270px; float:right; text-align:left; margin:0px 10px;}
+.userConWindow font a{ color:#777; font-size:14px;}
+.userConWindow font strong{ font-size:14px; color:#48c9b0; padding:0px 10px; line-height:35px;}
+.userConWindow a:hover{ color:#196790;}

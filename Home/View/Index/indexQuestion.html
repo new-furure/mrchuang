@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>先生汇 - 问答</title>
+<link href="../../../Public/CSS/normal.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../../../Public/Js/jquery-1.10.2.js"><!-- 替换成其他版本可能会有问题 --></script>
+<script type="text/javascript" src="../../../Public/Js/normal.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".senderQATrigger").mousedown(function(){
+		$(this).css({"height":"85"});
+	}).click(function(){
+		$(".senderQA").show().css({"overflow":"hidden"});
+		$(".senderQA").animate({"height":"130"},500,function(){
+			$(".senderQA").css({"overflow":"inherit"});
+		})
+	}).mouseup(function(){
+		$(".senderQATrigger").animate({"height":"0"},500);
+	});
+	$(".public").click(function(){
+		$(".senderQA").css({"overflow":"hidden"});
+		$(".senderQA").animate({"height":"0"},500,function(){
+			$(".senderQATrigger").animate({"height":"80"},500);
+		})
+	});
+});
+$(function(){
+	$(".mainListMenu a").eq(5).addClass("sel");
+});
+</script>
+<style>
+.mainConCenter{ position:relative; z-index:100;}
+.senderQATrigger{ position:absolute; z-index:110; top:0px; right:0px; width:39px; height:80px; background:url(../../../Public/Img/senderQATrigger.png) bottom center; overflow:hidden; cursor:pointer;}
+.senderQA{ display:none; height:0px; overflow:hidden;}
+</style>
+</head>
+<body>
+<div class="top">
+	<div class="topBox">
+		<a class="logo" href="###"><img src="../../../Public/Img/logo.gif" /></a>
+		<span class="searchInput rs"><input type="text" value="搜索话题、问题或人..." /></span>
+		<input class="searchButton rs" type="button" value="提问" />
+		<ul>
+			<li><a href="indexAll.html">先生汇</a></li><li>|</li><li><a href="###">爱创圈</a></li><li>|</li>
+			<li><a href="###">政策</a></li><li>|</li><li><a href="###">消息</a></li>
+		</ul>
+		<a class="userImg"><img src="../../../Public/Img/userImg.gif" /></a>
+	</div>
+</div>
+<div class="main">
+	<div class="mainListMenu">
+		<ul>
+			<li><a class="mlmIcon_1" href="indexIdea.html">创意汇</a></li>
+			<li><a class="mlmIcon_2" href="indexTalk.html">时光机</a></li>
+			<li><a class="mlmIcon_3" href="###">项目库</a></li>
+			<li><a class="mlmIcon_4" href="###">投资人库</a></li>
+			<li><a class="mlmIcon_5" href="###">孵化器库</a></li>
+			<li><a class="mlmIcon_6" href="indexQuestion.html">问答</a></li>
+			<li><a class="mlmIcon_7" href="###">专栏</a></li>
+			<li><a class="mlmIcon_8" href="###">我的关注</a></li>
+			<li><a class="mlmIcon_9" href="###">我的收藏</a></li>
+		</ul>
+	</div>
+	<div class="mainCon">
+		<div class="mainConCenter">
+			<div class="senderQATrigger"></div>
+			<div class="space"></div><div class="space"></div>
+			<div class="sender senderQA">
+				<span class="rn">
+					<textarea>发表话题、问题...</textarea>
+				</span>
+				<em></em>
+				<b class="mo public">发布</b>
+				<dl>
+					<dt class="senderIcon_1 mo">表情</dt>
+					<dt class="senderIcon_2 mo upImg">
+						图片
+						<div class="upImgWindow rn ss">
+							<font class="rn"><i></i>图片上传</font>
+							<table>
+								<tr><td><a href="###">添加图片</a></td><td><a href="###">掷图上传</a></td></tr>
+								<tr><td><a href="###">截屏上传</a></td><td><a href="###">传至相册</a></td></tr>
+							</table>
+						</div>
+					</dt>
+					<dt class="senderIcon_3 mo">视频</dt>
+					<dd class="tab sel">时光机</dd>
+					<dd class="tab">创意汇</dd>
+				</dl>
+			</div>
+			<div class="space"></div><div class="space"></div>
+			<div class="newMsgBtn rs"><div class="mo">有 3 条 新 动 态</div></div>
+			<div class="msgBox">
+				<dl>
+					<dt>
+						<img src="../../../Public/Img/msgUserImg_1.png" />
+						<div class="userConWindow rn ss">
+							<div class="userConWindowBox">
+								<img class="userConImg" src="../../../Public/Img/msgUserImg_1.png" />
+								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
+								<p>
+									<a class="userConWindowUserName" href="###">十一的眼泪</a>
+									<br /><a href="###">关注（465）</a><strong>|</strong><a href="###">粉丝（374）</a>
+								</p>
+								<font><a href="###">个人主页</a><strong>|</strong><a href="###">个人资料</a><strong>|</strong><a href="###">项目主页</a></font>
+							</div>
+						</div>
+					</dt>
+					<dd>
+						<i>法学　下很多人赞同了回答</i><em>10分钟前</em>
+						<h3>国外遗产税很高的话，是否富豪家族几代后就会变普通人？</h3>
+						<font>匿名用户</font>
+						<p>确实，国外的遗产税很高，美国征收的遗产税最高税率达55%。问题是，在要求高税率的同时，也提供了足够的税收策划空间，导致很多富人有规避的空间。之前看过相关资料，这里顺便将材料内容整理一下吧。以下所述内容均以美国为例。一、财产规划传承工具 在美…</p>
+						<ul>
+							<li class="msgIcon_1 mo clk">关注问题</li>
+							<li class="msgIcon_2 mo clk">收藏</li>
+							<li class="msgIcon_3 mo clk">赞(142)</li>
+							<li class="msgIcon_4 mo clk">踩(657)</li>
+							<li class="msgIcon_5 mo clk">评论(6841)</li>
+							<li class="msgIcon_6 mo clk">分享</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<img src="../../../Public/Img/msgUserImg_2.png" />
+						<div class="userConWindow rn ss">
+							<div class="userConWindowBox">
+								<img class="userConImg" src="../../../Public/Img/msgUserImg_2.png" />
+								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
+								<p>
+									<a class="userConWindowUserName" href="###">十一的眼泪</a>
+									<br /><a href="###">关注（465）</a><strong>|</strong><a href="###">粉丝（374）</a>
+								</p>
+								<font><a href="###">个人主页</a><strong>|</strong><a href="###">个人资料</a><strong>|</strong><a href="###">项目主页</a></font>
+							</div>
+						</div>
+					</dt>
+					<dd>
+						<i>创业　下很多人赞同了回答</i><em>15分钟前</em>
+						<h3>创业网站起步有多难？</h3>
+						<font>我是动感超人</font>
+						<p>现在的创业网站种类很多，需要很多的人力物力资源。如果在这方面能够有一定的又适合资源的话起步并不会太难，但是在这过程中会遇到种种意想不到的事情。会产生极大的变化和波动。这都是需要我们去应对和解决的…<strong>显示更多</strong></p>
+						<ul>
+							<li class="msgIcon_1 mo clk">关注问题</li>
+							<li class="msgIcon_2 mo clk">收藏</li>
+							<li class="msgIcon_3 mo clk">赞(142)</li>
+							<li class="msgIcon_4 mo clk">踩(657)</li>
+							<li class="msgIcon_5 mo clk">评论(6841)</li>
+							<li class="msgIcon_6 mo clk">分享</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<img src="../../../Public/Img/msgUserImg_2.png" />
+						<div class="userConWindow rn ss">
+							<div class="userConWindowBox">
+								<img class="userConImg" src="../../../Public/Img/msgUserImg_2.png" />
+								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
+								<p>
+									<a class="userConWindowUserName" href="###">十一的眼泪</a>
+									<br /><a href="###">关注（465）</a><strong>|</strong><a href="###">粉丝（374）</a>
+								</p>
+								<font><a href="###">个人主页</a><strong>|</strong><a href="###">个人资料</a><strong>|</strong><a href="###">项目主页</a></font>
+							</div>
+						</div>
+					</dt>
+					<dd>
+						<i>创业　下很多人赞同了回答</i><em>15分钟前</em>
+						<h3>创业网站起步有多难？</h3>
+						<font>我是动感超人</font>
+						<p>现在的创业网站种类很多，需要很多的人力物力资源。如果在这方面能够有一定的又适合资源的话起步并不会太难，但是在这过程中会遇到种种意想不到的事情。会产生极大的变化和波动。这都是需要我们去应对和解决的…<strong>显示更多</strong></p>
+						<ul>
+							<li class="msgIcon_1 mo clk">关注问题</li>
+							<li class="msgIcon_2 mo clk">收藏</li>
+							<li class="msgIcon_3 mo clk">赞(142)</li>
+							<li class="msgIcon_4 mo clk">踩(657)</li>
+							<li class="msgIcon_5 mo clk">评论(6841)</li>
+							<li class="msgIcon_6 mo clk">分享</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<img src="../../../Public/Img/msgUserImg_2.png" />
+						<div class="userConWindow rn ss">
+							<div class="userConWindowBox">
+								<img class="userConImg" src="../../../Public/Img/msgUserImg_2.png" />
+								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
+								<p>
+									<a class="userConWindowUserName" href="###">十一的眼泪</a>
+									<br /><a href="###">关注（465）</a><strong>|</strong><a href="###">粉丝（374）</a>
+								</p>
+								<font><a href="###">个人主页</a><strong>|</strong><a href="###">个人资料</a><strong>|</strong><a href="###">项目主页</a></font>
+							</div>
+						</div>
+					</dt>
+					<dd>
+						<i>创业　下很多人赞同了回答</i><em>15分钟前</em>
+						<h3>创业网站起步有多难？</h3>
+						<font>我是动感超人</font>
+						<p>现在的创业网站种类很多，需要很多的人力物力资源。如果在这方面能够有一定的又适合资源的话起步并不会太难，但是在这过程中会遇到种种意想不到的事情。会产生极大的变化和波动。这都是需要我们去应对和解决的…<strong>显示更多</strong></p>
+						<ul>
+							<li class="msgIcon_1 mo clk">关注问题</li>
+							<li class="msgIcon_2 mo clk">收藏</li>
+							<li class="msgIcon_3 mo clk">赞(142)</li>
+							<li class="msgIcon_4 mo clk">踩(657)</li>
+							<li class="msgIcon_5 mo clk">评论(6841)</li>
+							<li class="msgIcon_6 mo clk">分享</li>
+						</ul>
+					</dd>
+				</dl>
+			</div>
+			<div class="space"></div><div class="space"></div>
+			<div class="newMsgBtn rs"><div class="mo">更 多</div></div>
+		</div>
+		<div class="mainConRight">
+			<dl class="recommendUser">
+				<dt>用户推荐</dt>
+				<dd>
+					<a href="###"><img src="../../../Public/Img/testUserImg_1.png" /></a>
+					<a href="###"><img src="../../../Public/Img/testUserImg_2.png" /></a>
+					<a href="###"><img src="../../../Public/Img/testUserImg_3.png" /></a>
+					<a href="###"><img src="../../../Public/Img/testUserImg_4.png" /></a>
+					<a href="###"><img src="../../../Public/Img/testUserImg_5.png" /></a>
+					<a href="###"><img src="../../../Public/Img/testUserImg_6.png" /></a>
+				</dd>
+			</dl>
+			<dl class="hotActivity">
+				<dt>热门活动</dt>
+				<dd>
+					<span>
+						<img src="../../../Public/Img/testActivity_1.gif" />
+						<p><b>硬蛋·i未来硬件大赛初赛北京赛区下半场</b>地点：3W咖啡<br />票价：30元<br />限额：300人</p>
+					</span>
+				</dd>
+			</dl>
+			<dl class="findOut">
+				<dt>发现之旅</dt>
+				<dd>
+					<a href="###" class="type_1">控股</a>
+					<a href="###">创新</a>
+					<a href="###">想法</a>
+					<a href="###" class="type_2">风投</a>
+					<a href="###" class="type_2">融资</a>
+					<a href="###" class="type_0">孵化</a>
+					<a href="###" class="type_2">投资</a>
+					<a href="###" class="type_1">期权</a>
+					<a href="###">培训</a>
+					<a href="###">创意</a>
+					<a href="###" class="type_1">应聘</a>
+					<a href="###" class="type_1">项目</a>
+					<a href="###" class="type_1">问答</a>
+					<a href="###">谋生</a>
+				</dd>
+			</dl>
+		</div>
+	</div>
+</div>
+</body>
+</html>

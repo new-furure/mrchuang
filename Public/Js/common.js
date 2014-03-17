@@ -147,6 +147,7 @@ function edit(){
 }
 //提交的处理函数。根据不同的文章类型先判断输入的合法性。异步提交并返回一定的信息。
 function submit(){ 
+	alert(article_type);
 	var layer=document.createElement("div");
 	layer.id="layer";
 	var top_num =  document.documentElement.scrollTop -480 +"px";
@@ -184,9 +185,14 @@ function submit(){
 	default:
 		profile ='';
 	}
-	var content=UE.getEditor('editor').getContent();
-	$.post(submit_url,{article_type:article_type,title:title.val(),content:content,
-		profile:profile,array:array,pic_name:pic_name},
+	//var content=UE.getEditor('editor').getContent();array:array,
+	var content=$('textarea[name=content]');
+	if(content.val()==''){
+		content.focus();
+		return;
+	}
+	$.post(submit_url,{article_type:article_type,title:title.val(),content:content.val(),
+		profile:profile,pic_name:pic_name},
 		function(data){
 			switch(data.type){
 				case 1:
@@ -196,7 +202,8 @@ function submit(){
 				case 2:
 					layer.innerHTML = "发布成功";
 					layout(layer,top_num);
-					window.location.href = article_url+"/"+data.article_id;
+					alert(data.article_id);
+					//window.location.href = article_url+"/"+data.article_id;
 					break;
 				default:
 					layer.innerHTML = "发布失败！"+data;
@@ -205,6 +212,16 @@ function submit(){
 			}
 		}
 		,'json');
+	 	/*$.ajax(
+                {
+                    url:submit_url, //你处理上传文件的服务端
+                    dataType: 'json',
+                    success:function(data)
+                        {
+                              alert(data.file_infor);
+                        }
+                }
+            );*/
 }
 //存草稿函数，根据不同的文章类型异步传值，并返回状态信息。
 function save_draft(){

@@ -3,18 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>先生汇 - 首页</title>
-<link href="../../../Public/CSS/normal.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="../../../Public/Js/jquery-1.10.2.js"><!-- 替换成其他版本可能会有问题 --></script>
-<script type="text/javascript" src="../../../Public/Js/normal.js"></script>
-<script type="text/javascript" src="../../../Public/Js/common.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link href="../../Public/CSS/normal.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../../Public/Js/jquery-1.10.2.js"><!-- 替换成其他版本可能会有问题 --></script>
+<script type="text/javascript" src="../../Public/Js/normal.js"></script>
 <script type="text/javascript">
 $(function(){
 	$(".mainListMenu a").eq(0).addClass("sel");
 });
-var type_select=true;
-var article_type='talk';
-var submit_url ='{:U("/Home/Base/submit")}';
 </script>
 <style>
 
@@ -23,21 +18,21 @@ var submit_url ='{:U("/Home/Base/submit")}';
 <body>
 <div class="top">
 	<div class="topBox">
-		<a class="logo" href="###"><img src="../../../Public/Img/logo.gif" /></a>
+		<a class="logo" href="###"><img src="../../Public/Img/logo.gif" /></a>
 		<span class="searchInput rs"><input type="text" value="搜索话题、问题或人..." /></span>
 		<input class="searchButton rs" type="button" value="提问" />
 		<ul>
-			<li><a href="indexAll.html">先生汇</a></li><li>|</li><li><a href="###">爱创圈</a></li><li>|</li>
+			<li><a href="###">先升汇</a></li><li>|</li><li><a href="###">爱创圈</a></li><li>|</li>
 			<li><a href="###">政策</a></li><li>|</li><li><a href="###">消息</a></li>
 		</ul>
-		<a class="userImg"><img src="../../../Public/Img/userImg.gif" /></a>
+		<a class="userImg"><img src="../../Public/Img/userImg.gif" /></a>
 	</div>
 </div>
 <div class="main">
 	<div class="mainListMenu">
 		<ul>
 			<li><a class="mlmIcon_1" href="indexIdea.html">创意汇</a></li>
-			<li><a class="mlmIcon_2" href="indexTalk.html">时光机</a></li>
+			<li><a class="mlmIcon_2" href="###">时光机</a></li>
 			<li><a class="mlmIcon_3" href="###">项目库</a></li>
 			<li><a class="mlmIcon_4" href="###">投资人库</a></li>
 			<li><a class="mlmIcon_5" href="###">孵化器库</a></li>
@@ -51,30 +46,21 @@ var submit_url ='{:U("/Home/Base/submit")}';
 		<div class="mainConCenter">
 			<div class="space"></div><div class="space"></div>
 			<div class="sender">
-				<input typt="text" name="article_title" value="标题"></input>
 				<span class="rn">
-					<textarea name="content">发表话题、问题...</textarea>
+					<textarea>发表话题、问题...</textarea>
 				</span>
 				<em></em>
-				<b class="mo" onclick="submit()">发布</b>
+				<b class="mo">发布</b>
 				<dl>
 					<dt class="senderIcon_1 mo">表情</dt>
 					<dt class="senderIcon_2 mo upImg">
 						图片
 						<div class="upImgWindow rn ss">
 							<font class="rn"><i></i>图片上传</font>
-							<!-- <table>
+							<table>
 								<tr><td><a href="###">添加图片</a></td><td><a href="###">掷图上传</a></td></tr>
 								<tr><td><a href="###">截屏上传</a></td><td><a href="###">传至相册</a></td></tr>
-							</table> target="tarframe"-->
-							<div>
-								<form name="uploadForm" id="uploadForm" action="{:U('Base/uploadPicture')}" method="post"    enctype="multipart/form-data">
-       
-     							 <input id="photo" type="file" name="photo" onChange="PreviewImage(this)" style="display:none" size="1" hidefocus></input>
-     							 <img id="imgPreview" src="__ROOT__/Public/Img/error.jpg" width="110" height="140" onclick="openBrowse()"/>
-     							 <iframe width="0" height="0" style="" name="tarframe"></iframe>
-  							</form>
-							</div>
+							</table>
 						</div>
 					</dt>
 					<dt class="senderIcon_3 mo">视频</dt>
@@ -87,10 +73,10 @@ var submit_url ='{:U("/Home/Base/submit")}';
 			<div class="msgBox">
 				<dl>
 					<dt>
-						<img src="../../../Public/Img/msgUserImg_1.png" />
+						<img src="../../Public/Img/msgUserImg_1.png" />
 						<div class="userConWindow rn ss">
 							<div class="userConWindowBox">
-								<img class="userConImg" src="../../../Public/Img/msgUserImg_1.png" />
+								<img class="userConImg" src="../../Public/Img/msgUserImg_1.png" />
 								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
 								<p>
 									<a class="userConWindowUserName" href="###">十一的眼泪</a>
@@ -117,10 +103,10 @@ var submit_url ='{:U("/Home/Base/submit")}';
 				</dl>
 				<dl>
 					<dt>
-						<img src="../../../Public/Img/msgUserImg_2.png" />
+						<img src="../../Public/Img/msgUserImg_2.png" />
 						<div class="userConWindow rn ss">
 							<div class="userConWindowBox">
-								<img class="userConImg" src="../../../Public/Img/msgUserImg_2.png" />
+								<img class="userConImg" src="../../Public/Img/msgUserImg_2.png" />
 								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
 								<p>
 									<a class="userConWindowUserName" href="###">十一的眼泪</a>
@@ -153,19 +139,19 @@ var submit_url ='{:U("/Home/Base/submit")}';
 			<dl class="recommendUser">
 				<dt>用户推荐</dt>
 				<dd>
-					<a href="###"><img src="../../../Public/Img/testUserImg_1.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_2.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_3.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_4.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_5.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_6.png" /></a>
+					<a href="###"><img src="../../Public/Img/testUserImg_1.png" /></a>
+					<a href="###"><img src="../../Public/Img/testUserImg_2.png" /></a>
+					<a href="###"><img src="../../Public/Img/testUserImg_3.png" /></a>
+					<a href="###"><img src="../../Public/Img/testUserImg_4.png" /></a>
+					<a href="###"><img src="../../Public/Img/testUserImg_5.png" /></a>
+					<a href="###"><img src="../../Public/Img/testUserImg_6.png" /></a>
 				</dd>
 			</dl>
 			<dl class="hotActivity">
 				<dt>热门活动</dt>
 				<dd>
 					<span>
-						<img src="../../../Public/Img/testActivity_1.gif" />
+						<img src="../../Public/Img/testActivity_1.gif" />
 						<p><b>硬蛋·i未来硬件大赛初赛北京赛区下半场</b>地点：3W咖啡<br />票价：30元<br />限额：300人</p>
 					</span>
 				</dd>
@@ -192,63 +178,5 @@ var submit_url ='{:U("/Home/Base/submit")}';
 		</div>
 	</div>
 </div>
-  <script type="text/javascript">
-    function openBrowse(){ 
-       	// alert('点击上传');
-        var ie=navigator.appName=="Microsoft Internet Explorer" ? true : false; 
-        if(ie){ 
-        document.getElementById("photo").click(); 
-        }else{
-        var a=document.createEvent("MouseEvents");//FF的处理 
-        a.initEvent("click", true, true);  
-        document.getElementById("photo").dispatchEvent(a); 
-        } 
-    } 
-  
-    function PreviewImage(imgFile)
-     {  
-        $("#uploadForm").submit();
-        /*  $.ajaxFileUpload
-                     (
-                       {
-                            url:'{:U("__URL__/uploadPhoto")}', //你处理上传文件的服务端
-                            secureuri:false,
-                            fileElementId:'img',
-                            dataType: 'json',
-                            success:function(data)
-                                  {
-                                    alert(data.file_infor);
-                                  }
-                        }
-                    );
-        alert('上传图片');*/
-        var filextension=imgFile.value.substring(imgFile.value.lastIndexOf("."),imgFile.value.length);
-        filextension=filextension.toLowerCase();
-        if ((filextension!='.jpg')&&(filextension!='.gif')&&(filextension!='.jpeg')&&(filextension!='.png')&&(filextension!='.bmp'))
-        {
-            alert("对不起，系统仅支持标准格式的照片，请您调整格式后重新上传，谢谢 !");
-            imgFile.focus();
-        }
-        else
-        {
-            var path;
-            if(document.all)//IE
-            {
-                imgFile.select();
-                path = document.selection.createRange().text;
-                document.getElementById("imgPreview").innerHTML="";
-                document.getElementById("imgPreview").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果      
-            }
-            else//FF
-            {
-                path=window.URL.createObjectURL(imgFile.files[0]);// FF 7.0以上
-                //path = imgFile.files[0].getAsDataURL();// FF 3.0
-                document.getElementById("imgPreview").innerHTML = "<img id='img1' width='110px' height='140px' src='"+path+"'/>";
-                //document.getElementById("img1").src = path;
-            }
-            //document.getElementById("message").value = "上传成功";
-        }
- }
- </script>
 </body>
 </html>
