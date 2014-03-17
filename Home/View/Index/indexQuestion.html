@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>先生汇 - 问答</title>
-<link href="../../../Public/CSS/normal.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="../../../Public/Js/jquery-1.10.2.js"><!-- 替换成其他版本可能会有问题 --></script>
-<script type="text/javascript" src="../../../Public/Js/normal.js"></script>
+<link href="__ROOT__/Public/CSS/normal.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="__ROOT__/Public/Js/jquery-1.10.2.js"><!-- 替换成其他版本可能会有问题 --></script>
+<script type="text/javascript" src="__ROOT__/Public/Js/normal.js"></script>
 <script type="text/javascript">
 $(function(){
 	$(".senderQATrigger").mousedown(function(){
@@ -31,32 +31,32 @@ $(function(){
 </script>
 <style>
 .mainConCenter{ position:relative; z-index:100;}
-.senderQATrigger{ position:absolute; z-index:110; top:0px; right:0px; width:39px; height:80px; background:url(../../../Public/Img/senderQATrigger.png) bottom center; overflow:hidden; cursor:pointer;}
+.senderQATrigger{ position:absolute; z-index:110; top:0px; right:0px; width:39px; height:80px; background:url(__ROOT__/Public/Img/senderQATrigger.png) bottom center; overflow:hidden; cursor:pointer;}
 .senderQA{ display:none; height:0px; overflow:hidden;}
 </style>
 </head>
 <body>
 <div class="top">
 	<div class="topBox">
-		<a class="logo" href="###"><img src="../../../Public/Img/logo.gif" /></a>
+		<a class="logo" href="###"><img src="__ROOT__/Public/Img/logo.gif" /></a>
 		<span class="searchInput rs"><input type="text" value="搜索话题、问题或人..." /></span>
 		<input class="searchButton rs" type="button" value="提问" />
 		<ul>
-			<li><a href="indexAll.html">先生汇</a></li><li>|</li><li><a href="###">爱创圈</a></li><li>|</li>
+			<li><a href="{:U('Index/indexAll')}">先生汇</a></li><li>|</li><li><a href="###">爱创圈</a></li><li>|</li>
 			<li><a href="###">政策</a></li><li>|</li><li><a href="###">消息</a></li>
 		</ul>
-		<a class="userImg"><img src="../../../Public/Img/userImg.gif" /></a>
+		<a class="userImg"><img src="__ROOT__/Public/Img/userImg.gif" /></a>
 	</div>
 </div>
 <div class="main">
 	<div class="mainListMenu">
 		<ul>
-			<li><a class="mlmIcon_1" href="indexIdea.html">创意汇</a></li>
-			<li><a class="mlmIcon_2" href="indexTalk.html">时光机</a></li>
+			<li><a class="mlmIcon_1" href="{:U('Index/indexAll',array('type'=>C('IDEA_TYPE')))}">创意汇</a></li>
+			<li><a class="mlmIcon_2" href="{:U('Index/indexAll',array('type'=>C('TALK_TYPE')))}">时光机</a></li>
 			<li><a class="mlmIcon_3" href="###">项目库</a></li>
 			<li><a class="mlmIcon_4" href="###">投资人库</a></li>
 			<li><a class="mlmIcon_5" href="###">孵化器库</a></li>
-			<li><a class="mlmIcon_6" href="indexQuestion.html">问答</a></li>
+			<li><a class="mlmIcon_6" href="{:U('Index/indexAll',array('type'=>C('QUESTION_TYPE')))}">问答</a></li>
 			<li><a class="mlmIcon_7" href="###">专栏</a></li>
 			<li><a class="mlmIcon_8" href="###">我的关注</a></li>
 			<li><a class="mlmIcon_9" href="###">我的收藏</a></li>
@@ -94,10 +94,10 @@ $(function(){
 			<div class="msgBox">
 				<dl>
 					<dt>
-						<img src="../../../Public/Img/msgUserImg_1.png" />
+						<img src="__ROOT__/Public/Img/msgUserImg_1.png" />
 						<div class="userConWindow rn ss">
 							<div class="userConWindowBox">
-								<img class="userConImg" src="../../../Public/Img/msgUserImg_1.png" />
+								<img class="userConImg" src="__ROOT__/Public/Img/msgUserImg_1.png" />
 								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
 								<p>
 									<a class="userConWindowUserName" href="###">十一的眼泪</a>
@@ -124,10 +124,10 @@ $(function(){
 				</dl>
 				<dl>
 					<dt>
-						<img src="../../../Public/Img/msgUserImg_2.png" />
+						<img src="__ROOT__/Public/Img/msgUserImg_2.png" />
 						<div class="userConWindow rn ss">
 							<div class="userConWindowBox">
-								<img class="userConImg" src="../../../Public/Img/msgUserImg_2.png" />
+								<img class="userConImg" src="__ROOT__/Public/Img/msgUserImg_2.png" />
 								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
 								<p>
 									<a class="userConWindowUserName" href="###">十一的眼泪</a>
@@ -154,10 +154,10 @@ $(function(){
 				</dl>
 				<dl>
 					<dt>
-						<img src="../../../Public/Img/msgUserImg_2.png" />
+						<img src="__ROOT__/Public/Img/msgUserImg_2.png" />
 						<div class="userConWindow rn ss">
 							<div class="userConWindowBox">
-								<img class="userConImg" src="../../../Public/Img/msgUserImg_2.png" />
+								<img class="userConImg" src="__ROOT__/Public/Img/msgUserImg_2.png" />
 								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
 								<p>
 									<a class="userConWindowUserName" href="###">十一的眼泪</a>
@@ -184,10 +184,10 @@ $(function(){
 				</dl>
 				<dl>
 					<dt>
-						<img src="../../../Public/Img/msgUserImg_2.png" />
+						<img src="__ROOT__/Public/Img/msgUserImg_2.png" />
 						<div class="userConWindow rn ss">
 							<div class="userConWindowBox">
-								<img class="userConImg" src="../../../Public/Img/msgUserImg_2.png" />
+								<img class="userConImg" src="__ROOT__/Public/Img/msgUserImg_2.png" />
 								<span><b class="rs">加好友</b><b class="rs">关注</b><b class="rs">私信</b></span>
 								<p>
 									<a class="userConWindowUserName" href="###">十一的眼泪</a>
@@ -220,19 +220,19 @@ $(function(){
 			<dl class="recommendUser">
 				<dt>用户推荐</dt>
 				<dd>
-					<a href="###"><img src="../../../Public/Img/testUserImg_1.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_2.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_3.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_4.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_5.png" /></a>
-					<a href="###"><img src="../../../Public/Img/testUserImg_6.png" /></a>
+					<a href="###"><img src="__ROOT__/Public/Img/testUserImg_1.png" /></a>
+					<a href="###"><img src="__ROOT__/Public/Img/testUserImg_2.png" /></a>
+					<a href="###"><img src="__ROOT__/Public/Img/testUserImg_3.png" /></a>
+					<a href="###"><img src="__ROOT__/Public/Img/testUserImg_4.png" /></a>
+					<a href="###"><img src="__ROOT__/Public/Img/testUserImg_5.png" /></a>
+					<a href="###"><img src="__ROOT__/Public/Img/testUserImg_6.png" /></a>
 				</dd>
 			</dl>
 			<dl class="hotActivity">
 				<dt>热门活动</dt>
 				<dd>
 					<span>
-						<img src="../../../Public/Img/testActivity_1.gif" />
+						<img src="__ROOT__/Public/Img/testActivity_1.gif" />
 						<p><b>硬蛋·i未来硬件大赛初赛北京赛区下半场</b>地点：3W咖啡<br />票价：30元<br />限额：300人</p>
 					</span>
 				</dd>

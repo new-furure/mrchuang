@@ -25,7 +25,7 @@ $(function(){
 		<span class="searchInput rs"><input type="text" value="搜索话题、问题或人..." /></span>
 		<input class="searchButton rs" type="button" value="提问" />
 		<ul>
-			<li><a href="indexAll.html">先生汇</a></li><li>|</li><li><a href="###">爱创圈</a></li><li>|</li>
+			<li><a href="{:U('Index/indexAll')}">先生汇</a></li><li>|</li><li><a href="###">爱创圈</a></li><li>|</li>
 			<li><a href="###">政策</a></li><li>|</li><li><a href="###">消息</a></li>
 		</ul>
 		<a class="userImg"><img src="__ROOT__/Public/Img/userImg.gif" /></a>
@@ -34,12 +34,12 @@ $(function(){
 <div class="main">
 	<div class="mainListMenu">
 		<ul>
-			<li><a class="mlmIcon_1" href="indexIdea.html">创意汇</a></li>
-			<li><a class="mlmIcon_2" href="indexTalk.html">时光机</a></li>
+			<li><a class="mlmIcon_1" href="{:U('Index/indexAll',array('type'=>C('IDEA_TYPE')))}">创意汇</a></li>
+			<li><a class="mlmIcon_2" href="{:U('Index/indexAll',array('type'=>C('TALK_TYPE')))}">时光机</a></li>
 			<li><a class="mlmIcon_3" href="###">项目库</a></li>
 			<li><a class="mlmIcon_4" href="###">投资人库</a></li>
 			<li><a class="mlmIcon_5" href="###">孵化器库</a></li>
-			<li><a class="mlmIcon_6" href="indexQuestion.html">问答</a></li>
+			<li><a class="mlmIcon_6" href="{:U('Index/indexAll',array('type'=>C('QUESTION_TYPE')))}">问答</a></li>
 			<li><a class="mlmIcon_7" href="###">专栏</a></li>
 			<li><a class="mlmIcon_8" href="###">我的关注</a></li>
 			<li><a class="mlmIcon_9" href="###">我的收藏</a></li>
