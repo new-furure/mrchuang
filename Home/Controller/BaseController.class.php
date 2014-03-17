@@ -1045,17 +1045,18 @@ public function test(){
 }
 public function uploadPicture(){
         $saveName=time();
-        $savePath  = '/Img/Article/project';
-        //$url=upload_file( $savePath, $saveName, "photo" );
+        $savePath  = 'Img/Article/project';
+        $url=upload_file( $savePath, $saveName, "photo" );
         $file = $_FILES["photo"];
         dump($file);
         if ( $url==null ) {
           // 上传错误
-          // $this->error( "图片上传失败！" );
-          // return;
+           $this->error( "图片上传失败！" );
+           return;
         }else {
           $pic_url = $url;
           $this->success( "修改成功！" );
+          return;
     }
 }
 /*function upload_file1( $savePath, $saveName, $postName, $fileexts="img" ) {
