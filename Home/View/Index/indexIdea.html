@@ -6,12 +6,13 @@
 <link href="__ROOT__/Public/CSS/normal.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="__ROOT__/Public/Js/jquery-1.10.2.js"><!-- 替换成其他版本可能会有问题 --></script>
 <script type="text/javascript" src=".__ROOT__/Public/Js/normal.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
 <script type="text/javascript">
 $(function(){
 	$(".mainListMenu a").eq(0).addClass("sel");
-	var article_type='idea';
-	var submit_url ='{:U("/Home/Base/submit")}';
 });
+	var article_type="idea";
+	var submit_url ='{:U("/Home/Base/submit")}';
 </script>
 <style>
 
@@ -48,8 +49,9 @@ $(function(){
 		<div class="mainConCenter">
 			<div class="space"></div><div class="space"></div>
 			<div class="sender">
+				<input typt="text" name="article_title" value="标题"></input>
 				<span class="rn">
-					<textarea>发表话题、问题...</textarea>
+					<textarea name="content">发表话题、问题...</textarea>
 				</span>
 				<em></em>
 				<b class="mo" onclick="submit()">发布</b>
