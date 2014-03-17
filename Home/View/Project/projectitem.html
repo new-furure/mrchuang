@@ -1,0 +1,43 @@
+{//用户首页使用的项目块,包含从User/index或者Project/card页传来的一些数据}
+{//或者不是传数据而是取数据什么的。。。不知道。。。}
+        <div>
+          <div class="thumbnail">
+            <div class="row">
+              <div class="col-md-3">
+                <a href="{:U('Project/detail/aid/'.$data['article_id'])}" target="_blank">
+                  <img src="__ROOT__/Public/Img/333.jpg" data-src="holder.js/300x200" alt="Generic placeholder thumbnail">
+                </a>
+                <!--V字认证？-->
+                <div style="color:#FF0000;width:90%; height:9px;"></div>
+                <span class="label label-warning" style="font-size:18px"><a href="" target="_blank" style="color:white" class="infocardshow" onmouseover="SetInfocardPosition()">V[workgroup_name]</a></span>
+                <!--项目团队,链接团队主页？-->
+              </div>
+              <div class="caption col-md-9">
+                <div style="height:20px">
+                  <a href="{:U('Project/detail/aid/'.$data['article_id'])}" target="_blank"><h2>{$data['pro_title']}</h2></a>
+                  <h6 class="text-muted">{$data['article_time']}</h6><!--这里的时间数据怎么显示？-->
+                </div>
+                <div style="height:90px">
+                  <h6 class="text-muted" style="line-height:1.5;letter-spacing:2px">{$data['article_profile']}</h6><!--52-->
+                </div>
+              </div>
+          </div><!--row end-->
+          <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <p>
+              <!-- <h5><a style="cursor:pointer">赞（[up_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">踩（[down_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">关注（[focus_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">收藏（[collect_number]）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">评论（[comment_number]）</a></h5> -->
+              <h5><a style="cursor:pointer">赞{$data.article_up_number}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">踩{$data.article_down_number}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">关注{$data.article_focus_number}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">收藏{$data.article_collect_number}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="cursor:pointer">评论{$data.article_comment_number}</a></h5>
+            </p>
+          </div>
+          </div><!--row end-->
+
+          </div>
+        </div>

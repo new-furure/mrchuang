@@ -16,7 +16,7 @@ return array(
 	'DB_HOST'   => 'localhost', // 服务器地址
 	'DB_NAME'   => 'mrchuang', // 数据库名
 	'DB_USER'   => 'root', // 用户名
-	'DB_PWD'    => '', // 密码
+	'DB_PWD'    => '930828', // 密码
 
 
 
