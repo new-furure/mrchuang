@@ -13,8 +13,7 @@ class MessageController extends Controller {
 //@作者：夏闪闪
 //切换功能选项
 public function index(){
-	//$user_id=get_id();
-	session('user_id',134217729);
+
 	$barName=I('get.bar');
 	switch ($barName) {
 		case '1':
@@ -23,7 +22,6 @@ public function index(){
 			break;
 		case '2':
 			$this->list_dialog();
-			session('unwatch_message_count',0);
 			$tplName="index_page_privateletter";
 			break;
 		case '3':			
@@ -73,8 +71,12 @@ public function send_message(){
 	    }
 	    $fileinfo="<br/>分享文件".$_FILES['photo']['name']."<a href=''>下载</a>";
 	}
+	// $count=S('mcnt'.$acceptUid);
+	// if(empty($count)){
+		S('mcnt'.$acceptUid,$Message->unwatch_message_count($acceptUid));
+	//}
 	$message.=$fileinfo;
-	$return['uid']=$message;
+
 	if($Message->send_message($acceptUid,$message)){
 		$return['status']=1;		
 	}else{
@@ -110,6 +112,7 @@ public function list_dialog_message(){
 	$page=$_GET['p']?$_GET['p']:1;
 	$Message=D('Message');
 	$Message->read_dialog($user_id_other);
+	S('mcnt'.get_id(),$Message->unwatch_message_count(get_id()));
 
 	$msgList=$Message->list_dialog_message($user_id_other);
 	$count=count($msgList);//数据集总数
@@ -127,17 +130,20 @@ public function list_dialog_message(){
 
 //私信对话列表
 public function list_dialog(){
+	$user_id=get_id();
 	$Dialog=D('Dialog');
 	$page=I('get.page');
 	$page=$page?$page:1;
 	$dialogList=$Dialog->list_dialog();
+	//更新session未读信息
+	session('unwatch_message_count',D('Message')->unwatch_message_count($user_id));
+
 	$count=count($dialogList);//数据集总数
 	$Page=new \Org\Util\Page($count,10);
 	$show=$Page->show();
 	$list=array_slice($dialogList, $Page->firstRow, $Page->listRows);
 	$this->assign('page',$show);// 赋值分页输出
 	$this->assign('list',$list);
-	//$this->display('index');
 }
 
 //删除私信对话
@@ -264,7 +270,7 @@ public function index_notice(){
 	$user_id=get_id();
 	//首页私信
 	$Message=D('Message');
-	$unwatch_message_count=$Message->unwatch_message_count();
+	$unwatch_message_count=$Message->unwatch_message_count($user_id);
 	$message=$Message->join('__USER__ as user on send_user_id=user.user_id')->where('receive_user_id='.$user_id.' and receive_effective=1')->field('message_time,message_content,user.user_nickname as user_name,user.user_id')->order('message_time desc')->find();
 
 	session('unwatch_message_count',$unwatch_message_count);
@@ -359,21 +365,33 @@ public function save_setting(){
 	public function user_info(){
 		$users=M('User')->where('user.user_id in (select focus.user_id_focused from focus_on_user as focus where focus.user_id='.get_id().')')->field('user_id,user_nickname as user_name')->select();
 		$this->ajaxReturn($users,'json');
+
 	}
 
 	//ajax长连接方法获取提醒
 	public function new_message_notice(){
+		$user_id=get_id();
 		$interval=500000;//轮询间隔
-		set_time_limit(3);
+		set_time_limit(4);
 		$Message=D('Message');	
-		$current_count=session('unwatch_message_count');
-		$unwatch_count=$Message->unwatch_message_count();
+
+		S('mcnt'.$user_id,$Message->unwatch_message_count($user_id));//缓存中未读私信
+		$current_count=S('mcnt'.$user_id);
+
+		// $curAnswerCount=M('Notice')->where('user_id='.$user_id.' and notice_effective=1 and notice_read=0 and notice_type=13')->count('notice_id');
+		// S('ancount'.$user_id,$curAnswerCount);			
+
 		while(true){
-			//$unwatch_count=$Message->unwatch_message_count();
+			$unwatch_count = S('mcnt'.$user_id);//遍历缓存，读取私信数
+			//$ansUnwatchCount=S('ancount'.$user_id);
+			//if($unwatch_count!=$current_count || $ansUnwatchCount!=$curAnswerCount){
 			if($unwatch_count!=$current_count){
+				//有新私信/回答或者私信/回答未读数发生变化
 				session('unwatch_message_count',$unwatch_count);
-				//$this->ajaxReturn($unwatch_count,'string');
-				exit($unwatch_count);
+				//$data['unwatch_count']=$unwatch_count;
+				// $data['ansUnwatchCount']=$ansUnwatchCount;
+				exit($unwatch_count);//跳出循环
+				//exit($data);
 			}
 			usleep($interval);
 		}

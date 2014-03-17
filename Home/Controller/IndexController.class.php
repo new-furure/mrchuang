@@ -17,7 +17,63 @@ class IndexController extends Controller {
     public function index(){
         $this->display();
     }
+    /**
+     *修改者：夏闪闪
+     *添加逻辑 
+     */
     public function indexAll(){
+        $user_id=get_id();
+        $Article=M('article');
+        $fieldSql='article.*,user.user_nickname as user_name,user.user_avatar_url';
+        $joinSql=array();//user join sql
+        $joinSql[0]="left join __USER__ as user on user.user_id=article.user_id";
+        $article_type=I('get.article_type');//不同模块
+        
+        if($article_type){
+            $typeSql=' and article.article_type='.$article_type;
+            //政策原链接地址
+            if($article_type==C("POLICY_TYPE")){
+                $fieldSql.=',policy.policy_url';
+                $joinSql[1]="left join __POLICY__ as policy on article.article_id=policy.article_id";
+            }          
+        }
+        //条件先忽略，后期去掉注释
+        //$condition='article_effective=1 and user.user_id in (select user_id_focused from focus_on_user where user_id='.$user_id.')'.$typeSql;
+        $count=$Article->where($condition)->count();
+        import('ORG.Util.Page');
+        $Page=new \Think\Page($count,6);
+        $show=$Page->show();
+        
+        //ajax请求
+        if(IS_AJAX){
+            $maxArticleId=I('post.maxArticleId');//新页最大article id
+            $articleList=$Article
+            ->join($joinSql)
+            ->where('article_id<='.$maxArticleId)
+            ->field($fieldSql)
+            ->order('article_id desc')
+            ->limit($Page->firstRow+$Page->listRows/2,$Page->listRows/2)//加载更多
+            ->select();
+            if($articleList){
+                $data['status']=1;
+                $data['articleList']=$articleList;
+                $this->ajaxReturn($data,'json');
+            }
+        }else{
+            $articleList=$Article
+            ->join($joinSql)
+            ->where($condition)
+            ->field($fieldSql)
+            ->order('article_id desc')
+            ->limit($Page->firstRow, $Page->listRows/2)
+            ->select();
+            //下次操作（加载更多）的最大articleId
+            $maxArticleId=$articleList[0]['article_id'];
+
+            $this->assign('maxArticleId',$maxArticleId);
+            $this->assign('list', $articleList);
+            $this->assign('page', $show);
+        }
         $this->display();
     }
 
