@@ -4,6 +4,8 @@
  * +用户模块
  *
  * @author NewFuture
+ * @version 2.0
+ * 取消组织用户...
  * +---------------------------------------------------
  */
 
@@ -32,7 +34,7 @@ class UserController extends Controller{
   /**
    * 注册页
    *
-   * @author：NewFuture
+   * @author NewFuture
    * @param unknown $goto         注册成功之后的连接
    * @param unknown $isorg        是否为组织注册
    * @param unknown $isfullscreen 是否为全屏
@@ -44,8 +46,9 @@ class UserController extends Controller{
       //验证是否已经登录
       $this->error( "您已登录", U( 'User/index' ) );
 
+    }elseif ( !C( "IS_REG_ON" ) ) {
+      $this->error( '当前注册已关闭', U( 'Index/index' ) );
     }else {
-
       if ( $isfullscreen )
 
         $this->display( 'User/regfullscreen' );
@@ -60,7 +63,7 @@ class UserController extends Controller{
    *
    * @author NewFuture
    *
-   * @param unknown $goto注册成功后跳转页面
+   * @param string $goto注册成功后跳转页面
    * @return error或者success
    * //支持异步
    */
@@ -85,7 +88,7 @@ class UserController extends Controller{
 
     if ( $error ) {
       $this->error( $error );
-    }elseif ( !C( 'REG_IS_ON' ) ) {
+    }elseif ( !C( 'IS_REG_ON' ) ) {
 
       $error="注册已关闭！";
     }elseif ( $isorg ) {
@@ -145,25 +148,44 @@ class UserController extends Controller{
       if ( !$User->create() ) {
         $error=( "注册失败!".$User->getError() );
       }else {
+
+        if ( !C( 'IS_EMAIL_VALIDATE_ON' ) ) {
+          //不需要邮箱验证
+
+          set_user_type( $t_user_type, 1, 0, C( "STARTUP" ) );
+          $User->user_type=$t_user_type;
+
+        }
         $id=$User->add();
         if ( $id>0 ) {
 
           $Person=M( "Person" );
           $person_info["user_id"]=$id;
+
           if ( $Person->add( $person_info ) ) {
 
-            $key=validate( $id );
-            $url="http://".I( 'server.HTTP_HOST' )."/index.php/Home/User/validate/id/".$id."/key/".$key."/type/".C( "ACTIVE_MAIL" );
-            send_mail( I( "post.user_email" ), C( 'ACTIVE_MAIL' ), '<a href="'.$url.'">'.$url.'</a>' );
-
             if ( C( 'IS_CODE_NEED' ) ) {
+              //删除邀请码
               delete_invitation( $invite_code );
             }
-
-            if ( $goto==null )
+            if ( $goto==null ) {
+              //成功跳转默认为登陆页
               $goto=U( 'User/Log' );
+            }
 
-            $this->success( '注册成功！查看邮箱激活账号！', $goto );
+            if ( C( 'IS_EMAIL_VALIDATE_ON' )==true ) {
+              //开启邮箱验证
+              $key=validate( $id );
+              $url="http://".I( 'server.HTTP_HOST' ).U( "/User/validate", "id=$id&key=$key&type=".C( "ACTIVE_MAIL" ) );
+              send_mail( I( "post.user_email" ), C( 'ACTIVE_MAIL' ), '<a href="'.$url.'">'.$url.'</a>' );
+              $this->success( '注册成功！查看邮箱激活账号！', $goto );
+            }elseif(IS_AJAX){
+              $this->success($id-C("MIN_USER_ID")+1,$goto);
+            }else{
+              $this->success( '注册成功！请登录！', $goto, 2 );
+            }
+
+
           }else {
             $User->where( "user_id=".$id )->delete();
             $error=( "注册失败:".$Person->getError() );
@@ -205,10 +227,12 @@ class UserController extends Controller{
     $log_info= $User->create( $_POST, 2 ) ;
     if ( $log_info ) {
 
-      $user_info=$User->where( "user_email='". $log_info["user_email"]."'" )->find(  );
+      $user_info=M('User')->getByUserEmail($log_info['user_email']);
+
       if ( $user_info ) {
         //邮箱存在
-        if ( $user_info["user_passwd"]===$User->user_passwd ) {
+      
+        if ( $user_info["user_passwd"]===$log_info['user_passwd'] ) {
           //密码一致
 
           $error=$this->_isValidUser( $user_info );
@@ -275,7 +299,7 @@ class UserController extends Controller{
         //发送找回邮件
         $id=$user_info['user_id'];
         $key=validate( $id );
-        $url="http://".I( 'server.HTTP_HOST' )."/index.php/Home/User/validate/id/".$id."/key/".$key."/type/".C( 'PASSWORD_MAIL' );
+        $url="http://".I( 'server.HTTP_HOST' ).U( "/User/validate", "id=$id&key=$key&type=".C( 'PASSWORD_MAIL' ) );
         send_mail( $user_email, C( 'PASSWORD_MAIL' ), '<a href="'.$url.'">'.$url.'</a>' );
         $this->success( "已成功发送找回邮件！", U( 'User/Log' ) );
       }else {
@@ -338,8 +362,7 @@ class UserController extends Controller{
       $this->display( "User/reactive" );
     }elseif ( !validate_email( $user_email ) ) {
       $this->error( "邮件不存在！" );
-    }
-    else {
+    }    else {
       $User =M( 'user' );
       $user_info=$User->where( 'user_email="'.$user_email.'"' )->find() ;
       if ( !$user_info ) {
@@ -350,8 +373,7 @@ class UserController extends Controller{
         //发送激活邮件
         $id=$user_info['user_id'];
         $key=validate( $id );
-        $url="http://".I( 'server.HTTP_HOST' )."/index.php/Home/User/validate/id/".$id."/key/".$key."/type/".C( "ACTIVE_MAIL" );
-
+        $url="http://".I( 'server.HTTP_HOST' ).U( "User/validate", "id=$id&key=$key&type=".C( "ACTIVE_MAIL" ) );
         send_mail( $user_email, C( 'ACTIVE_MAIL' ), '<a href="'.$url.'">'.$url.'</a>' );
         $this->success( "已成功发送激活邮件！", U( 'User/Log' ) );
       }
@@ -420,85 +442,85 @@ class UserController extends Controller{
     }
   }
 
-  /**
-   * 切换组织和用户账号
-   *
-   * @author Future
-   */
-  public function switchAcount() {
-    $id=get_id();
-    $type=session( "account_type" );
-    $User=M( "user" );
-    switch ( $type ) {
-    case 'o':
-      //当前为组织账号
-      /*组织切换到个人*/
-      $per_id=session( "user_id_p" );
-      if ( $per_id>0 ) {
+  // /**
+  //  * 切换组织和用户账号
+  //  *
+  //  * @author Future
+  //  */
+  // public function switchAcount() {
+  //   $id=get_id();
+  //   $type=session( "account_type" );
+  //   $User=M( "user" );
+  //   switch ( $type ) {
+  //   case 'o':
+  //     //当前为组织账号
+  //     /*组织切换到个人*/
+  //     $per_id=session( "user_id_p" );
+  //     if ( $per_id>0 ) {
 
-        //更新登录时间
-        $User->where( "user_id=".$per_id )->setField( "user_last_time", date( "Y-m-d H:i:s" ) );
-        //session
-        session( 'user_id',  $user_id );
-        session( "user_id", $per_id );
-        session( "account_type", "p" );//账号类型
+  //       //更新登录时间
+  //       $User->where( "user_id=".$per_id )->setField( "user_last_time", date( "Y-m-d H:i:s" ) );
+  //       //session
+  //       session( 'user_id',  $user_id );
+  //       session( "user_id", $per_id );
+  //       session( "account_type", "p" );//账号类型
 
-        $this->success( "成功切换到个人账号", U( 'User/info' ) );
-      }else {
-        $this->error( "个人账号不存在，请重新登陆！" );
-      }
-      break;
+  //       $this->success( "成功切换到个人账号", U( 'User/info' ) );
+  //     }else {
+  //       $this->error( "个人账号不存在，请重新登陆！" );
+  //     }
+  //     break;
 
-    case 'p':
-      //当前为个人账户
+  //   case 'p':
+  //     //当前为个人账户
 
-      //切换到组织
-      $org_id=session( "user_id_o" );
-      if ( $org_id>0 ) {
-        //更新登录时间
-        $User->where( "user_id=".$org_id )->setField( "user_last_time", date( "Y-m-d H:i:s" ) );
-        session( "user_id", $org_id );
-        session( "account_type", "o" );//账号类型
+  //     //切换到组织
+  //     $org_id=session( "user_id_o" );
+  //     if ( $org_id>0 ) {
+  //       //更新登录时间
+  //       $User->where( "user_id=".$org_id )->setField( "user_last_time", date( "Y-m-d H:i:s" ) );
+  //       session( "user_id", $org_id );
+  //       session( "account_type", "o" );//账号类型
 
-        $this->success( "成功切换到组织账号", U( 'User/info' ) );
-      }else {
-        $this->error( "组织账号不存在，请重新登陆！" );
-      }
-      break;
+  //       $this->success( "成功切换到组织账号", U( 'User/info' ) );
+  //     }else {
+  //       $this->error( "组织账号不存在，请重新登陆！" );
+  //     }
+  //     break;
 
-    default:
-      //第一次切换
+  //   default:
+  //     //第一次切换
 
-      /*个人到组织*/
-      $org=$this->_getUserOrg( $id );
-      if ( $org ) {
-        if ( $org['user_status']==C( "ADMIN_USER" ) ) {
-          $OrgUser=M( "User" );
-          $org_id= $org["organization_user_id"];
-          $org_info=$OrgUser->getByUserId( $org_id );
+  //     /*个人到组织*/
+  //     $org=$this->_getUserOrg( $id );
+  //     if ( $org ) {
+  //       if ( $org['user_status']==C( "ADMIN_USER" ) ) {
+  //         $OrgUser=M( "User" );
+  //         $org_id= $org["organization_user_id"];
+  //         $org_info=$OrgUser->getByUserId( $org_id );
 
-          $result=$this->_isValidUser( $org_info );
-          if ( $result===true ) {
-            //个人切换到组织账号,更新session
-            session( "user_id", $org_id );
-            session( "user_id_p", $id );//个人账户
-            session( "user_id_o", $org_id );//组织账号
-            session( "account_type", "o" );//账号类型
+  //         $result=$this->_isValidUser( $org_info );
+  //         if ( $result===true ) {
+  //           //个人切换到组织账号,更新session
+  //           session( "user_id", $org_id );
+  //           session( "user_id_p", $id );//个人账户
+  //           session( "user_id_o", $org_id );//组织账号
+  //           session( "account_type", "o" );//账号类型
 
-            $this->success( "成功切换到组织账号", U( 'User/info' ) );
-          }else {
-            $this->error( $result );
-          }
-        }else {
-          $this->error( "您不是管理员！" );
-        }
-      }else {
-        $this->error( "无有效组织" );
-      }
+  //           $this->success( "成功切换到组织账号", U( 'User/info' ) );
+  //         }else {
+  //           $this->error( $result );
+  //         }
+  //       }else {
+  //         $this->error( "您不是管理员！" );
+  //       }
+  //     }else {
+  //       $this->error( "无有效组织" );
+  //     }
 
-      break;
-    }
-  }
+  //     break;
+  //   }
+  // }
 
   /**
    * 验证用户有效性
@@ -873,10 +895,10 @@ class UserController extends Controller{
    * @return bool 是否成功
    */
   public function edit( $field=null, $value=null ) {
-    $field=I('field');
-    $value=I('value');
+    $field=I( 'field' );
+    $value=I( 'value' );
     if ( $field==null||$value===null ) {
-     $this->error("未设定修改内容");
+      $this->error( "未设定修改内容" );
     }
     $id=get_id();
     $Table=null;
@@ -916,16 +938,15 @@ class UserController extends Controller{
       break;
     }
     if ( $Table!=null ) {
-      
-      if($Table->where( "user_id=".$id )->setField( $field, $value )===false)
-      {
-        $this->error('保存失败！');
-      }else{
-        $this->success('保存成功！');
+
+      if ( $Table->where( "user_id=".$id )->setField( $field, $value )===false ) {
+        $this->error( '保存失败！' );
+      }else {
+        $this->success( '保存成功！' );
       }
 
     }else {
-       $this->error('未作任何修改！');
+      $this->error( '未作任何修改！' );
     }
 
   }
@@ -1326,12 +1347,12 @@ class UserController extends Controller{
     $article_content="";
     if ( $articles ) {
       foreach ( $articles as $article ) {
-       // $this->data=M( "Article" )->getByArticleId( $article['article_id'] );
+        // $this->data=M( "Article" )->getByArticleId( $article['article_id'] );
         $this->data=$article;
         $article_content.=$this->fetch( "article" );
       }
     }
-   echo ($article_content);
+    echo $article_content;
   }
 
   /**
@@ -1674,7 +1695,6 @@ class UserController extends Controller{
 
 
   public function test( $id=0 ) {
-
-    $this->display();
+echo C("IS_SAE")?1:0;
   }
 }
