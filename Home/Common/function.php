@@ -59,7 +59,7 @@ function get_id( $mustLogin=true ) {
 	else {$error=$result;}
 
 	if ( $mustLogin )//异步不跳转
-		redirect( __ROOT__.U('User/Log'), 1, $error );
+		redirect(U('User/Log'), 1, $error );
 	return 0;
 }
 
