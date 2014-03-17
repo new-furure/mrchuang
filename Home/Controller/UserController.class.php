@@ -978,18 +978,18 @@ class UserController extends Controller{
     $id=get_id();
     $savePath  = 'Img/User/Photo/';
     $url=upload_file( $savePath, $id, "photo" );
-
+    dump($_FILES["photo"]);
     if ( $url==null ) {
       // 上传错误
       $this->error( "头像上传失败！" );
-      return;
+      //return;
     }else {
       //更新数据库
       $User=M( 'user' );
       $conditon['user_id']=$id;
       $user_info['user_avatar_url']=$url;
       $User->where( $conditon )->save( $user_info );
-      $this->success( "修改成功！" );
+      //$this->success( "修改成功！" );
     }
   }
 
