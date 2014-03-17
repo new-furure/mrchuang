@@ -1,7 +1,6 @@
 <?php
 return array(
-	// sae上传文件
-	'FILE_UPLOAD_TYPE' => 'Sae',
+
 	// 添加数据库配置信息
 	'DB_TYPE'   => 'mysql', // 数据库类型
 	'DB_PORT'   => 3306, // 端口
@@ -21,20 +20,13 @@ return array(
 
 
 
-	//网站配置
+	//系统配置
+	'SHOW_PAGE_TRACE'      =>true, //显示页面Trace信息
 	'URL_CASE_INSENSITIVE' =>true, //不区分大小写
-	'SHOW_PAGE_TRACE' =>true, // 显示页面Trace信息
-<<<<<<< HEAD
-	'MODULE_ALLOW_LIST' => array( 'Home', 'Admin' ), //默认模块Home
-	'URL_MODEL' =>2, //URL重写
-=======
-	'MODULE_ALLOW_LIST' => array('Home','Admin'),//默认模块Home
- 	'URL_MODEL' =>2,	//URL重写
->>>>>>> 58744d35e33606f88e9d3d20596a1b855bb45e2d
-
-
-	//验证有效期
-	'VALIDATE_EFFECTIVE_TIME'=>10, //天
+	//'URL_MODEL'            =>2, //URL重写
+	'MODULE_ALLOW_LIST'    =>array( 'Home', 'Admin' ), //默认模块Home
+	//上传目录
+	"UPLOAD_ROOT"=>__ROOT__."/Uploads/", //上传文件根目录
 
 	/**
 	 *   -------数据库id范围------
@@ -118,7 +110,6 @@ return array(
 
 
 	//文章类型
-<<<<<<< HEAD
 	"PROJECT_TYPE" =>1, //项目
 	"POLICY_TYPE"  =>2, //政策
 	"QUESTION_TYPE"=>3, //问题
@@ -129,12 +120,6 @@ return array(
 	"INCUBATOR_TYPE"=>8, //孵化器库
 
 
-=======
-	"PROJECT_TYPE" =>0, //项目
-	"POLICY_TYPE"  =>1, //政策
-	"QUESTION_TYPE"=>2, //问题
-	"POST_TYPE"    =>5, //圈子帖子
->>>>>>> 58744d35e33606f88e9d3d20596a1b855bb45e2d
 	//圈子帖子类型
 	"OUT_POST"    =>0, //跨圈
 	"IN_POST"     =>1, //圈内
@@ -142,23 +127,15 @@ return array(
 	"NORMAL_POST" =>3, //普通帖子
 	//评论类型
 	//"SECOND_COMMENT"  =>0单独表
-<<<<<<< HEAD
 	"PROJECT_IMPROVE"   =>1, //项目改善
 	"PROJECT_COMMENT"   =>2, //项目评论
 	"POLICY_COMMENT"    =>3, //政策回复
 	"QUESTION_COMMENT"  =>4, //问题回复
-	"IDEA_COMMENT"     =>5, //创意评论
+	"IDEA_COMMENT"      =>5, //创意评论
 	"TALK_COMMENT"      =>6, //时光机状态回复
 	"VC_COMMENT"        =>7, //风投回复
 	"INCUBATOR_COMMENT" =>8, //孵化器回复
 	"CIRCLE_POST_COMMENT"=>15, //圈子评论
-=======
-	"PROJECT_IMPROVE" =>1, //项目改善
-	"PROJECT_COMMENT" =>2, //项目评论
-	"POLICY_COMMENT"  =>3, //政策回复
-	"QUESTION_COMMENT"=>4, //问题回复
-	"CIRCLE_POST_COMMENT"    =>5, //圈子评论
->>>>>>> 58744d35e33606f88e9d3d20596a1b855bb45e2d
 
 	/**
 	 * //notice_type
@@ -181,6 +158,9 @@ return array(
 
 
 	//发送邮件配置
+	//发件服务器选择
+	'OPEN_SAE_MAIL'=>false, //开启sae后还需要在sae下运行才可
+	//邮箱配置
 	'MAIL_ADDRESS'=>'mr_chuang_com@163.com', // 邮箱地址
 	'MAIL_SMTP'=>'smtp.163.com', // 邮箱SMTP服务器
 	'MAIL_LOGINNAME'=>'mr_chuang_com@163.com', // 邮箱登录帐号
@@ -189,27 +169,21 @@ return array(
 	'MAIL_AUTH'=>true, //邮箱认证
 	'MAIL_HTML'=>true, //true HTML格式 false TXT格式
 	//邮件类型
-<<<<<<< HEAD
 	"ACTIVE_MAIL"     =>1, //激活邮件
 	"PASSWORD_MAIL"   =>2, //修改密码
 	"INVITE_ORG_MAIL" =>3, //组织邀请邮件
 	"CREATE_ORG_MAIL" =>4, //组织创建邮件
 	"SEND_INVITE_CODE"=>5, //发送邀请码
 
-	"REG_IS_ON"           =>true,  //是否开启注册
-	"IS_CODE_NEED"        =>true,  //是否需要邀请码
+
+	/**
+	 * //网站设置
+	 */
+	"IS_REG_ON"           =>true,  //是否开启注册
+	"IS_ORG_ON"           =>false, //是否开启组织账号
+	"IS_CODE_NEED"        =>false, //是否需要邀请码
 	"IS_EMAIL_VALIDATE_ON"=>false, //是否需要邮箱验证
-
-=======
-	"ACTIVE_MAIL"=>1,//激活邮件
-	"PASSWORD_MAIL"=>2, //修改密码
-	"INVITE_ORG_MAIL"=>3, //组织邀请邮件
-	"CREATE_ORG_MAIL"=>4,//组织创建邮件
-	"SEND_INVITE_CODE"=>5,//发送邀请码
-
-	"REG_IS_ON"=>true,//是否开启注册
-	"IS_CODE_NEED"=>true,//是否需要邀请码
-	
->>>>>>> 58744d35e33606f88e9d3d20596a1b855bb45e2d
+	//验证有效期
+	'VALIDATE_EFFECTIVE_TIME'=>10, //天
 
 );
