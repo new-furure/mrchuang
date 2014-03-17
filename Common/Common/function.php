@@ -53,7 +53,7 @@
  * @author NewFuture
  *
  * @param string  $savePath 相对于/Uploads/保存路径,
- * @param string  $savename 保存文件名，文件后缀不变
+ * @param string  $savename 保存文件名(不含后缀)，文件后缀不变
  * @param string  $postName 文件在表单中的名字
  * @param array/string arry 自定义类型 ，string指定类型
  * [参数值说明]
@@ -67,8 +67,10 @@
  *  $url=upload_file("\Img\User\Photo\"，,$id,'photo','img');
  */
 function upload_file( $savePath, $saveName, $postName, $fileexts="img" ) {
+
   $upload = new \Think\Upload();// 实例化上传类
   $upload->maxSize   =     5*1024*1024;//5M ;// 设置附件上传大小
+
   // 设置附件上传类型
   if ( is_array( $fileexts ) ) {
     $upload->exts =$fileexts;
@@ -79,7 +81,11 @@ function upload_file( $savePath, $saveName, $postName, $fileexts="img" ) {
   }else {
     $upload->exts=null;
   }
-  $upload->savePath = './upload/'.$savePath; // 设置附件上传目录
+
+  // 设置附件上传目录
+  $upload->rootPath=C( 'UPLOAD_ROOT' );
+  $upload->savePath=$savePath;
+
   $upload->saveName = $saveName;
   $upload->autoSub =false;//不创建子目录
   $upload->replace =ture;//同名覆盖
@@ -89,9 +95,18 @@ function upload_file( $savePath, $saveName, $postName, $fileexts="img" ) {
     // 上传错误
     return null;
   }else {
-    // 上传成功 获取上传文件信息
-    $st = new SaeStorage();
-    return $st->getUrl( 'Uploads', 'upload' ).'/'.$savePath.$info['savename'];
+
+    $relativeUrl=$info['savepath'].$info['savename'];//相对路径
+
+    if ( C( "IS_SAE" ) ) {
+      //sae 上传成功 获取上传文件信息
+      $st = new SaeStorage();
+      return $st->getUrl( 'uploads', $relativeUrl );
+
+    }else {
+      //本地上传
+      return C( 'UPLOAD_ROOT' ).$relativeUrl;
+    }
   }
 }
 
@@ -158,45 +173,55 @@ function get_url_by_id( $id ) {
     $comment=M( 'comment' )->getByCommentId( $id );
     $artcile_id=$comment['artclie_id'] ;
 
-  switch ( $comment['commnet_type'] ) {
+    switch ( $comment['commnet_type'] ) {
 
-  case C( 'PROJECT_IMPROVE' )://项目改善
-  case C( 'PROJECT_COMMENT' )://项目评论
-    $url=U( 'Project/detail', "aid=$id" )."#$artcile_id";
+    case C( 'PROJECT_IMPROVE' )://项目改善
+    case C( 'PROJECT_COMMENT' )://项目评论
+      $url=U( 'Project/detail', "aid=$id" )."#$artcile_id";
+      break;
+
+    case C( 'POLICY_COMMENT' )://政策评论
+      $url=U( 'Policy/detail', "aid=$id" )."#$artcile_id";
+      break;
+
+    case C( 'QUESTION_COMMENT' )://问题评论
+      $url=U( 'Question/detail', "aid=$id" )."#$artcile_id";
+      break;
+
+    case C( 'IDEA_COMMENT' )://创意评论
+      //$url=;
+      break;
+
+    case C( 'VC_COMMENT' )://风投回复
+      break;
+
+    case C( 'INCUBATOR_COMMENT' )://孵化器评论
+      break;
+
+    case C( 'CIRCLE_POST_COMMENT' ):
+      // code...
+      break;
+
+    default:
+      // code...
+      break;
+    }
+
+
     break;
 
-  case C( 'POLICY_COMMENT' )://政策评论
-    $url=U( 'Policy/detail', "aid=$id" )."#$artcile_id";
+  case 'circle':
+    //圈子
+    $url=U( "Circle/detail", "cid=$id" );
+    break;
+  case 'notice':
+    //通知
+
     break;
 
-  case C( 'QUESTION_COMMENT' )://问题评论
-    $url=U( 'Question/detail', "aid=$id" )."#$artcile_id";
-    break;
-
-  case C( 'CIRCLE_POST_COMMENT' ):
-    // code...
-    break;
-
-  default:
-    // code...
-    break;
   }
 
-
-  break;
-
-case 'circle':
-  //圈子
-  $url=U( "Circle/detail", "cid=$id" );
-  break;
-case 'notice':
-  //通知
-
-  break;
-
-}
-
-return $url;
+  return $url;
 }
 
 /**
@@ -213,40 +238,40 @@ return $url;
  */
 function validate( $id, $key=null ) {
 
-$Validate=M( 'validate' );
-if ( $key==null ) {
-  //生成验证信息
-  $Validate->where( "validate_id=".$id )->delete();
-  $v['validate_id']=$id;
-  $key=random_string();
-  $v['validate_key']=$key;
-  $Validate->add( $v );
-  return $key;
-}else {
-  //进行验证
-  $result=null;
-  $data=$Validate->where( 'validate_id='. $id )->find();
-  if ( $data ) {
-    //验证信息存在，验证并删除数据库
-    $createtime=$data['validate_time'];
-    $days=round( ( time()-strtotime( $createtime ) )/3600/24 ) ;
-    if ( $days>C( "VALIDATE_EFFECTIVE_TIME" ) ) {
-      //过期
-      $result=array( false, "验证已经超过".C( "VALIDATE_EFFECTIVE_TIME" )."天限制" );
-    }elseif ( $key=== $data['validate_key'] ) {
-      //通过验证
-      $result=true;
-
-    }else {
-      $result=array( false, "验证不匹配" );
-    }
+  $Validate=M( 'validate' );
+  if ( $key==null ) {
+    //生成验证信息
     $Validate->where( "validate_id=".$id )->delete();
+    $v['validate_id']=$id;
+    $key=random_string();
+    $v['validate_key']=$key;
+    $Validate->add( $v );
+    return $key;
+  }else {
+    //进行验证
+    $result=null;
+    $data=$Validate->where( 'validate_id='. $id )->find();
+    if ( $data ) {
+      //验证信息存在，验证并删除数据库
+      $createtime=$data['validate_time'];
+      $days=round( ( time()-strtotime( $createtime ) )/3600/24 ) ;
+      if ( $days>C( "VALIDATE_EFFECTIVE_TIME" ) ) {
+        //过期
+        $result=array( false, "验证已经超过".C( "VALIDATE_EFFECTIVE_TIME" )."天限制" );
+      }elseif ( $key=== $data['validate_key'] ) {
+        //通过验证
+        $result=true;
 
-  } else {
-    $result=array( false, "验证信息不存在" );
+      }else {
+        $result=array( false, "验证不匹配" );
+      }
+      $Validate->where( "validate_id=".$id )->delete();
+
+    } else {
+      $result=array( false, "验证信息不存在" );
+    }
+    return $result;
   }
-  return $result;
-}
 }
 
 /**
@@ -259,36 +284,36 @@ if ( $key==null ) {
  *    结果"admin"  "article" "tag" "circle" "comment" "notice" "message" null
  */
 function get_id_type( $id ) {
-if ( $id>C( "MIN_USER_ID" )&&$id<C( "MAX_USER_ID" ) ) {
-  //用户
-  return "user";
-}elseif ( $id>C( "MIN_ARTICLE_ID" )&&$id<C( "MAX_ARTICLE_ID" ) ) {
-  //文章
-  return "article";
-} elseif ( $id>C( "MIN_COMMONT_ID" )&&$id<C( "MAX_COMMONT_ID" ) ) {
-  //评论
-  return "comment";
-}elseif ( $id>C( "MIN_SECOMMENT_ID" )&&$id<C( "MAX_SECOMMENT_ID" ) ) {
-  //二级评论
-  return "second_comment";
-}  elseif ( $id>C( "MIN_TAG_ID" )&&$id<C( "MAX_TAG_ID" ) ) {
-  //标签
-  return "tag";
-} elseif ( $id>C( "MIN_CIRCLE_ID" )&&$id<C( "MAX_CIRCLE_ID" ) ) {
-  //圈子
-  return "circle";
-}  elseif ( $id>C( "MIN_NOTICE_ID" )&&$id<C( "MAX_NOTCIE_ID" ) ) {
-  //通知
-  return "notice";
-}elseif ( $id>C( "MIN_MESSAGE_ID" )&&$id<C( "MAX_MESSAGE_ID" ) ) {
-  //消息
-  return "message";
-}elseif ( $id>C( "MIN_ADMIN_ID" )&&$id<C( "MAX_ADMIN_ID" )  ) {
-  //管理员
-  return "admin";
-} else {
-  return null;
-}
+  if ( $id>C( "MIN_USER_ID" )&&$id<C( "MAX_USER_ID" ) ) {
+    //用户
+    return "user";
+  }elseif ( $id>C( "MIN_ARTICLE_ID" )&&$id<C( "MAX_ARTICLE_ID" ) ) {
+    //文章
+    return "article";
+  } elseif ( $id>C( "MIN_COMMONT_ID" )&&$id<C( "MAX_COMMONT_ID" ) ) {
+    //评论
+    return "comment";
+  }elseif ( $id>C( "MIN_SECOMMENT_ID" )&&$id<C( "MAX_SECOMMENT_ID" ) ) {
+    //二级评论
+    return "second_comment";
+  }  elseif ( $id>C( "MIN_TAG_ID" )&&$id<C( "MAX_TAG_ID" ) ) {
+    //标签
+    return "tag";
+  } elseif ( $id>C( "MIN_CIRCLE_ID" )&&$id<C( "MAX_CIRCLE_ID" ) ) {
+    //圈子
+    return "circle";
+  }  elseif ( $id>C( "MIN_NOTICE_ID" )&&$id<C( "MAX_NOTCIE_ID" ) ) {
+    //通知
+    return "notice";
+  }elseif ( $id>C( "MIN_MESSAGE_ID" )&&$id<C( "MAX_MESSAGE_ID" ) ) {
+    //消息
+    return "message";
+  }elseif ( $id>C( "MIN_ADMIN_ID" )&&$id<C( "MAX_ADMIN_ID" )  ) {
+    //管理员
+    return "admin";
+  } else {
+    return null;
+  }
 
 }
 
@@ -301,27 +326,27 @@ if ( $id>C( "MIN_USER_ID" )&&$id<C( "MAX_USER_ID" ) ) {
  * @return int与参数有关
  * 对照表
  * [$class=1,查询激活状态  ，返回0，1]
- * [$class=2,查询是否是组织，返回0，1]
+ * ---此项暂不使用///[$class=2,查询是否是组织，返回0，1]
  * [$class=3,查询组织（包括所属组织）内别，返回，0-6]参照配置
  * 其他null
  */
 function ac( $user_type, $class=3 ) {
-switch ( $class ) {
-case 1:
-  //激活状态
-  return ( $user_type>>( C( "ACTIVE_BIT" )-1 ) )&1;
-  break;
+  switch ( $class ) {
+  case 1:
+    //激活状态
+    return ( $user_type>>( C( "ACTIVE_BIT" )-1 ) )&1;
+    break;
 
-case 2:
-  //组织还是个人
-  return ( $user_type>>( C( "ORG_BIT" )-1 ) )&1;
-  break;
+  case 2:
+    //组织还是个人
+    return ( $user_type>>( C( "ORG_BIT" )-1 ) )&1;
+    break;
 
-case 3:
-  //组织或者所属组织分类
-  return $user_type>>2;
-  break;
-}
+  case 3:
+    //组织或者所属组织分类
+    return $user_type>>2;
+    break;
+  }
 }
 
 /**
@@ -343,15 +368,17 @@ case 3:
  * 如果要判断$uid是否为 政府部门组织
  * 此时建议使用ac()效率更高
  *  ac_by_id($uid)==C("GOVERNMENT") && ac_by_id($id,2)
+ *
+ * @version 2.0 组织类型直接代表类型
  */
 function ac_by_id( $id=0, $class=3 ) {
-if ( !$id ) {
-  $id=get_id();
-}
-//获取用户类型
-$user_type=M( "User" )->getFieldByUserId( $id, 'user_type' );
+  if ( !$id ) {
+    $id=get_id();
+  }
+  //获取用户类型
+  $user_type=M( "User" )->getFieldByUserId( $id, 'user_type' );
 
-return ac( $user_type, $class );
+  return ac( $user_type, $class );
 }
 
 /**
@@ -383,34 +410,36 @@ return ac( $user_type, $class );
  */
 function set_user_type( &$user_type, $is_active=null, $is_org=null, $org_type=null ) {
 
-if ( !$user_type ) {
-  $user_type=0;
-}
-//激活位设置
-if ( $is_active===1||$is_active===true ) {
-  //激活
-  $user_type |=( 1<<( C( "ACTIVE_BIT" )-1 ) );//激活位 置1
-}elseif ( $is_active===0||$is_active===false ) {
-  //未激活
-  $user_type&=( 1<<( C( "ACTIVE_BIT" )-1 ) );//激活位 置0
-}
+  if ( !$user_type ) {
+    $user_type=0;
+  }
+  //激活位设置
+  if ( $is_active===1||$is_active===true ) {
+    //激活
+    $user_type |=( 1<<( C( "ACTIVE_BIT" )-1 ) );//激活位 置1
 
-//组织位设置
-if ( $is_org===1||$is_org===true ) {
-  //是组织
-  $user_type |=( 1<<( C( "ORG_BIT" )-1 ) );//组织位 置1
-}elseif ( $is_org===0||$is_org===false ) {
-  //个人
-  $user_type&=( 1<<( C( "ORG_BIT" )-1 ) );//组织位 置0
-}
+  }elseif ( $is_active===0||$is_active===false ) {
+    //未激活
+    $user_type&=~( 1<<( C( "ACTIVE_BIT" )-1 ) );//激活位 置0
+  }
 
-//组织类型设置
-if ( $org_type===null ) {
+  //组织位设置
+  if ( $is_org===1||$is_org===true ) {
+    //是组织
+    $user_type |=( 1<<( C( "ORG_BIT" )-1 ) );//组织位 置1
+  }elseif ( $is_org===0||$is_org===false ) {
+    //个人
+    $user_type&=~( 1<<( C( "ORG_BIT" )-1 ) );//组织位 置0
+  }
+
+
+  //组织类型设置
+  if ( $org_type===null ) {
+    return $user_type;
+  }elseif ( $org_type>=0 && $org_type<=C( "GOVERNMENT" ) ) {
+    $user_type=( $user_type&3 )|( $org_type << 2 );
+  }
   return $user_type;
-}elseif ( $org_type>=0 && $org_type<=C( "GOVERNMENT" ) ) {
-  $user_type=( $user_type&3 )|( $org_type << 2 );
-}
-return $user_type;
 }
 
 /**
@@ -426,68 +455,67 @@ return $user_type;
  * @return bool 合法 true
  */
 function validate_email( $email ) {
-$isValid = true;
-$atIndex = strrpos( $email, "@" );
-if ( is_bool( $atIndex ) && !$atIndex ) {
-  $isValid = false;
-}
-else {
-  $domain = substr( $email, $atIndex+1 );
-  $local = substr( $email, 0, $atIndex );
-  $localLen = strlen( $local );
-  $domainLen = strlen( $domain );
-  if ( $localLen < 1 || $localLen > 64 ) {
-    // local part length exceeded
+  $isValid = true;
+  $atIndex = strrpos( $email, "@" );
+  if ( is_bool( $atIndex ) && !$atIndex ) {
     $isValid = false;
   }
-  elseif ( $domainLen < 1 || $domainLen > 255 ) {
-    // domain part length exceeded
-    $isValid = false;
-  }
-  elseif ( $local[0] == '.' || $local[$localLen-1] == '.' ) {
-    // local part starts or ends with '.'
-    $isValid = false;
-  }
-  elseif ( preg_match( '/\\.\\./', $local ) ) {
-    // local part has two consecutive dots
-    $isValid = false;
-  }
-  elseif ( !preg_match( '/^[A-Za-z0-9\\-\\.]+$/', $domain ) ) {
-    // character not valid in domain part
-    $isValid = false;
-  }
-  elseif ( preg_match( '/\\.\\./', $domain ) ) {
-    // domain part has two consecutive dots
-    $isValid = false;
-  }
-  elseif
-  ( !preg_match( '/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/',
-      str_replace( "\\\\", "", $local ) ) ) {
-    // character not valid in local part unless
-    // local part is quoted
-    if ( !preg_match( '/^"(\\\\"|[^"])+"$/',
+  else {
+    $domain = substr( $email, $atIndex+1 );
+    $local = substr( $email, 0, $atIndex );
+    $localLen = strlen( $local );
+    $domainLen = strlen( $domain );
+    if ( $localLen < 1 || $localLen > 64 ) {
+      // local part length exceeded
+      $isValid = false;
+    }
+    elseif ( $domainLen < 1 || $domainLen > 255 ) {
+      // domain part length exceeded
+      $isValid = false;
+    }
+    elseif ( $local[0] == '.' || $local[$localLen-1] == '.' ) {
+      // local part starts or ends with '.'
+      $isValid = false;
+    }
+    elseif ( preg_match( '/\\.\\./', $local ) ) {
+      // local part has two consecutive dots
+      $isValid = false;
+    }
+    elseif ( !preg_match( '/^[A-Za-z0-9\\-\\.]+$/', $domain ) ) {
+      // character not valid in domain part
+      $isValid = false;
+    }
+    elseif ( preg_match( '/\\.\\./', $domain ) ) {
+      // domain part has two consecutive dots
+      $isValid = false;
+    }
+    elseif
+    ( !preg_match( '/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/',
         str_replace( "\\\\", "", $local ) ) ) {
+      // character not valid in local part unless
+      // local part is quoted
+      if ( !preg_match( '/^"(\\\\"|[^"])+"$/',
+          str_replace( "\\\\", "", $local ) ) ) {
+        $isValid = false;
+      }
+    }
+    if ( $isValid && !( checkdnsrr( $domain, "MX" ) ||checkdnsrr( $domain, "A" ) ) ) {
+      // domain not found in DNS
       $isValid = false;
     }
   }
-  if ( $isValid && !( checkdnsrr( $domain, "MX" ) ||checkdnsrr( $domain, "A" ) ) ) {
-    // domain not found in DNS
-    $isValid = false;
-  }
-}
-return $isValid;
+  return $isValid;
 }
 
 
 
 /**
  * 加密密码
- * 暂不写
  *
  * @author NewFuture
  */
 function encryption( $p, $i ) {
-return $p;
+  return crypt($p,$i);
 }
 
 
@@ -498,7 +526,7 @@ return $p;
  * @param int     n=16 位数
  */
 function random_string( $n=16 ) {
-return substr( str_shuffle( 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' ), 0, $n );
+  return substr( str_shuffle( 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' ), 0, $n );
 }
 
 
@@ -510,66 +538,65 @@ return substr( str_shuffle( 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNO
  * @return -1->type错误 array(...)->发送相关信息
  */
 function send_mail( $to, $type, $content ) {
-switch ( $type ) {
-case C( 'ACTIVE_MAIL' ):
-  //激活
-  $prefix = '您好,很高兴您注册了闯先生网,请点击以下链接进行账号的激活<br>';
-  $suffix = '<br>该邮件来自闯先生网';
-  $option['subject'] = '闯先生网用户注册激活';
-  break;
+  switch ( $type ) {
+  case C( 'ACTIVE_MAIL' ):
+    //激活
+    $prefix = '您好,很高兴您注册了闯先生网,请点击以下链接进行账号的激活<br>';
+    $suffix = '<br>该邮件来自闯先生网';
+    $option['subject'] = '闯先生网用户注册激活';
+    break;
 
-case C( 'PASSWORD_MAIL' ):
-  //修改密码
-  $prefix = '亲爱的用户,请点击以下链接进行账号密码的修改,若您没有申请找回密码<br>';
-  $suffix = '<br>该邮件来自闯先生网';
-  $option['subject'] = '闯先生网用户找回密码';
-  break;
+  case C( 'PASSWORD_MAIL' ):
+    //修改密码
+    $prefix = '亲爱的用户,请点击以下链接进行账号密码的修改,若您没有申请找回密码<br>';
+    $suffix = '<br>该邮件来自闯先生网';
+    $option['subject'] = '闯先生网用户找回密码';
+    break;
 
-case C( 'INVITE_ORG_MAIL' ):
-  //组织邀请邮件
-  $prefix = '您好,很高兴您注册了闯先生网的组织或企业账号,请点击以下链接进行账号的激活<br>';
-  $suffix = '<br>来自闯先生网';
-  $option['subject'] = '闯先生网用户组织邀请邮件';
-  break;
+  case C( 'INVITE_ORG_MAIL' ):
+    //组织邀请邮件
+    $prefix = '您好,很高兴您注册了闯先生网的组织或企业账号,请点击以下链接进行账号的激活<br>';
+    $suffix = '<br>来自闯先生网';
+    $option['subject'] = '闯先生网用户组织邀请邮件';
+    break;
 
-case C( 'CREATE_ORG_MAIL' ):
-  //创建组织通知
-  $prefix = '您好,您的组织已经创建成功！';
-  $suffix = '<br>来自闯先生网';
-  $option['subject'] = '闯先生网组织创建通知';
-  break;
+  case C( 'CREATE_ORG_MAIL' ):
+    //创建组织通知
+    $prefix = '您好,您的组织已经创建成功！';
+    $suffix = '<br>来自闯先生网';
+    $option['subject'] = '闯先生网组织创建通知';
+    break;
 
-case C( 'SEND_INVITE_CODE' ):
-  //发送邀请码
-  //创建组织通知
-  $prefix = '您好,系统已经成功为您生成下面的邀请码！';
-  $suffix = '<br>来自闯先生网';
-  $option['subject'] = '闯先生邀请码';
-  break;
+  case C( 'SEND_INVITE_CODE' ):
+    //发送邀请码
+    //创建组织通知
+    $prefix = '您好,系统已经成功为您生成下面的邀请码！';
+    $suffix = '<br>来自闯先生网';
+    $option['subject'] = '闯先生邀请码';
+    break;
 
-default:
-  return -1;
-  break;
-}
-if ( C( 'SAE' )===true ) {
-  $mail = new SaeMail();
-  $option['from'] = C( 'MAIL_ADDRESS' );
-  $option['to'] = $to;
-  $option['smtp_username'] = C( 'MAIL_LOGINNAME' );
-  $option['smtp_password'] = C( 'MAIL_PASSWORD' );
-  $option['smtp_host'] = C( 'MAIL_SMTP' );
-  $option['smtp_port'] = 25;
-  $option['content_type'] = C( 'MAIL_HTML' )?'HTML' : 'TXT';
-  $option['content'] = $prefix.$content.$suffix;
-  $mail->setOpt( $option );
-  $mail->send();
-  return array( 'errno' => $mail->errno(), 'errmsg' => $mail->errmsg() );
-}
-else {
-  import( 'Org.Util.Mail' );
-  $ret = SendMail( $to, $option['subject'], $prefix.$content.$suffix, C( 'MAIL_ADDRESS' ) );
-  return $ret;
-}
+  default:
+    return -1;
+    break;
+  }
+  if ( C( "IS_SAE" )&&C( 'OPEN_SAE_MAIL' ) ) {
+    $mail = new SaeMail();
+    $option['from'] = C( 'MAIL_ADDRESS' );
+    $option['to'] = $to;
+    $option['smtp_username'] = C( 'MAIL_LOGINNAME' );
+    $option['smtp_password'] = C( 'MAIL_PASSWORD' );
+    $option['smtp_host'] = C( 'MAIL_SMTP' );
+    $option['smtp_port'] = 25;
+    $option['content_type'] = C( 'MAIL_HTML' )?'HTML' : 'TXT';
+    $option['content'] = $prefix.$content.$suffix;
+    $mail->setOpt( $option );
+    $mail->send();
+    return array( 'errno' => $mail->errno(), 'errmsg' => $mail->errmsg() );
+  } else {
+    import( 'Org.Util.Mail' );
+    $ret = SendMail( $to, $option['subject'], $prefix.$content.$suffix, C( 'MAIL_ADDRESS' ) );
+    return $ret;
+  }
 }
 
 /**
@@ -589,40 +616,40 @@ else {
  */
 function invite( $key=null ) {
 
-$Invitation=M( 'Invitation' );
-if ( $key==null ) {
+  $Invitation=M( 'Invitation' );
+  if ( $key==null ) {
 
-  //生成邀请码
-  //最多尝试10次
-  for ( $i=0; $i < 10 ; $i++ ) {
+    //生成邀请码
+    //最多尝试10次
+    for ( $i=0; $i < 10 ; $i++ ) {
 
-    $key=random_string( 8 );
-    $v['invitation_code']=$key;
-    if ( $Invitation->add( $v ) ) {
-      return $key;
+      $key=random_string( 8 );
+      $v['invitation_code']=$key;
+      if ( $Invitation->add( $v ) ) {
+        return $key;
+      }
     }
-  }
-  return null;
+    return null;
 
-}elseif ( strlen( $key )!=8 ) {
-  return false;
-}else {
-  //进行验证
-  $result=null;
-  $data=$Invitation->getByInvitationCode( $key );
-
-  if ( !$data ) {
-    $result=array( false, "验证信息不存在" );
+  }elseif ( strlen( $key )!=8 ) {
+    return false;
   }else {
-    return   (bool)$data['invitation_effective'];
-  }
-  // if ( $data['invitation_effective'] ) {
-  //   //验证信息存在，更新数据库
-  //   $data['invitation_effective']=0;
-  //   return $Invitation->save( $data );
+    //进行验证
+    $result=null;
+    $data=$Invitation->getByInvitationCode( $key );
 
-  // }
-}
+    if ( !$data ) {
+      $result=array( false, "验证信息不存在" );
+    }else {
+      return   (bool)$data['invitation_effective'];
+    }
+    // if ( $data['invitation_effective'] ) {
+    //   //验证信息存在，更新数据库
+    //   $data['invitation_effective']=0;
+    //   return $Invitation->save( $data );
+
+    // }
+  }
 }
 
 /**
@@ -633,8 +660,8 @@ if ( $key==null ) {
  * @return 返回操作结果
  */
 function delete_invitation( $code ) {
-if ( strlen( trim( $code ) )==8 ) {
-  return M( "Invitation" )->where( 'invitation_code="'.$code.'"' )
-  ->setField( 'invitation_effective', 0 );
-}
+  if ( strlen( trim( $code ) )==8 ) {
+    return M( "Invitation" )->where( 'invitation_code="'.$code.'"' )
+    ->setField( 'invitation_effective', 0 );
+  }
 }

@@ -24,8 +24,13 @@ return array(
 	//网站配置
 	'URL_CASE_INSENSITIVE' =>true, //不区分大小写
 	'SHOW_PAGE_TRACE' =>true, // 显示页面Trace信息
+<<<<<<< HEAD
 	'MODULE_ALLOW_LIST' => array( 'Home', 'Admin' ), //默认模块Home
 	'URL_MODEL' =>2, //URL重写
+=======
+	'MODULE_ALLOW_LIST' => array('Home','Admin'),//默认模块Home
+ 	'URL_MODEL' =>2,	//URL重写
+>>>>>>> 58744d35e33606f88e9d3d20596a1b855bb45e2d
 
 
 	//验证有效期
@@ -113,6 +118,7 @@ return array(
 
 
 	//文章类型
+<<<<<<< HEAD
 	"PROJECT_TYPE" =>1, //项目
 	"POLICY_TYPE"  =>2, //政策
 	"QUESTION_TYPE"=>3, //问题
@@ -123,6 +129,12 @@ return array(
 	"INCUBATOR_TYPE"=>8, //孵化器库
 
 
+=======
+	"PROJECT_TYPE" =>0, //项目
+	"POLICY_TYPE"  =>1, //政策
+	"QUESTION_TYPE"=>2, //问题
+	"POST_TYPE"    =>5, //圈子帖子
+>>>>>>> 58744d35e33606f88e9d3d20596a1b855bb45e2d
 	//圈子帖子类型
 	"OUT_POST"    =>0, //跨圈
 	"IN_POST"     =>1, //圈内
@@ -130,6 +142,7 @@ return array(
 	"NORMAL_POST" =>3, //普通帖子
 	//评论类型
 	//"SECOND_COMMENT"  =>0单独表
+<<<<<<< HEAD
 	"PROJECT_IMPROVE"   =>1, //项目改善
 	"PROJECT_COMMENT"   =>2, //项目评论
 	"POLICY_COMMENT"    =>3, //政策回复
@@ -139,6 +152,13 @@ return array(
 	"VC_COMMENT"        =>7, //风投回复
 	"INCUBATOR_COMMENT" =>8, //孵化器回复
 	"CIRCLE_POST_COMMENT"=>15, //圈子评论
+=======
+	"PROJECT_IMPROVE" =>1, //项目改善
+	"PROJECT_COMMENT" =>2, //项目评论
+	"POLICY_COMMENT"  =>3, //政策回复
+	"QUESTION_COMMENT"=>4, //问题回复
+	"CIRCLE_POST_COMMENT"    =>5, //圈子评论
+>>>>>>> 58744d35e33606f88e9d3d20596a1b855bb45e2d
 
 	/**
 	 * //notice_type
@@ -169,6 +189,7 @@ return array(
 	'MAIL_AUTH'=>true, //邮箱认证
 	'MAIL_HTML'=>true, //true HTML格式 false TXT格式
 	//邮件类型
+<<<<<<< HEAD
 	"ACTIVE_MAIL"     =>1, //激活邮件
 	"PASSWORD_MAIL"   =>2, //修改密码
 	"INVITE_ORG_MAIL" =>3, //组织邀请邮件
@@ -179,5 +200,16 @@ return array(
 	"IS_CODE_NEED"        =>true,  //是否需要邀请码
 	"IS_EMAIL_VALIDATE_ON"=>false, //是否需要邮箱验证
 
+=======
+	"ACTIVE_MAIL"=>1,//激活邮件
+	"PASSWORD_MAIL"=>2, //修改密码
+	"INVITE_ORG_MAIL"=>3, //组织邀请邮件
+	"CREATE_ORG_MAIL"=>4,//组织创建邮件
+	"SEND_INVITE_CODE"=>5,//发送邀请码
+
+	"REG_IS_ON"=>true,//是否开启注册
+	"IS_CODE_NEED"=>true,//是否需要邀请码
+	
+>>>>>>> 58744d35e33606f88e9d3d20596a1b855bb45e2d
 
 );

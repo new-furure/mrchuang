@@ -1,12 +1,3 @@
- <!--网站首页
- <head>
-   <title>MR.Chuang-{$title}</title>
- </head>
-
- <body>
-  <a href="{$href}">{$word}</a>
- </body-->
-
 <extend name="Home/Public/base.html" />
 
 <block name="headfiles">
@@ -15,71 +6,301 @@
 </block>
 
 <block name="main">
-<div class="index__TopBackground">
-<div class="">
-<div class="row">
-  <div class="col-md-1 col-md-offset-2">
-    <img src="__ROOT__/Public/Img/white_logo_index.png" class="index__TopLogo">
-  </div>
-  <div class="col-md-2">
-    <img src="Public/Img/white-text-logo.gif" class="index__TopLogoText"/>
-  </div>
-  <!-- <div class="index__TopNav col-md-1">
-    <h3><a class="index__TopNav">Home</a></h3>
-  </div>
-  <div class="index__TopNav col-md-1">
-    <h3><a class="index__TopNav">What</a></h3>
-  </div>
-  <div class="index__TopNav col-md-1">
-    <h3><a class="index__TopNav">Why</a></h3>
-  </div>
-  <div class="index__TopNav col-md-1">
-    <h3><a class="index__TopNav">How</a></h3>
-  </div> -->
-   <div class="index__TopNav col-md-5 ">
-    <h5 class="index__TopSkinWord">南开大学一站式创业服务平台</h5>
-  </div>
-</div><!--row 1 end-->
-<div class="row">
-  <div class="index__TopMotto col-md-4 col-md-offset-2">
-    <p class="index__TopMottoWord1">将来的你</p><br/>
-    <strong class="index__TopMottoWord2">一定会感激现在的自己</strong><br/>
-    <strong class="index__TopMottoWord3">闯先生</strong><br/>
-    <strong class="index__TopMottoWord2">中国最好的创业交流平台</strong>
-  </div>
-  <div class="col-md-4" style="width:35%;margin-top:6em">
-    <div>
-    <form id="logform" action="{:U('User/login')}" name="logform" method="post" class="form-horizontal" role="form">
-      <h5>
-      <input type="email" name="user_email" id="user_email" class="form-control index__TopInput" placeholder="Email" onmouseover="mOverInpute()" onmouseout="mOutInpute()" />
-      <input type="password" name="user_passwd" id="user_passwd" class="form-control index__TopInput" placeholder="Password" onmouseover="mOverInputp()" onmouseout="mOutInputp()"/>
-      <button class="btn index__TopLoginButton" id="login_button" >登录</button>
-      <button type="button" class="btn index__TopRegisterButton" data-toggle="modal" data-target="#registermodal">注册</button>
-      <a class="index__TopFindBack" href="{:U('User/findpassword')}">找回密码</a>
-      </h5>
-    </form>
-    </div>
-    <script type="text/javascript" defer src="__ROOT__/Public/Js/index.js"></script>
+  <div class="hidden-xs">
+    <div class="index__up-div" id="all"></div>
+    <div class="index__down-div"></div>
+    <div class="index__backgroundimg-div" id="div1">
+      <div class="row">
+        <div class="col-md-6" id="changeable-logo-div">
+          <img src="__ROOT__/Public/Img/Index/Logo.png" class="index__logo" id="Logo-Text-area"/>
+          <img src="__ROOT__/Public/Img/Index/Logo-text.png" class="index__logo-text" id="Logo-Text-area"/>
+          <div class="row">
+            <img src="__ROOT__/Public/Img/Index/video-usual.png" id="video-button" class="index__video" onmouseover="videoButtonOver()" onmouseout="videoButtonOut()" data-toggle="modal" data-target="#videoModal"/>
+            <img src="__ROOT__/Public/Img/Index/video-text.png" id="video-button" class="index__video-text"/>
+          </div>
+        </div>
+        <!--===========================================================-->
+        <div class="col-md-4 col-md-offset-2" style="padding-top:34px">
+          <div id="log-div">
+            <!--Login  div-->
+            <div class="row" style="width:90%;">
+              <div class="col-md-6">
+                <p class="index__log-reg-title-text" style="margin-top:5px;">登录账号</p>
+              </div>
+              <div class="col-md-6">
+                <a class="pull-right index__log-reg-title-text" id="change-to-reg" onclick="toggleLogToReg()">
+                  注册
+                  <img src="__ROOT__/Public/Img/Index/arrow.png" style="width:30px;"/>
+                </a>
+              </div>
+            </div>
+            <!--row end-->
+            <form action="{:U('User/login')}" method='post'>
+            <input class="form-control index__input" name="user_email" type="email" placeholder="邮箱"/>
+            <input  name="user_passwd" class="form-control index__input" type="password" placeholder="密码"/>
+            <button class="btn btn-block index__log-reg-button">登录闯先生</button>
+          </form>
+          </div>
+          <!--Login div end-->
+          <!--===============================================================-->
+          <div id="reg-div" style="display:none">
+            <div class="row" style="width:90%;">
+              <!--Register  div-->
+              <div class="col-md-6">
+                <p class="index__log-reg-title-text" style="margin-top:5px;">注册账号</p>
+              </div>
+              <div class="col-md-6">
+                <a class="pull-right index__log-reg-title-text" onclick="toggleRegToLog()">
+                  登录
+                  <img src="__ROOT__/Public/Img/Index/arrow.png" style="width:30px"/>
+                </a>
+              </div>
+            </div>
+            <!--row end-->
+            <input class="form-control index__input" type="text" placeholder="姓名" id="input-reg-name"/>
+            <input class="form-control index__input" type="email" placeholder="邮箱" id="input-reg-email"/>
+            <input class="form-control index__input" type="password" placeholder="密码" id="input-reg-password"/>
+            <div class="index__alert">
+              <p id="alert-name" >
+                <img src="__ROOT__/Public/Img/Index/alert-sign.png" style="width:30px"/>
+                姓名未填写
+              </p>
+              <p id="alert-email" >
+                <img src="__ROOT__/Public/Img/Index/alert-sign.png" style="width:30px"/>
+                邮箱不正确
+              </p>
+              <p id="alert-password" >
+                <img src="__ROOT__/Public/Img/Index/alert-sign.png" style="width:30px"/>
+                密码未填写
+              </p>
+            </div>
+            <button class="btn btn-block index__log-reg-button" id="register-button">注册闯先生</button>
+          </div>
+          <!--Register div end-->
+          <!--===========================================================-->
+          <div class="row">
+            <a class="index__contactus">联系我们</a>
+            <img class="index__icon-img1" id="img_apple" src="__ROOT__/Public/Img/Index/apple.png" onmouseover="mOver2()" onmouseout="mOut2()"/>
+            <img class="index__icon-img2" id="img_android" src="__ROOT__/Public/Img/Index/android.png" onmouseover="mOver1()" onmouseout="mOut1()"/>
+            <img class="index__icon-img3" id="img_weixin" src="__ROOT__/Public/Img/Index/weixin.png" onmouseover="mOver3()" onmouseout="mOut3()"/>
+          </div>
+        </div>
 
-
-
-
-
-    <div class="row">
-      <div class="col-md-5">
-        <button class="btn index__TopContactButton" data-toggle="modal" data-target="#lianxiwomenmodal"><strong>联系我们</strong></button>
       </div>
-      <div class="col-md-7">
-        <a href="">
-          <img src="__ROOT__/Public/Img/android.png" class="index__TopAppImg" id="img_android" onmouseover="mOver1()" onmouseout="mOut1()"/>
-        </a>
-        <a href="">
-          <img src="__ROOT__/Public/Img/apple.png" class="index__TopAppImg" id="img_apple" onmouseover="mOver2()" onmouseout="mOut2()"/>
-        </a>
-        <a href="">
-          <img src="__ROOT__/Public/Img/weixin.png" class="index__TopAppImg" id="img_weixin" onmouseover="mOver3()" onmouseout="mOut3()"/>
-        </a>
-<script defer>
+      <!--row end--> </div>
+    <!--background-img div end-->
+
+    <div style="width:100%;height:500px;background-color: #eeeeee;"></div>
+    <!--background div-->
+
+    <div class="index__people-div row" id="div2">
+      <!--===========================================================-->
+      <div class="col-md-4 row">
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/1.png" class="index__people-avatar"/>
+        </div>
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/2.png" class="index__people-avatar"/>
+        </div>
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/3.png" class="index__people-avatar"/>
+        </div>
+        <!--===========================================================-->
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/4.png" class="index__people-avatar"/>
+        </div>
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/5.png" class="index__people-avatar"/>
+        </div>
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/6.png" class="index__people-avatar"/>
+        </div>
+        <!--===========================================================-->
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/7.png" class="index__people-avatar"/>
+        </div>
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/8.png" class="index__people-avatar"/>
+        </div>
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/9.png" class="index__people-avatar"/>
+        </div>
+        <!--===========================================================-->
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/10.png" class="index__people-avatar"/>
+        </div>
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/11.png" class="index__people-avatar"/>
+        </div>
+        <div class="col-md-4">
+          <img src="__ROOT__/Public/Img/Index/avatar/1/12.png" class="index__people-avatar"/>
+        </div>
+        <!--===========================================================--> </div>
+      <!--===========================================================-->
+      <div class="col-md-8">
+        <img id="base-img" style="width:100%" src="__ROOT__/Public/Img/Index/avatar/people-base.jpg"/>
+        <img id="detail-img"style="position:absolute;top:34px;left:60px;width:50px;" src="__ROOT__/Public/Img/Index/avatar/2/1.png" />
+      </div>
+    </div>
+    <!--people div end-->
+
+    <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery
+/jquery-1.4.min.js"></script>
+    <script defer type="text/javascript">
+    function videoButtonOver()
+    {
+      document.getElementById("video-button").src="__ROOT__/Public/Img/Index/video-down.png";
+    }
+    function videoButtonOut()
+    {
+      document.getElementById("video-button").src="__ROOT__/Public/Img/Index/video-usual.png";
+    }
+    function toggleLogToReg()
+    {
+        document.getElementById("log-div").style.display="none";
+        document.getElementById("reg-div").style.display="block";
+        $(".index__down-div").css("height","75px");
+        $(".index__people-div").css("top","400px");
+        $("#changeable-logo-div").css("top","0px");
+        $("#alert-name").css("display","none");
+        $("#alert-email").css("display","none");
+        $("#alert-password").css("display","none");
+
+    }
+    function toggleRegToLog()
+    {
+        document.getElementById("reg-div").style.display="none";
+        document.getElementById("log-div").style.display="block";
+        $(".index__down-div").css("height","75px");
+        $(".index__people-div").css("top","400px");
+        $("#changeable-logo-div").css("top","0px");
+        $("#alert-name").css("display","none");
+        $("#alert-email").css("display","none");
+        $("#alert-password").css("display","none");
+    }
+
+    $(document).ready(function(){
+     $("input").focus(function(){
+    $(this).css("border-color","#1abc9a");
+    $(this).css("background-color","white");
+    });
+    $("input").blur(function(){
+    $(this).css("border-color","#7cbde5");
+    $(this).css("background-color","#dcdcdc");
+    });
+    $("button").mousedown(function(){
+    $(this).css("color","white");
+    $(this).css("background-color","#16a085");
+    });
+    $("button").mouseup(function(){
+    $(this).css("color","white");
+    $(this).css("background-color","#48c9b0");
+    });
+    $(".index__people-avatar").mouseover(function(){
+      var n=this.src;
+      var s=n.replace(/1/,"/2/");
+      $(this).attr("src",s);
+      $("#detail-img").attr("src",s);
+    });
+    $(".index__people-avatar").mouseout(function(){
+      var n=this.src;
+      var s=n.replace(/2/,"/1/");
+      $(this).attr("src",s);
+    });
+    $(".index__log-reg-title-text").mousedown(function(){
+    $(this).css("margin-right","10px");
+    //$(this).css("background-color","#dcdcdc");
+    });
+    $(".index__log-reg-title-text").mouseup(function(){
+    $(this).css("margin-right","0px");
+    //$(this).css("background-color","#dcdcdc");
+    });
+    //
+    $("#register-button").click(function(){
+      var s_name=$("#input-reg-name").val();
+      var s_email=$("#input-reg-email").val();
+      var  password=$("#input-reg-password").val() ;
+      var count=0;
+      if(!s_name)
+      {count++;}else{$("#alert-name").css("display","none");}
+      
+     if((/\w@\w*\.\w/).test(s_email)){
+        $("#alert-email").css("display","none");
+      }else{
+      count++;
+      s_email="";
+      }
+      //
+      if(!password)
+      {count++;}
+      else
+        {       
+          $("#alert-password").css("display","none");
+        }
+      //
+      if(count==2 || count==3 || count==4)
+      {
+        $(".index__down-div").css("height","200px");
+        $(".index__people-div").css("top","560px");
+        $("#changeable-logo-div").css("top","21px");
+      }
+      else
+      {
+        $(".index__down-div").css("height","75px");
+        $(".index__people-div").css("top","400px");
+        $("#changeable-logo-div").css("top","0px");
+      }
+      if(!s_name)
+      {$("#alert-name").css("display","block");}
+      else
+        {$("#alert-name").css("display","none");}
+      //
+
+      if(!s_email)
+      {$("#alert-email").css("display","block");}
+      else
+        {$("#alert-email").css("display","none");}
+      //
+      if(!password)
+      {$("#alert-password").css("display","block");}
+      else
+        {$("#alert-password").css("display","none");}
+      //////////////////////////////////
+      if(count==0)
+      {
+        var url='/User/register';
+        $.post(url,
+        {
+          user_nickname:s_name,
+          user_email:s_email,
+          user_passwd:password,
+          re_passwd:password,
+        },
+        function(data,status){
+          if(status){
+            if(data.status){
+              //注册成功
+
+         $("#congratulation-model").css("display","block");
+        document.getElementById("congratulation_username").innerHTML=s_name;
+        $("strong").text(data.info);
+        $(".index__btn-tiyan").attr('href',data.url);
+            }else{
+              //注册失败
+
+            }
+
+          }else{
+            //连接失败
+
+          }
+        });
+
+       
+      }
+    });
+});
+    ///
 function mOver1()
  {document.getElementById("img_android").style.opacity="0.7";}
 function mOut1()
@@ -92,106 +313,76 @@ function mOut2()
  {document.getElementById("img_weixin").style.opacity="0.7";}
 function mOut3()
  {document.getElementById("img_weixin").style.opacity="1";}
-function mOverInpute()
- {document.getElementById("user_email").style.opacity="0.5";}
-function mOutInpute()
- {document.getElementById("user_email").style.opacity="0.2";}
-function mOverInputp()
- {document.getElementById("user_passwd").style.opacity="0.5";}
-function mOutInputp()
- {document.getElementById("user_passwd").style.opacity="0.2";}
-</script>
+  </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content index__videx-model">
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <embed src="http://player.youku.com/player.php/sid/XNjgxODQ3ODMy/v.swf" allowFullScreen="true" quality="high" width="100%" height="500px" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"/>
+          </div>
+        </div>
+        <!-- /.modal-content --> </div>
+      <!-- /.modal-dialog --> </div>
+    <!-- /.modal -->
+
+    <div id="congratulation-model" style="display:none">
+      <div class="index__congratulation-model"></div>
+      <div class="index__congratulation-box" id="congratulation-box">
+        <img src="__ROOT__/Public/Img/Index/blue-white-logo.jpg" style="width:50%"/>
+        <h3 class="text-muted" center id="congratulation_username"></h3>
+        <h3 class="text-muted">
+          恭喜你成为第 <strong style="color:#48c9b0">N</strong>
+          位闯先生
+        </h3>
+        <button class="btn index__btn-wanshan" onclick="">关闭</button>
+        <script type="text/javascript">       $(".index__btn-wanshan").click(function(){
+    $('#congratulation-model').attr("style",'display:none');
+  });
+        </script>
+
+        <button class="btn index__btn-tiyan"><a href="/User/log">开始体验</a></button>
       </div>
-    </div>
+      <script type="text/javascript">
 
-
-
-
-
-
+   var screen_w=screen.width;
+   var left_w=(screen_w-400)/2;
+   var s_left_w=left_w.toString();
+   $("#congratulation-box").css("margin-left",s_left_w+"px");
+   ////////
+   // var s_name1=$("#input-reg-name1").val();
+  </script>
+    </script>
   </div>
-</div><!--row 2 end-->
-<div style="margin-top:2em">
- <img src="__ROOT__/Public/Img/white.png" class="index__TopWhite"/>
 </div>
+<!--响应式布局-电脑版 end-->
+
+<div class="visible-xs">
+  <div style="background-color:#196790;height:500px;">
+    <div style="width:500px;margin:auto;padding-top:20px;">
+      <img src ="__ROOT__/Public/Img/Index/Logo.png" style="width:450px;"/>
+      <img src ="__ROOT__/Public/Img/Index/Logo-text.png" style="width:450px"/>
+      <h2 style="color:#dddddd">
+        网站正处于内测阶段，
+        <br/>
+        <br/>
+        请输入邀请码：
+        <br/>
+        <br/>
+        <div class="input-group" style="width:450px;">
+          <input type="text" class="form-control index__TopInput">
+          <span class="input-group-btn">
+            <button class="btn btn-default index__TopInput2" type="button" onclick="bingo()">进入</button>
+          </span>
+        </div>
+        <!-- /input-group --> </h2>
+      <h5 id="bingo" style="color:#bbbbbb"></h5>
+    </div>
+  </div>
+ 
+
+
 </div>
-</div>
-
-<!--悬浮框 注册-->
-<div class="modal fade" id="registermodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="opacity:0.9;background-color:#404040">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 style="color:white" class="modal-title" id="myModalLabel">注册</h4>
-        <a href="{:U('User/regfullscreen')}" class="">切换到全屏页面</a>
-      </div>
-      <div class="modal-body" style="color:white">
-        <include file="User:reg"/>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-
-
-<div class="modal fade" id="lianxiwomenmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" id="lianxiwomenmodal2" onmouseover="mOver4()" onmouseout="mOut4()">
-    <div class="modal-content" style="opacity:0.8;background-color:#404040">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel" style="color:white">联系我们</h4>
-      </div>
-      <div class="modal-body" style="color:white">
-        联系电话：12345678<br/>
-        电子邮箱：31efwefwvfwe
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<script defer>
-function mOver4()
- {document.getElementById("lianxiwomenmodal2").style.opacity="1";}
-function mOut4()
- {document.getElementById("lianxiwomenmodal2").style.opacity="0.8";}
-</script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function()    {  
-    $("#user_email").val() ="Email";
-    $("#user_email").focusin(function() {
-        if($(this).val() =="Email"){  
-            $(this).val("");
-        }
-    });
-    $("#user_email").focusout(function() {
-        if($(this).val() ==""){ 
-            $(this).val("Email");
-        }
-    });
-    $("#user_passwd").val() ="Password";
-    $("#user_passwd").focusin(function() {
-        if($(this).val() =="Password"){  
-            $(this).val("");
-        }
-    });
-    $("#user_passwd").focusout(function() {
-        if($(this).val() ==""){ 
-            $(this).val("Password");
-        }
-    });
-
-    $("#login_button").onclick(function() {
-      var url=$("#logform").attr("too");
-      alert(url);
-      document.getElementById("logform").setAttribute("action",url);
-    });
-});
-</script>
 </block>

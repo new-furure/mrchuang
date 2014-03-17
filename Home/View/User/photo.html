@@ -1,16 +1,63 @@
 <div class="col-md-2">
-    <form method="post" enctype="multipart/form-data" action="__URL__/uploadPhoto" >
+    <form method="post" enctype="multipart/form-data" action="{:U('User/uploadPhoto')}" >
         <img src="{$user.user_avatar_url}" class="thumbnail" style="width:100%"/>
 
         <IF condition="$isself">
             <div>
-                <input name="photo" type="file" class="btn" style="background-color:#e5e5e5"/>
+                
+      <input id="photo" type="file" name="photo" onChange="PreviewImage(this)" style="display:none" size="1" hidefocus/>
+      <div id="imgPreview" style='width:110px; height:140px;'>
+      <img id="img1" src="__ROOT__/Public/Img/error.jpg" width="110" height="140" onclick="openBrowse()"/>
+      </div>
                 <h5 class="text-muted">
-                    保存头像.
-                    <input  type="submit" class="btn btn-default"/>
+                    <input  type="submit" class="btn btn-default" value="保存头像"/>
                 </h5>
+
             </div>
         </IF>
 
     </form>
+    <script type="text/javascript">
+    function openBrowse(){ 
+        //alert('点击上传');
+        var ie=navigator.appName=="Microsoft Internet Explorer" ? true : false; 
+        if(ie){ 
+        document.getElementById("photo").click(); 
+        }else{
+        var a=document.createEvent("MouseEvents");//FF的处理 
+        a.initEvent("click", true, true);  
+        document.getElementById("photo").dispatchEvent(a); 
+        } 
+    } 
+    function PreviewImage(imgFile)
+     {  
+
+        var filextension=imgFile.value.substring(imgFile.value.lastIndexOf("."),imgFile.value.length);
+        filextension=filextension.toLowerCase();
+        if ((filextension!='.jpg')&&(filextension!='.gif')&&(filextension!='.jpeg')&&(filextension!='.png')&&(filextension!='.bmp'))
+        {
+            alert("对不起，系统仅支持标准格式的照片，请您调整格式后重新上传，谢谢 !");
+            imgFile.focus();
+        }
+        else
+        {
+            var path;
+            if(document.all)//IE
+            {
+                imgFile.select();
+                path = document.selection.createRange().text;
+                document.getElementById("imgPreview").innerHTML="";
+                document.getElementById("imgPreview").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果      
+            }
+            else//FF
+            {
+                path=window.URL.createObjectURL(imgFile.files[0]);// FF 7.0以上
+                //path = imgFile.files[0].getAsDataURL();// FF 3.0
+                document.getElementById("imgPreview").innerHTML = "<img id='img1' width='110px' height='140px' src='"+path+"'/>";
+                //document.getElementById("img1").src = path;
+            }
+        }
+ }
+ </script>
+          
 </div>

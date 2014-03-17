@@ -1,0 +1,27 @@
+
+<a class="col-sm-offset-3"  href="{:U('User/Log')}">&nbsp;&nbsp;登录</a> 
+  <div id="congratulation-model" style="display:none">
+  	<div class="index__congratulation-model"></div>
+  	<div class="index__congratulation-box" id="congratulation-box">
+  		<img src="__ROOT__/Public/Img/Index/blue-white-logo.jpg" style="width:50%"/>  
+  		<h3 class="text-muted" id="congratulation_username">{$username|default=''}</h3>
+  		<h3 class="text-muted">
+  			恭喜你成为第您 <strong style="color:#48c9b0" id="num">{$num|default='N'}</strong>
+  			位闯先生
+  		</h3>
+  		<button class="btn index__btn-close" id='close-cong'>关闭</button>
+  		<button class="btn index__btn-tiyan">
+  			<a href="/User/log">开始体验</a>
+  		</button>
+  	</div>
+  </div>
+  <script type="text/javascript">
+	$('#close-cong').click(function(){
+		$('#congratulation-model').display('none');
+	});
+ 
+   var screen_w=screen.width;
+   var left_w=(screen_w-400)/2;
+   var s_left_w=left_w.toString();
+   $("#congratulation-box").css("margin-left",s_left_w+"px");
+ </script>

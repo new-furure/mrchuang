@@ -213,7 +213,8 @@ class UserController extends CommonController {
 		$data['user_passwd']=md5(I('post.passwd'));
 		$data['user_email']=I('post.email');
 		$category=I('post.category');
-		set_user_type($data['user_type'],0,1,$category);
+		set_user_type($data['user_type'],0,C("IS_ORG_ON"),$category);
+
 		if($User->create($data))
 		{    
 			$result = $User->add();  
@@ -221,11 +222,22 @@ class UserController extends CommonController {
 			{
 				$insertid=$result;//现在再加入到organization，
 				$data2['user_id']=$insertid;
+
+				if(C('IS_ORG_ON'))
+				{//启用组织注册
+
+				$tableName='organization';
+
+				
 				$data2['category_id']=I('post.category');
 				$data2['organization_certification_infomation']=I('post.info');
 				$data2['organization_certified']=C('UNCERTIFY');//后台添加是时候默认不认证的。
 				//如果添加的时候默认是认证的话，那么还要注意添加的如果是创业团队的，还要多一步把它升级为认证公司
-				if(M('organization')->add($data2))
+				}else{
+					$tableName='Person';
+				
+				}
+				if(M($tableName)->add($data2))
 				{
 					//添加用户之后要生成一个验证URL，然后发送到用户邮箱，等待邮箱激活
 					//validate()函数在function.php中。

@@ -59,7 +59,7 @@ function get_id( $mustLogin=true ) {
 	else {$error=$result;}
 
 	if ( $mustLogin )//异步不跳转
-		redirect( __ROOT__.'/index.php/Home/User/Log', 1, $error );
+		redirect( __ROOT__.U('User/Log'), 1, $error );
 	return 0;
 }
 
@@ -86,7 +86,7 @@ function validate_user( $user_id, $password ) {
 				//有效
 				if ( ac( $userinfo["user_type"], 1 ) ) {
 					//类型处于非待验证阶段
-					session( 'user_id', $user_id );
+					//session( 'user_id', $user_id );
 					return true;
 				}else {
 					$error="尚处于验证期，请查看邮箱！";
@@ -127,6 +127,8 @@ function validate_user( $user_id, $password ) {
  *
  * $info[0] 是否成功
  * $info[1] 消息，判断是否登陆$info[1]==0;
+ *
+ *@version 2.0 文章类型不做判断
  */
 function focus( $item_id, $is_on=null ) {
 
@@ -176,35 +178,39 @@ function focus( $item_id, $is_on=null ) {
 				}elseif ( $article["user_id"]==$user_id ) {
 					$error="不能关注自己发布的内容";
 
-				}else {
+				} 
+				//else {
 
-					switch ( $article["article_type"] ) {
+				// 	switch ( $article["article_type"] ) {
 
-					case C( "PROJECT_TYPE" ):
-						//项目
-						$writer=M( "project" )->getFieldByArticleId( $item_id, "user_id" );
-						if ( !$writer ) {
-							$error="该项目不存在";
+				// 	case C( "PROJECT_TYPE" ):
+				// 		//项目
+				// 		$writer=M( "project" )->getFieldByArticleId( $item_id, "user_id" );
+				// 		if ( !$writer ) {
+				// 			$error="该项目不存在";
 
-						}elseif ( $writer==$user_id ) {
-							$error="不能关注自己的项目";
-						}
-						break;
+				// 		}elseif ( $writer==$user_id ) {
+				// 			$error="不能关注自己的项目";
+				// 		}
+				// 		break;
 
-					case 'Policy':
-						//政策
-						$writer=M( "Policy" )->getFieldByArticleId( $item_id, "user_id" );
-						if ( !$writer ) {
-							$error="该政策不存在";
+				// 	case C('Policy'):
+				// 		//政策
+				// 		$writer=M( "Policy" )->getFieldByArticleId( $item_id, "user_id" );
+				// 		if ( !$writer ) {
+				// 			$error="该政策不存在";
 
-						}elseif ( $writer==$user_id ) {
-							$error="不能关注自己的政策";
-						}
+				// 		}elseif ( $writer==$user_id ) {
+				// 			$error="不能关注自己的政策";
+				// 		}
+				// 		case C('')
 
-						break;
-					}
-				}
-			}else {
+				// 		break;
+				// 	}
+				// }
+			}
+			//else
+			 {
 				$table_name='focus_on_article';
 				$id_name="article_id";
 			}
