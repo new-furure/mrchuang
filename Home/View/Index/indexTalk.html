@@ -6,9 +6,12 @@
 <link href="../../../Public/CSS/normal.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="../../../Public/Js/jquery-1.10.2.js"><!-- 替换成其他版本可能会有问题 --></script>
 <script type="text/javascript" src="../../../Public/Js/normal.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Js/common.js"></script>
 <script type="text/javascript">
 $(function(){
 	$(".mainListMenu a").eq(0).addClass("sel");
+	var article_type='idea';
+	var submit_url ='{:U("/Home/Base/submit")}';
 });
 </script>
 <style>
@@ -50,7 +53,7 @@ $(function(){
 					<textarea>发表话题、问题...</textarea>
 				</span>
 				<em></em>
-				<b class="mo">发布</b>
+				<b class="mo" onclick="submit()">发布</b>
 				<dl>
 					<dt class="senderIcon_1 mo">表情</dt>
 					<dt class="senderIcon_2 mo upImg">
