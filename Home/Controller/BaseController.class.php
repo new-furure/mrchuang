@@ -1046,17 +1046,14 @@ public function test(){
 public function uploadPicture(){
         $saveName=time();
         $savePath  = '/Img/Article/project';
-        $url=$this->upload_file1( $savePath, $saveName, "photo" );
+        //$url=upload_file( $savePath, $saveName, "photo" );
+        $file = $_FILES["photo"];
+        dump($file);
         if ( $url==null ) {
           // 上传错误
-          $this->error( "头像上传失败！" );
-          return;
+          // $this->error( "图片上传失败！" );
+          // return;
         }else {
-          //更新数据库
-         /* $User=M( 'user' );
-          $conditon['user_id']=$id;
-          $user_info['user_avatar_url']=$url;
-          $User->where( $conditon )->save( $user_info );*/
           $pic_url = $url;
           $this->success( "修改成功！" );
     }

@@ -68,7 +68,7 @@ var submit_url ='{:U("/Home/Base/submit")}';
 								<tr><td><a href="###">截屏上传</a></td><td><a href="###">传至相册</a></td></tr>
 							</table> target="tarframe"-->
 							<div>
-								<form name="uploadForm" id="uploadForm" action="{:U('Base/uploadPicture')}" method="post"    enctype="multipart/form-data">
+								<form name="uploadForm" id="uploadForm" target="tarframe" action="{:U('Base/uploadPicture')}" method="post"    enctype="multipart/form-data">
        
      							 <input id="photo" type="file" name="photo" onChange="PreviewImage(this)" style="display:none" size="1" hidefocus></input>
      							 <img id="imgPreview" src="__ROOT__/Public/Img/error.jpg" width="110" height="140" onclick="openBrowse()"/>
@@ -207,7 +207,6 @@ var submit_url ='{:U("/Home/Base/submit")}';
   
     function PreviewImage(imgFile)
      {  
-        $("#uploadForm").submit();
         /*  $.ajaxFileUpload
                      (
                        {
@@ -241,12 +240,15 @@ var submit_url ='{:U("/Home/Base/submit")}';
             }
             else//FF
             {
+            	alert('图片预览');
                 path=window.URL.createObjectURL(imgFile.files[0]);// FF 7.0以上
                 //path = imgFile.files[0].getAsDataURL();// FF 3.0
                 document.getElementById("imgPreview").innerHTML = "<img id='img1' width='110px' height='140px' src='"+path+"'/>";
                 //document.getElementById("img1").src = path;
             }
+            alert(path);
             //document.getElementById("message").value = "上传成功";
+      	    $("#uploadForm").submit();
         }
  }
  </script>
