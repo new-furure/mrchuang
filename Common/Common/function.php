@@ -665,3 +665,23 @@ function delete_invitation( $code ) {
     ->setField( 'invitation_effective', 0 );
   }
 }
+
+/**
+   * @author夏闪闪
+   *时间格式化输出
+   */
+  function time_format($time){
+    $now_time=NOW_TIME;
+    $interval=$now_time-strtotime($time);
+    $pastMin=intval($interval/60);
+    if($pastMin>0 and $pastMin<60){
+      return $pastMin."分钟前";
+    }else if($pastMin>=60){
+      $pastHour=intval($interval/3600);
+      if($pastHour<=24){
+        return $pastHour."小时前";
+      }else{
+        return substr($time, 5,11);
+      }
+    }
+  }

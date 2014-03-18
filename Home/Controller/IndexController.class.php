@@ -24,7 +24,7 @@ class IndexController extends Controller {
     public function indexAll(){
         $user_id=get_id();
         $Article=M('article');
-        $fieldSql='article.*,user.user_nickname as user_name,user.user_avatar_url';
+        $fieldSql='article.*,user.user_nickname as user_name,user.user_id,user.user_avatar_url,user.user_focus_number';
         $joinSql=array();//user join sql
         $joinSql[0]="left join __USER__ as user on user.user_id=article.user_id";
         $article_type=I('get.article_type');//不同模块
