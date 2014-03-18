@@ -538,8 +538,8 @@ class BaseController extends Controller {
 		$data['user_id'] = 134217735;
 		$data['article_title']=I('post.title');				
 		$data['article_content']=I('post.content');	
-		if($pic_url != '')
-			$data['article_picture_url']=$pic_url;
+		if($this->$pic_url != '')
+			$data['article_picture_url']=$this->$pic_url;
     	//$pic_name = I('post.pic_name');
     	//判断是否有传图片
     	/*if($pic_name){
@@ -1042,20 +1042,26 @@ public function test(){
 	echo ac(5);*/
 	$time = time(); 
 	echo $time;
+	dump(time());
+	//$this->display();
 }
 public function uploadPicture(){
-        $saveName=time();
-        $savePath  = '/Img/Article/project';
-        //$url=upload_file( $savePath, $saveName, "photo" );
+		$saveName .= time();
+        //$saveName = string();
+        $savePath  = 'Img/Article/project/';
+        $url=upload_file( $savePath, $saveName, "photo" );
         $file = $_FILES["photo"];
         dump($file);
         if ( $url==null ) {
           // 上传错误
-          // $this->error( "图片上传失败！" );
-          // return;
+           $this->error( "图片上传失败！" );
+           return;
         }else {
-          $pic_url = $url;
-          $this->success( "修改成功！" );
+        	echo $url;
+          	$this->$pic_url = $url;
+          	echo $this->pic_url;
+          	//$this->success( "修改成功！" );
+          	return;
     }
 }
 /*function upload_file1( $savePath, $saveName, $postName, $fileexts="img" ) {
